@@ -1,0 +1,50 @@
+.divMainParent .divPLContainer {
+  background: #ff00000f;
+  min-height: 100px;
+  padding: 8px;
+}
+
+.divMainParent #divPLContainer {
+  background: #80808017;
+  cursor: default;
+}
+
+.divMainParent .divPLHeader {
+  font-size: large;
+  font-weight: lighter;
+  margin-bottom: 8px;
+  background: #80808061;
+  padding: 8px 0;
+  border-radius: 10px;
+}
+
+.divMainParent .divPLValueRow {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  align-content: center;
+  text-align: revert;
+}
+
+.divMainParent .divPLValueRow > span,
+.divMainParent .divPLHeader > span {
+  display: inline-block;
+  min-width: 100px;
+  max-width: 150px;
+  text-align: center;
+}
+
+.divMainParent #spanRefresh {
+  cursor: pointer;
+  user-select: none;
+}
+
+.divMainParent .divFearGreedIndex
+{
+  background: rgba(255,255,255,0.3);
+  color: white;
+  padding: 8px;
+  width: 35%;
+  float: right;
+}

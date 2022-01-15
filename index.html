@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Home | Aquib's Crypto Bot</title>
+	<link rel="stylesheet" href="styles/basic.css">
+	<link rel="stylesheet" href="styles/PL.css">
+	<link rel="stylesheet" href="styles/table.css">
+</head>
+
+<body>
+	<div class="divMainParent">
+		<div class="divFearGreedIndex">
+			Fear and Greed Index <br>
+			Value: <span id="spanValue"></span><br>
+			Classification: <span id="spanClassification"></span> <br>
+			$ price: <span id="spanDollarPrice"></span>
+		</div>
+		<table class="demo" id="table">
+			<caption>HODL Table</caption>
+			<thead>
+				<tr>
+					<th>Coin Name</th>
+					<th>Buying Price</th>
+					<th>Quantity</th>
+					<th>Total $</th>
+					<th>Total inr</th>
+					<th>Current Price</th>
+					<th>Current Total $</th>
+					<th>Current Total inr</th>
+					<th>Profit/Loss</th>
+					<th>Margin $</th>
+					<th>Margin INR</th>
+					<th>Term</th>
+					<th id="thRefresh">Refresh</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+
+		<table class="demo" id="table1">
+			<caption>Profit/Loss Table</caption>
+			<thead>
+				<tr>
+					<th>Coin Name</th>
+					<th>Buying Price</th>
+					<th>Sold Price</th>
+					<th>Quantity</th>
+					<th>Total $</th>
+					<th>Total inr</th>
+					<th>Profit/Loss</th>
+					<th>Margin $</th>
+					<th>Margin INR</th>
+					<th>Term</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+
+	<template id="templatePL1Row">
+		<tr id="%%">
+			<td id="tdPairName"></td>
+			<td id="tdBuyPrice"></td>
+			<td id="tdSoldPrice"></td>
+			<td id="tdQty"></td>
+			<td id="tdTotalDollar"></td>
+			<td id="tdTotalinr"></td>
+			<td id="tdPLPercentage"></td>
+			<td id="tdMarginDol"></td>
+			<td id="tdMarginINR"></td>
+			<td id="tdTerm"></td>
+		</tr>
+	</template>
+
+	<template id="templatePLRow">
+		<tr id="%%">
+			<td id="tdPairName"></td>
+			<td id="tdBuyPrice"></td>
+			<td id="tdQty"></td>
+			<td id="tdTotalDollar"></td>
+			<td id="tdTotalinr"></td>
+			<td id="tdCurrentPrice"></td>
+			<td id="tdCurTotalDollar"></td>
+			<td id="tdCurTotalinr"></td>
+			<td id="tdPLPercentage"></td>
+			<td id="tdMarginDol"></td>
+			<td id="tdMarginINR"></td>
+			<td id="tdTerm"></td>
+			<td id="tdRefresh"></td>
+		</tr>
+	</template>
+
+</body>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+<script src="javascript/base.js"></script> -->
+
+<!-- <script  src="javascript/constants.js"></script> -->
+<script type="module" src="javascript/pricePL.js"></script>
+
+
+</html>
