@@ -20,7 +20,6 @@ async function UpdateFearGreedIndex (usdtinr)
 async function AddRows_FromJSON ( obj,
                                   isUpdate = false )
 {
-
   const arrTicker = await Const.getTicker();
   const usdtinr = arrTicker.filter( e => e.symbol == ( "usdtinr" ) )[ 0 ].lastPrice;
   await UpdateFearGreedIndex( usdtinr );

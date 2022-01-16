@@ -223,17 +223,17 @@ const JSONDATA = {
     price: 2.33972,
     term: "short"
   },
-  adas1: {
-    coin: "ada",
-    pair: "usdt",
-    qty: 4,
-    price: 1.26509,
-    term: "short"
-  },
+  // adas1: {
+  //   coin: "ada",
+  //   pair: "usdt",
+  //   qty: 4,
+  //   price: 1.26509,
+  //   term: "short"
+  // },
   usdt: {
     coin: "usdt",
     pair: "inr",
-    qty: 1.554896,
+    qty: 6.994896,
     price: 78.56,
     term: "short"
   }
@@ -255,7 +255,15 @@ const SoldJSon = {
     buyPrice: 0.189,
     soldPrice: 0.199899,
     term: "long"
-  }
+  },
+  adas1: {
+    coin: "ada",
+    pair: "usdt",
+    qty: 4,
+    buyPrice: 1.26509,
+    soldPrice: 1.36000,
+    term: "short"
+  },
 };
 
 const ticker24URL = "https://api.wazirx.com/sapi/v1/tickers/24hr";
