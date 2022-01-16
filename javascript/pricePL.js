@@ -71,7 +71,12 @@ async function AddRows_FromJSON ( obj,
       }
 
       if (!isUpdate)
-        tbody[0].appendChild(row);
+      {
+        if ( percentage > 0 )
+          tbody[ 0 ].prepend( row );
+        else
+          tbody[0].appendChild(row);
+      }
     }
   }
 }
@@ -116,7 +121,7 @@ async function AddRows_FromJSON1 ( obj,
       row.querySelector("#tdTotalDollar").textContent =       totalToDollar.toFixed(2) + " ₿";
       row.querySelector("#tdTotalinr").textContent =          totalToInr.toFixed(2) + " ₹";
 
-      row.querySelector("#tdPLPercentage").textContent =      percentage.toFixed(2) + "%";
+      row.querySelector("#tdPLPercentage").textContent =      percentage.toFixed(2) + " %";
       row.querySelector("#tdMarginDol").textContent =         marginDollar.toFixed(2) + " ₿";
       row.querySelector("#tdMarginINR").textContent =         marginINR.toFixed(2) + " ₹";
 
@@ -151,7 +156,28 @@ async function OnClick_Row(tbody, event = window.event) {
   }
 }
 
+await AddRows_FromJSON( Const.JSONDATA );
+await AddRows_FromJSON1( Const.SoldJSon );
 
+function test ()
+{
+  const children = tbody1[ 0 ].children;
+  const footChild = tbody1[ 0 ].nextElementSibling.children[0].children;
+  let beforeDollar = 0, beforeInr = 0, percentage = 0, afterDollar = 0, afterInr = 0;
+  let text1 = "", text2 = "";
+  for ( let child of children )
+  {
+    beforeDollar += +child.querySelector( "#tdTotalDollar" ).textContent.split( " " )[ 0 ];
+    beforeInr += +child.querySelector( "#tdTotalinr" ).textContent.split( " " )[ 0 ];
+    percentage += +child.querySelector( "#tdPLPercentage" ).textContent.split( " " )[ 0 ];
+    afterDollar += +child.querySelector( "#tdMarginDol" ).textContent.split( " " )[ 0 ];
+    afterInr += +child.querySelector( "#tdMarginINR" ).textContent.split( " " )[ 0 ];
+  }
+  footChild[ 0 ].textContent = "₿ Invested: " + beforeDollar.toFixed(2);
+  footChild[ 1 ].textContent = "₹ Invested: " + beforeInr.toFixed(2);
+  footChild[ 2 ].textContent = "Average Percentage: " + (percentage/children.length).toFixed(2);
+  footChild[ 3 ].textContent = "₿ Gain: " + afterDollar.toFixed(2);
+  footChild[ 4 ].textContent = "₹ Gain : " + afterInr.toFixed(2);
+}
 
-await AddRows_FromJSON(Const.JSONDATA);
-await AddRows_FromJSON1(Const.SoldJSon)
+test();
