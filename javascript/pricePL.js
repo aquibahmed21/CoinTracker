@@ -176,25 +176,27 @@ try {
   {
     for ( let child of tbody[ 0 ].querySelectorAll( "tr[pairName=" + arrs.s + "]" ) )
     {
-      const tds = child.querySelectorAll( "td" );
       const lastPrice = +child.querySelector("#tdCurrentPrice").textContent.split( " " )[ 0 ];
       const qty = +child.querySelector( "#tdQty" ).textContent;
       const currentPrice = +arrs.c;
       const color = lastPrice == currentPrice ? "" : lastPrice < currentPrice ? "green" : "red";
+
+      if ( color.length )
+        debugger;
 
       const isINR = arrs.U == "inr";
 
       const totalToDollar = +child.querySelector("#tdTotalDollar").textContent.split(" ")[0];
       const totalToInr = +child.querySelector("#tdTotalinr").textContent.split(" ")[0];
 
-      const currentTotalToDollar = isINR ? ( ( lastPrice / usdtinr ) * qty ) : ( lastPrice * qty );
+      const currentTotalToDollar = isINR ? ( ( currentPrice / usdtinr ) * qty ) : ( currentPrice * qty );
       const currentTotalToInr = currentTotalToDollar * usdtinr;
       const percentage = ( ( currentTotalToInr * 100 ) / totalToInr ) - 100;
 
       const marginDollar = currentTotalToDollar - totalToDollar;
       const marginINR = currentTotalToInr - totalToInr;
 
-      child.querySelector("#tdCurrentPrice").textContent =      lastPrice + (isINR ? " ₹" :" ₿");
+      child.querySelector("#tdCurrentPrice").textContent =      currentPrice + (isINR ? " ₹" :" ₿");
       child.querySelector("#tdCurTotalDollar").textContent =    currentTotalToDollar.toFixed(2) + " ₿";
       child.querySelector("#tdCurTotalinr").textContent =       currentTotalToInr.toFixed(2) + " ₹";
       child.querySelector("#tdPLPercentage").textContent =      percentage.toFixed(2) + "%";
