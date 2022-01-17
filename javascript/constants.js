@@ -223,6 +223,13 @@ const JSONDATA = {
     price: 2.33972,
     term: "short"
   },
+  doge1: {
+    coin: "doge",
+    pair: "usdt",
+    qty: 41,
+    price: 0.1703671,
+    term: "long"
+  },
   // adas1: {
   //   coin: "ada",
   //   pair: "usdt",
@@ -233,7 +240,7 @@ const JSONDATA = {
   usdt: {
     coin: "usdt",
     pair: "inr",
-    qty: 6.994896,
+    qty: 0.009845,
     price: 78.56,
     term: "short"
   }
