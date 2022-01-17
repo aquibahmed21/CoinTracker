@@ -1,10 +1,16 @@
 import * as Const from "./constants.js";
+import * as Test from "./test.js";
 
 const table = document.getElementById("table");
 const tbody = table.getElementsByTagName( "tbody" );
 
 const table1 = document.getElementById("table1");
-const tbody1 = table1.getElementsByTagName("tbody");
+const tbody1 = table1.getElementsByTagName( "tbody" );
+
+const arrTicker = await Const.getTicker();
+const usdtinr = arrTicker.filter( e => e.symbol == ( "usdtinr" ) )[ 0 ].lastPrice;
+
+const arr = [];
 
 table.addEventListener( "click", OnClick_Row.bind( this, tbody ) );
 
@@ -20,8 +26,7 @@ async function UpdateFearGreedIndex (usdtinr)
 async function AddRows_FromJSON ( obj,
                                   isUpdate = false )
 {
-  const arrTicker = await Const.getTicker();
-  const usdtinr = arrTicker.filter( e => e.symbol == ( "usdtinr" ) )[ 0 ].lastPrice;
+
   await UpdateFearGreedIndex( usdtinr );
   for ( const key in obj )
   {
@@ -37,7 +42,13 @@ async function AddRows_FromJSON ( obj,
 
       const isINR = pair == "inr";
       if ( !isUpdate )
-        row.getElementById( "tdPairName" ).parentElement.id = key;
+      {
+        const rowParent = row.getElementById( "tdPairName" ).parentElement;
+        rowParent.id = key;
+        rowParent.setAttribute( "pairName", coin + pair );
+        if (!arr.includes( coin + pair ))
+          arr.push( coin + pair );
+      }
 
       const totalToDollar = isINR ? ( ( price / usdtinr ) * qty ) : ( price * qty );
       const totalToInr = totalToDollar * usdtinr;
@@ -84,9 +95,6 @@ async function AddRows_FromJSON ( obj,
 async function AddRows_FromJSON1 ( obj,
                                   isUpdate = false )
 {
-
-  const arrTicker = await Const.getTicker();
-  const usdtinr = arrTicker.filter( e => e.symbol == ( "usdtinr" ) )[ 0 ].lastPrice;
   for ( const key in obj )
   {
 
@@ -158,6 +166,48 @@ async function OnClick_Row(tbody, event = window.event) {
 
 await AddRows_FromJSON( Const.JSONDATA );
 await AddRows_FromJSON1( Const.SoldJSon );
+Test.wsSubscribe( arr.map( e => e + "@trades" ), tesst );
+
+function tesst (event)
+{
+try {
+  const array = event.data.filter( e => arr.includes( e.s ) );
+  for ( let arrs of array )
+  {
+    for ( let child of tbody[ 0 ].querySelectorAll( "tr[pairName=" + arrs.s + "]" ) )
+    {
+      const tds = child.querySelectorAll( "td" );
+      const lastPrice = +child.querySelector("#tdCurrentPrice").textContent.split( " " )[ 0 ];
+      const qty = +child.querySelector( "#tdQty" ).textContent;
+      const currentPrice = +arrs.c;
+      const color = lastPrice == currentPrice ? "" : lastPrice < currentPrice ? "green" : "red";
+
+      const isINR = arrs.U == "inr";
+
+      const totalToDollar = +child.querySelector("#tdTotalDollar").textContent.split(" ")[0];
+      const totalToInr = +child.querySelector("#tdTotalinr").textContent.split(" ")[0];
+
+      const currentTotalToDollar = isINR ? ( ( lastPrice / usdtinr ) * qty ) : ( lastPrice * qty );
+      const currentTotalToInr = currentTotalToDollar * usdtinr;
+      const percentage = ( ( currentTotalToInr * 100 ) / totalToInr ) - 100;
+
+      const marginDollar = currentTotalToDollar - totalToDollar;
+      const marginINR = currentTotalToInr - totalToInr;
+
+      child.querySelector("#tdCurrentPrice").textContent =      lastPrice + (isINR ? " ₹" :" ₿");
+      child.querySelector("#tdCurTotalDollar").textContent =    currentTotalToDollar.toFixed(2) + " ₿";
+      child.querySelector("#tdCurTotalinr").textContent =       currentTotalToInr.toFixed(2) + " ₹";
+      child.querySelector("#tdPLPercentage").textContent =      percentage.toFixed(2) + "%";
+      child.querySelector("#tdMarginDol").textContent =         marginDollar.toFixed(2) + " ₿";
+      child.querySelector("#tdMarginINR").textContent =         marginINR.toFixed(2) + " ₹";
+
+      child.querySelector( "#tdCurrentPrice" ).style.color = color;
+    }
+  }
+} catch (error) {
+  console.log( error );
+}
+}
 
 function test ()
 {
