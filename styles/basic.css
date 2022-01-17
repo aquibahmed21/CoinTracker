@@ -12,6 +12,7 @@
   font-family: inherit;
   vertical-align: baseline;
   box-sizing: border-box;
+  user-select: none;
 }
 
 html {

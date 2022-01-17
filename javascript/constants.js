@@ -1,3 +1,5 @@
+"use strict";
+
 const JSONDATA = {
   shib1: {
     coin: "shib",

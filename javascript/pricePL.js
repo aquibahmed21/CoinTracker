@@ -1,44 +1,38 @@
+"use strict";
+
 import * as Const from "./constants.js";
-import * as Test from "./test.js";
+import * as webSocket from "./websocket.js";
 
-const table = document.getElementById("table");
-const tbody = table.getElementsByTagName( "tbody" );
+const hodlingTable = document.getElementById( "table" );
+const hodlingBody = hodlingTable.getElementsByTagName( "tbody" );
 
-const table1 = document.getElementById("table1");
-const tbody1 = table1.getElementsByTagName( "tbody" );
+const plTable = hodlingTable.nextElementSibling;
+const plBody = plTable.getElementsByTagName( "tbody" );
+
 
 const arrTicker = await Const.getTicker();
-const usdtinr = arrTicker.filter( e => e.symbol == ( "usdtinr" ) )[ 0 ].lastPrice;
+let usdtinr = arrTicker.filter( e => e.symbol == ( "usdtinr" ) )[ 0 ].lastPrice;
 
 const arr = [];
 
-table.addEventListener( "click", OnClick_Row.bind( this, tbody ) );
+await AddHodlingRows_FromJSON( Const.JSONDATA );
+await AddPLRows_FromJSON( Const.SoldJSon );
+SummationPLTable();
+webSocket.wsSubscribe( LiveUpdateHodlingTable );
 
-async function UpdateFearGreedIndex (usdtinr)
+async function AddHodlingRows_FromJSON ( obj,
+                                         isUpdate = false )
 {
-  const fearGreed = await Const.fearGreed();
-  const divFearGreedContainer = document.getElementsByClassName( "divFearGreedIndex" );
-  divFearGreedContainer[ 0 ].querySelector( "#spanValue" ).textContent = fearGreed.data[ 0 ].value + " %";
-  divFearGreedContainer[ 0 ].querySelector( "#spanClassification" ).textContent = fearGreed.data[ 0 ].value_classification;
-  divFearGreedContainer[ 0 ].querySelector( "#spanDollarPrice" ).textContent = usdtinr;
-}
-
-async function AddRows_FromJSON ( obj,
-                                  isUpdate = false )
-{
-
   await UpdateFearGreedIndex( usdtinr );
-  for ( const key in obj )
-  {
+  for ( const key in obj ) {
 
-    if ( obj.hasOwnProperty( key ) )
-    {
-      const { coin, pair, qty, price, term } = obj[key];
+    if ( obj.hasOwnProperty( key ) ) {
+      const { coin, pair, qty, price, term } = obj[ key ];
       const lastPrice = arrTicker.filter( e => e.symbol == ( coin + pair ) )[ 0 ].lastPrice;
 
 
-      const row = isUpdate ? document.querySelector( "#" + key ):
-                             document.getElementById( "templatePLRow" ).content.cloneNode( true );
+      const row = isUpdate ? document.querySelector( "#" + key ) :
+        document.getElementById( "templatePLRow" ).content.cloneNode( true );
 
       const isINR = pair == "inr";
       if ( !isUpdate )
@@ -46,7 +40,7 @@ async function AddRows_FromJSON ( obj,
         const rowParent = row.getElementById( "tdPairName" ).parentElement;
         rowParent.id = key;
         rowParent.setAttribute( "pairName", coin + pair );
-        if (!arr.includes( coin + pair ))
+        if ( !arr.includes( coin + pair ) )
           arr.push( coin + pair );
       }
 
@@ -60,19 +54,19 @@ async function AddRows_FromJSON ( obj,
       const marginDollar = currentTotalToDollar - totalToDollar;
       const marginINR = currentTotalToInr - totalToInr;
 
-      row.querySelector("#tdPairName").textContent =          coin + pair;
-      row.querySelector("#tdBuyPrice").textContent =          price;
-      row.querySelector("#tdQty").textContent =               qty;
-      row.querySelector("#tdTerm").textContent =              term;
-      row.querySelector("#tdTotalDollar").textContent =       totalToDollar.toFixed(2) + " ₿";
-      row.querySelector("#tdTotalinr").textContent =          totalToInr.toFixed(2) + " ₹";
+      row.querySelector( "#tdPairName" ).textContent = coin + pair;
+      row.querySelector( "#tdBuyPrice" ).textContent = price;
+      row.querySelector( "#tdQty" ).textContent = qty;
+      row.querySelector( "#tdTerm" ).textContent = term;
+      row.querySelector( "#tdTotalDollar" ).textContent = totalToDollar.toFixed( 2 ) + " ₿";
+      row.querySelector( "#tdTotalinr" ).textContent = totalToInr.toFixed( 2 ) + " ₹";
 
-      row.querySelector("#tdCurrentPrice").textContent =      lastPrice + (isINR ? " ₹" :" ₿");
-      row.querySelector("#tdCurTotalDollar").textContent =    currentTotalToDollar.toFixed(2) + " ₿";
-      row.querySelector("#tdCurTotalinr").textContent =       currentTotalToInr.toFixed(2) + " ₹";
-      row.querySelector("#tdPLPercentage").textContent =      percentage.toFixed(2) + "%";
-      row.querySelector("#tdMarginDol").textContent =         marginDollar.toFixed(2) + " ₿";
-      row.querySelector("#tdMarginINR").textContent =         marginINR.toFixed(2) + " ₹";
+      row.querySelector( "#tdCurrentPrice" ).textContent = lastPrice + ( isINR ? " ₹" : " ₿" );
+      row.querySelector( "#tdCurTotalDollar" ).textContent = currentTotalToDollar.toFixed( 2 ) + " ₿";
+      row.querySelector( "#tdCurTotalinr" ).textContent = currentTotalToInr.toFixed( 2 ) + " ₹";
+      row.querySelector( "#tdPLPercentage" ).textContent = percentage.toFixed( 2 ) + "%";
+      row.querySelector( "#tdMarginDol" ).textContent = marginDollar.toFixed( 2 ) + " ₿";
+      row.querySelector( "#tdMarginINR" ).textContent = marginINR.toFixed( 2 ) + " ₹";
 
       if ( percentage > 0 )
       {
@@ -81,31 +75,28 @@ async function AddRows_FromJSON ( obj,
         parentRow.color = "#fff";
       }
 
-      if (!isUpdate)
+      if ( !isUpdate )
       {
         if ( percentage > 0 )
-          tbody[ 0 ].prepend( row );
+          hodlingBody[ 0 ].prepend( row );
         else
-          tbody[0].appendChild(row);
+          hodlingBody[ 0 ].appendChild( row );
       }
     }
   }
 }
 
-async function AddRows_FromJSON1 ( obj,
-                                  isUpdate = false )
+async function AddPLRows_FromJSON ( obj,
+                                    isUpdate = false )
 {
   for ( const key in obj )
   {
 
     if ( obj.hasOwnProperty( key ) )
     {
-      const { coin, pair, qty, buyPrice, soldPrice, term } = obj[key];
-      // const lastPrice = arrTicker.filter( e => e.symbol == ( coin + pair ) )[ 0 ].lastPrice;
-
-
-      const row = isUpdate ? document.querySelector( "#" + key ):
-                             document.getElementById( "templatePL1Row" ).content.cloneNode( true );
+      const { coin, pair, qty, buyPrice, soldPrice, term } = obj[ key ];
+      const row = isUpdate ? document.querySelector( "#" + key ) :
+        document.getElementById( "templatePL1Row" ).content.cloneNode( true );
 
       const isINR = pair == "inr";
       if ( !isUpdate )
@@ -121,17 +112,17 @@ async function AddRows_FromJSON1 ( obj,
       const marginDollar = currentTotalToDollar - totalToDollar;
       const marginINR = currentTotalToInr - totalToInr;
 
-      row.querySelector("#tdPairName").textContent =          coin + pair;
-      row.querySelector("#tdBuyPrice").textContent =          buyPrice;
-      row.querySelector("#tdSoldPrice").textContent =         soldPrice;
-      row.querySelector("#tdQty").textContent =               qty;
-      row.querySelector("#tdTerm").textContent =              term;
-      row.querySelector("#tdTotalDollar").textContent =       totalToDollar.toFixed(2) + " ₿";
-      row.querySelector("#tdTotalinr").textContent =          totalToInr.toFixed(2) + " ₹";
+      row.querySelector( "#tdPairName" ).textContent = coin + pair;
+      row.querySelector( "#tdBuyPrice" ).textContent = buyPrice;
+      row.querySelector( "#tdSoldPrice" ).textContent = soldPrice;
+      row.querySelector( "#tdQty" ).textContent = qty;
+      row.querySelector( "#tdTerm" ).textContent = term;
+      row.querySelector( "#tdTotalDollar" ).textContent = totalToDollar.toFixed( 2 ) + " ₿";
+      row.querySelector( "#tdTotalinr" ).textContent = totalToInr.toFixed( 2 ) + " ₹";
 
-      row.querySelector("#tdPLPercentage").textContent =      percentage.toFixed(2) + " %";
-      row.querySelector("#tdMarginDol").textContent =         marginDollar.toFixed(2) + " ₿";
-      row.querySelector("#tdMarginINR").textContent =         marginINR.toFixed(2) + " ₹";
+      row.querySelector( "#tdPLPercentage" ).textContent = percentage.toFixed( 2 ) + " %";
+      row.querySelector( "#tdMarginDol" ).textContent = marginDollar.toFixed( 2 ) + " ₿";
+      row.querySelector( "#tdMarginINR" ).textContent = marginINR.toFixed( 2 ) + " ₹";
 
       if ( percentage < 0 )
       {
@@ -140,88 +131,72 @@ async function AddRows_FromJSON1 ( obj,
         parentRow.color = "#fff";
       }
 
-      if (!isUpdate)
-        tbody1[0].appendChild(row);
+      if ( !isUpdate )
+        plBody[ 0 ].appendChild( row );
     }
   }
 }
 
-async function OnClick_Row(tbody, event = window.event) {
-  const targetID = event.target.id;
-  switch (targetID) {
-    // case "tdRefresh":
-    //   {
-    //     const parent = event.target.parentElement;
-    //     UpdateRowsValue(parent);
-    //   }
-    //   break;
-    case "thRefresh":
-      await AddRows_FromJSON( Const.JSONDATA, true);
-      break;
-
-    default:
-      break;
-  }
-}
-
-await AddRows_FromJSON( Const.JSONDATA );
-await AddRows_FromJSON1( Const.SoldJSon );
-Test.wsSubscribe( arr.map( e => e + "@trades" ), tesst );
-
-function tesst (event)
+async function LiveUpdateHodlingTable ( event )
 {
-try {
-  const array = event.data.filter( e => arr.includes( e.s ) );
-  for ( let arrs of array )
+  try
   {
-    for ( let child of tbody[ 0 ].querySelectorAll( "tr[pairName=" + arrs.s + "]" ) )
+    const array = event.data.filter( e => arr.includes( e.s ) );
+    const usdtINRArray = array.filter( e => e.s == "usdtinr" );
+
+    if ( usdtINRArray.length )
     {
-      const lastPrice = +child.querySelector("#tdCurrentPrice").textContent.split( " " )[ 0 ];
-      const qty = +child.querySelector( "#tdQty" ).textContent;
-      const currentPrice = +arrs.c;
-      const color = lastPrice == currentPrice ? "" : lastPrice < currentPrice ? "green" : "red";
-
-      if ( color.length )
-        debugger;
-
-      const isINR = arrs.U == "inr";
-
-      const totalToDollar = +child.querySelector("#tdTotalDollar").textContent.split(" ")[0];
-      const totalToInr = +child.querySelector("#tdTotalinr").textContent.split(" ")[0];
-
-      const currentTotalToDollar = isINR ? ( ( currentPrice / usdtinr ) * qty ) : ( currentPrice * qty );
-      const currentTotalToInr = currentTotalToDollar * usdtinr;
-      const percentage = ( ( currentTotalToInr * 100 ) / totalToInr ) - 100;
-
-      const marginDollar = currentTotalToDollar - totalToDollar;
-      const marginINR = currentTotalToInr - totalToInr;
-
-      child.querySelector("#tdCurrentPrice").textContent =      currentPrice + (isINR ? " ₹" :" ₿");
-      child.querySelector("#tdCurTotalDollar").textContent =    currentTotalToDollar.toFixed(2) + " ₿";
-      child.querySelector("#tdCurTotalinr").textContent =       currentTotalToInr.toFixed(2) + " ₹";
-      child.querySelector("#tdPLPercentage").textContent =      percentage.toFixed(2) + "%";
-      child.querySelector("#tdMarginDol").textContent =         marginDollar.toFixed(2) + " ₿";
-      child.querySelector("#tdMarginINR").textContent =         marginINR.toFixed(2) + " ₹";
-
-      child.querySelector("#tdCurrentPrice").style.color = color;
-      child.querySelector("#tdCurTotalDollar").style.color = color;
-      child.querySelector("#tdCurTotalinr").style.color = color;
-      child.querySelector("#tdPLPercentage").style.color = color;
-      child.querySelector("#tdMarginDol").style.color = color;
-      child.querySelector("#tdMarginINR").style.color = color;
+      usdtinr = usdtINRArray[ 0 ].c;
+      await UpdateFearGreedIndex( usdtinr );
     }
+    for ( let arrs of array )
+    {
+      for ( let child of hodlingBody[ 0 ].querySelectorAll( "tr[pairName=" + arrs.s + "]" ) )
+      {
+        const lastPrice = +child.querySelector( "#tdCurrentPrice" ).textContent.split( " " )[ 0 ];
+        const qty = +child.querySelector( "#tdQty" ).textContent;
+        const currentPrice = +arrs.c;
+        const color = lastPrice == currentPrice ? "" : lastPrice < currentPrice ? "green" : "red";
+        // const prevPercentage = +child.querySelector( "#tdPLPercentage" ).textContent.split( " " )[ 0 ];
+
+        const isINR = arrs.U == "inr";
+
+        const totalToDollar = +child.querySelector( "#tdTotalDollar" ).textContent.split( " " )[ 0 ];
+        const totalToInr = +child.querySelector( "#tdTotalinr" ).textContent.split( " " )[ 0 ];
+
+        const currentTotalToDollar = isINR ? ( ( currentPrice / usdtinr ) * qty ) : ( currentPrice * qty );
+        const currentTotalToInr = currentTotalToDollar * usdtinr;
+        const percentage = ( ( currentTotalToInr * 100 ) / totalToInr ) - 100;
+
+        const marginDollar = currentTotalToDollar - totalToDollar;
+        const marginINR = currentTotalToInr - totalToInr;
+
+        child.querySelector( "#tdCurrentPrice" ).textContent = currentPrice + ( isINR ? " ₹" : " ₿" );
+        child.querySelector( "#tdCurTotalDollar" ).textContent = currentTotalToDollar.toFixed( 2 ) + " ₿";
+        child.querySelector( "#tdCurTotalinr" ).textContent = currentTotalToInr.toFixed( 2 ) + " ₹";
+        child.querySelector( "#tdPLPercentage" ).textContent = percentage.toFixed( 2 ) + " %";
+        child.querySelector( "#tdMarginDol" ).textContent = marginDollar.toFixed( 2 ) + " ₿";
+        child.querySelector( "#tdMarginINR" ).textContent = marginINR.toFixed( 2 ) + " ₹";
+
+        child.querySelector( "#tdCurrentPrice" ).style.color = color;
+        child.querySelector( "#tdCurTotalDollar" ).style.color = color;
+        child.querySelector( "#tdCurTotalinr" ).style.color = color;
+        child.querySelector( "#tdPLPercentage" ).style.color = color;
+        child.querySelector( "#tdMarginDol" ).style.color = color;
+        child.querySelector( "#tdMarginINR" ).style.color = color;
+      }
+    }
+  } catch ( error ) {
+    console.log( error );
   }
-} catch (error) {
-  console.log( error );
-}
 }
 
-function test ()
+function SummationPLTable ()
 {
-  const children = tbody1[ 0 ].children;
-  const footChild = tbody1[ 0 ].nextElementSibling.children[0].children;
+  const children = plBody[ 0 ].children;
+  const footChild = plBody[ 0 ].nextElementSibling.children[ 0 ].children;
   let beforeDollar = 0, beforeInr = 0, percentage = 0, afterDollar = 0, afterInr = 0;
-  let text1 = "", text2 = "";
+
   for ( let child of children )
   {
     beforeDollar += +child.querySelector( "#tdTotalDollar" ).textContent.split( " " )[ 0 ];
@@ -230,11 +205,23 @@ function test ()
     afterDollar += +child.querySelector( "#tdMarginDol" ).textContent.split( " " )[ 0 ];
     afterInr += +child.querySelector( "#tdMarginINR" ).textContent.split( " " )[ 0 ];
   }
-  footChild[ 0 ].textContent = "₿ Invested: " + beforeDollar.toFixed(2);
-  footChild[ 1 ].textContent = "₹ Invested: " + beforeInr.toFixed(2);
-  footChild[ 2 ].textContent = "Average Percentage: " + (percentage/children.length).toFixed(2);
-  footChild[ 3 ].textContent = "₿ Gain: " + afterDollar.toFixed(2);
-  footChild[ 4 ].textContent = "₹ Gain : " + afterInr.toFixed(2);
+
+  footChild[ 0 ].textContent = "₿ Invested: " + beforeDollar.toFixed( 2 );
+  footChild[ 1 ].textContent = "₹ Invested: " + beforeInr.toFixed( 2 );
+  footChild[ 2 ].textContent = "Average Percentage: " + ( percentage / children.length ).toFixed( 2 );
+  footChild[ 3 ].textContent = "₿ Gain: " + afterDollar.toFixed( 2 );
+  footChild[ 4 ].textContent = "₹ Gain : " + afterInr.toFixed( 2 );
 }
 
-test();
+async function UpdateFearGreedIndex ( usdtinr, isUpdate = false )
+{
+  const divFearGreedContainer = document.getElementsByClassName( "divFearGreedIndex" );
+  divFearGreedContainer[ 0 ].querySelector( "#spanDollarPrice" ).textContent = usdtinr;
+
+  if ( !isUpdate )
+  {
+    const fearGreed = await Const.fearGreed();
+    divFearGreedContainer[ 0 ].querySelector( "#spanValue" ).textContent = fearGreed.data[ 0 ].value + " %";
+    divFearGreedContainer[ 0 ].querySelector( "#spanClassification" ).textContent = fearGreed.data[ 0 ].value_classification;
+  }
+}
