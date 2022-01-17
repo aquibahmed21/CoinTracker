@@ -17,7 +17,8 @@ const arr = [];
 
 await AddHodlingRows_FromJSON( Const.JSONDATA );
 await AddPLRows_FromJSON( Const.SoldJSon );
-SummationPLTable();
+SummationPLTable(hodlingBody);
+SummationPLTable(plBody);
 webSocket.wsSubscribe( LiveUpdateHodlingTable );
 
 async function AddHodlingRows_FromJSON ( obj,
@@ -64,7 +65,7 @@ async function AddHodlingRows_FromJSON ( obj,
       row.querySelector( "#tdCurrentPrice" ).textContent = lastPrice + ( isINR ? " ₹" : " ₿" );
       row.querySelector( "#tdCurTotalDollar" ).textContent = currentTotalToDollar.toFixed( 2 ) + " ₿";
       row.querySelector( "#tdCurTotalinr" ).textContent = currentTotalToInr.toFixed( 2 ) + " ₹";
-      row.querySelector( "#tdPLPercentage" ).textContent = percentage.toFixed( 2 ) + "%";
+      row.querySelector( "#tdPLPercentage" ).textContent = percentage.toFixed( 2 ) + " %";
       row.querySelector( "#tdMarginDol" ).textContent = marginDollar.toFixed( 2 ) + " ₿";
       row.querySelector( "#tdMarginINR" ).textContent = marginINR.toFixed( 2 ) + " ₹";
 
@@ -191,10 +192,10 @@ async function LiveUpdateHodlingTable ( event )
   }
 }
 
-function SummationPLTable ()
+function SummationPLTable (body)
 {
-  const children = plBody[ 0 ].children;
-  const footChild = plBody[ 0 ].nextElementSibling.children[ 0 ].children;
+  const children = body[ 0 ].children;
+  const footChild = body[ 0 ].nextElementSibling.children[ 0 ].children;
   let beforeDollar = 0, beforeInr = 0, percentage = 0, afterDollar = 0, afterInr = 0;
 
   for ( let child of children )
