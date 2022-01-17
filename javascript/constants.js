@@ -245,6 +245,13 @@ const JSONDATA = {
     qty: 0.009845,
     price: 78.56,
     term: "short"
+  },
+  wrx1: {
+    coin: "wrx",
+    pair: "inr",
+    qty:  0.37119771,
+    price: 93.4,
+    term: "commission"
   }
 };
 
