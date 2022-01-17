@@ -44,7 +44,14 @@
 {
   background: rgba(255,255,255,0.3);
   color: white;
-  padding: 8px;
-  width: 35%;
+  padding: 8px 20px;
   float: right;
+  font-weight: 500;
+  font-size: 12px;
 }
+
+.divMainParent .divFearGreedIndex span
+{
+  font-weight: 400;
+}
+

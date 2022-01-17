@@ -71,9 +71,7 @@ async function AddHodlingRows_FromJSON ( obj,
 
       if ( percentage > 0 )
       {
-        const parentRow = row.querySelector( "#tdMarginINR" ).parentNode.style;
-        parentRow.background = "#679f67";
-        parentRow.color = "#fff";
+        row.querySelector( "#tdMarginINR" ).parentNode.classList = "Profit";
       }
 
       if ( !isUpdate )
@@ -158,7 +156,7 @@ async function LiveUpdateHodlingTable ( event )
         const qty = +child.querySelector( "#tdQty" ).textContent;
         const currentPrice = +arrs.c;
         const color = lastPrice == currentPrice ? "" : lastPrice < currentPrice ? "green" : "red";
-        // const prevPercentage = +child.querySelector( "#tdPLPercentage" ).textContent.split( " " )[ 0 ];
+        const prevPercentage = +child.querySelector( "#tdPLPercentage" ).textContent.split( " " )[ 0 ];
 
         const isINR = arrs.U == "inr";
 
@@ -185,8 +183,26 @@ async function LiveUpdateHodlingTable ( event )
         child.querySelector( "#tdPLPercentage" ).style.color = color;
         child.querySelector( "#tdMarginDol" ).style.color = color;
         child.querySelector( "#tdMarginINR" ).style.color = color;
+
+        // ! ------------------------- TBT
+        if ( prevPercentage < 0 && percentage.toFixed(2) > 0 )
+        {
+          // move row to top
+          const parent = child.parentNode;
+          parent.insertBefore(child, child.parentNode.querySelector(".Profit"))
+          child.classList = "Profit";
+        }
+        else if ( prevPercentage > 0 && percentage.toFixed(2) < 0 )
+        {
+          const parent = child.parentNode;
+          parent.insertAfter(child, child.parentNode.querySelectorAll(".Profit:last-child"))
+          child.classList = "";
+          // move row to below top rows
+        }
+        // ! ----------------------
       }
     }
+    SummationPLTable( hodlingBody );
   } catch ( error ) {
     console.log( error );
   }
@@ -196,7 +212,8 @@ function SummationPLTable (body)
 {
   const children = body[ 0 ].children;
   const footChild = body[ 0 ].nextElementSibling.children[ 0 ].children;
-  let beforeDollar = 0, beforeInr = 0, percentage = 0, afterDollar = 0, afterInr = 0;
+
+  let beforeDollar = 0, beforeInr = 0, percentage = 0, afterDollar = 0, afterInr = 0, portFolio = 0;
 
   for ( let child of children )
   {
@@ -205,13 +222,26 @@ function SummationPLTable (body)
     percentage += +child.querySelector( "#tdPLPercentage" ).textContent.split( " " )[ 0 ];
     afterDollar += +child.querySelector( "#tdMarginDol" ).textContent.split( " " )[ 0 ];
     afterInr += +child.querySelector( "#tdMarginINR" ).textContent.split( " " )[ 0 ];
+
+    if (child.querySelector( "#tdCurTotalinr" ))
+      portFolio += +child.querySelector( "#tdCurTotalinr" ).textContent.split( " " )[ 0 ];
   }
 
   footChild[ 0 ].textContent = "₿ Invested: " + beforeDollar.toFixed( 2 );
   footChild[ 1 ].textContent = "₹ Invested: " + beforeInr.toFixed( 2 );
   footChild[ 2 ].textContent = "Average Percentage: " + ( percentage / children.length ).toFixed( 2 );
   footChild[ 3 ].textContent = "₿ Gain: " + afterDollar.toFixed( 2 );
-  footChild[ 4 ].textContent = "₹ Gain : " + afterInr.toFixed( 2 );
+  footChild[ 4 ].textContent = "₹ Gain: " + afterInr.toFixed( 2 );
+
+  if ( portFolio )
+  {
+    const lastPrice = +footChild[ 5 ].getAttribute( "lastPrice") || 0;
+    const currentPrice = portFolio.toFixed( 2 );
+    const color = lastPrice.toFixed( 2 ) == currentPrice ? "" : ( lastPrice < currentPrice ? "green" : "red" );
+    footChild[ 5 ].setAttribute( "lastPrice", currentPrice );
+    footChild[ 5 ].textContent = "Portfolio: " + currentPrice;
+    footChild[ 5 ].style.color = color;
+  }
 }
 
 async function UpdateFearGreedIndex ( usdtinr, isUpdate = false )
