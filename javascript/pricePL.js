@@ -201,7 +201,12 @@ try {
       child.querySelector("#tdMarginDol").textContent =         marginDollar.toFixed(2) + " ₿";
       child.querySelector("#tdMarginINR").textContent =         marginINR.toFixed(2) + " ₹";
 
-      child.querySelector( "#tdCurrentPrice" ).style.color = color;
+      child.querySelector("#tdCurrentPrice").style.color = color;
+      child.querySelector("#tdCurTotalDollar").style.color = color;
+      child.querySelector("#tdCurTotalinr").style.color = color;
+      child.querySelector("#tdPLPercentage").style.color = color;
+      child.querySelector("#tdMarginDol").style.color = color;
+      child.querySelector("#tdMarginINR").style.color = color;
     }
   }
 } catch (error) {
