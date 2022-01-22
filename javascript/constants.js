@@ -232,13 +232,168 @@ const JSONDATA = {
     price: 0.1703671,
     term: "long"
   },
-  // adas1: {
-  //   coin: "ada",
-  //   pair: "usdt",
-  //   qty: 4,
-  //   price: 1.26509,
-  //   term: "short"
-  // },
+  // dip buy
+  shib4: {
+    coin: "shib",
+    pair: "usdt",
+    qty: 245363,
+    price: 0.00001886,
+    term: "short"
+  },
+  dot3: {
+    coin: "dot",
+    pair: "usdt",
+    qty: 0.3,
+    price: 17.59,
+    term: "short"
+  },
+  doge3: {
+    coin: "doge",
+    pair: "usdt",
+    qty: 40,
+    price: 0.131396,
+    term: "short"
+  },
+  coti1: {
+    coin: "coti",
+    pair: "usdt",
+    qty: 20,
+    price: 0.2606,
+    term: "short"
+  },
+  dent3: {
+    coin: "dent",
+    pair: "usdt",
+    qty: 1990,
+    price: 0.002515,
+    term: "short"
+  },
+  celr1: {
+    coin: "celr",
+    pair: "usdt",
+    qty: 90,
+    price: 0.5618,
+    term: "short"
+  },
+  bnb3: {
+    coin: "bnb",
+    pair: "usdt",
+    qty: 0.015,
+    price: 352,
+    term: "short"
+  },
+  ada4: {
+    coin: "ada",
+    pair: "usdt",
+    qty: 5,
+    price: 1.04004,
+    term: "short"
+  },
+  xrp3: {
+    coin: "xrp",
+    pair: "usdt",
+    qty: 8.5,
+    price: 0.595,
+    term: "short"
+  },
+  hbar1: {
+    coin: "hbar",
+    pair: "usdt",
+    qty: 22.5,
+    price: 0.2231,
+    term: "short"
+  },
+  eth4: {
+    coin: "eth",
+    pair: "usdt",
+    qty: 0.002,
+    price: 2450,
+    term: "short"
+  },
+  btc4: {
+    coin: "btc",
+    pair: "usdt",
+    qty: 0.00015,
+    price: 35311,
+    term: "short"
+  },
+
+  // yash
+  sushi1: {
+    coin: "sushi",
+    pair: "inr",
+    qty: 0.282,
+    price: 355.8,
+    term: "yash"
+  },
+  enj1: {
+    coin: "enj",
+    pair: "inr",
+    qty: 1,
+    price: 122.65,
+    term: "yash"
+  },
+  gala1: {
+    coin: "gala",
+    pair: "inr",
+    qty: 6,
+    price: 14.3,
+    term: "yash"
+  },
+  win1: {
+    coin: "win",
+    pair: "inr",
+    qty: 4219,
+    price: 0.0237,
+    term: "yash"
+  },
+  mana1: {
+    coin: "mana",
+    pair: "inr",
+    qty: 0.6,
+    price: 158,
+    term: "yash"
+  },
+  fil1: {
+    coin: "fil",
+    pair: "inr",
+    qty: 0.063,
+    price: 1576.42,
+    term: "yash"
+  },
+  sol4: {
+    coin: "sol",
+    pair: "inr",
+    qty: 0.012,
+    price: 8049.98,
+    term: "yash"
+  },
+  doge4: {
+    coin: "doge",
+    pair: "inr",
+    qty: 10,
+    price: 10.31,
+    term: "yash"
+  },
+  shib5: {
+    coin: "shib",
+    pair: "inr",
+    qty: 71428,
+    price: 0.0014,
+    term: "yash"
+  },
+  wrx2: {
+    coin: "wrx",
+    pair: "inr",
+    qty: 1.5852439,
+    price: 60.17,
+    term: "commission_y"
+  },
+  // yash
+
+  // dip buy
+
+
   usdt: {
     coin: "usdt",
     pair: "inr",
@@ -246,33 +401,110 @@ const JSONDATA = {
     price: 78.56,
     term: "short"
   },
-  usdt1: {
-    coin: "usdt",
-    pair: "inr",
-    qty: 16,
-    price: 81.57,
-    term: "short"
-  },
-  usdt2: {
-    coin: "usdt",
-    pair: "inr",
-    qty: 45.16,
-    price: 81.92,
-    term: "short"
-  },
-  usdt3: {
-    coin: "usdt",
-    pair: "inr",
-    qty: 16,
-    price: 81.93,
-    term: "yash"
-  },
+  // usdt1: {
+  //   coin: "usdt",
+  //   pair: "inr",
+  //   qty: 16,
+  //   price: 81.57,
+  //   term: "short"
+  // },
+  // usdt2: {
+  //   coin: "usdt",
+  //   pair: "inr",
+  //   qty: 45.16,
+  //   price: 81.92,
+  //   term: "short"
+  // },
+
+
+  // usdt3: {
+  //   coin: "usdt",
+  //   pair: "inr",
+  //   qty: 16,
+  //   price: 81.93,
+  //   term: "yash"
+  // },
+
+
   wrx1: {
     coin: "wrx",
     pair: "inr",
-    qty:  0.37119771,
+    qty:  0.29220812,
     price: 93.4,
     term: "commission"
+  }
+};
+
+const JSONDATA_YASH = {
+  sushi1: {
+    coin: "sushi",
+    pair: "inr",
+    qty: 0.282,
+    price: 355.8,
+    term: "yash"
+  },
+  enj1: {
+    coin: "enj",
+    pair: "inr",
+    qty: 1,
+    price: 122.65,
+    term: "yash"
+  },
+  gala1: {
+    coin: "gala",
+    pair: "inr",
+    qty: 6,
+    price: 14.3,
+    term: "yash"
+  },
+  win1: {
+    coin: "win",
+    pair: "inr",
+    qty: 4219,
+    price: 0.0237,
+    term: "yash"
+  },
+  mana1: {
+    coin: "mana",
+    pair: "inr",
+    qty: 0.6,
+    price: 158,
+    term: "yash"
+  },
+  fil1: {
+    coin: "fil",
+    pair: "inr",
+    qty: 0.063,
+    price: 1576.42,
+    term: "yash"
+  },
+  sol4: {
+    coin: "sol",
+    pair: "inr",
+    qty: 0.012,
+    price: 8049.98,
+    term: "yash"
+  },
+  doge4: {
+    coin: "doge",
+    pair: "inr",
+    qty: 10,
+    price: 10.31,
+    term: "yash"
+  },
+  shib5: {
+    coin: "shib",
+    pair: "inr",
+    qty: 71428,
+    price: 0.0014,
+    term: "yash"
+  },
+  wrx2: {
+    coin: "wrx",
+    pair: "inr",
+    qty: 1.5852439,
+    price: 60.17,
+    term: "commission_y"
   }
 };
 
@@ -331,4 +563,4 @@ const  getTicker = async () =>
   return allTicker.filter( e => symbolArr.includes( e.symbol ) );
 };
 
-export { JSONDATA, SoldJSon, delay, baseFun, getTicker, fearGreed };
+export { JSONDATA, JSONDATA_YASH, SoldJSon, delay, baseFun, getTicker, fearGreed };
