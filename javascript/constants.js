@@ -246,6 +246,27 @@ const JSONDATA = {
     price: 78.56,
     term: "short"
   },
+  usdt1: {
+    coin: "usdt",
+    pair: "inr",
+    qty: 16,
+    price: 81.57,
+    term: "short"
+  },
+  usdt2: {
+    coin: "usdt",
+    pair: "inr",
+    qty: 45.16,
+    price: 81.92,
+    term: "short"
+  },
+  usdt3: {
+    coin: "usdt",
+    pair: "inr",
+    qty: 16,
+    price: 81.93,
+    term: "yash"
+  },
   wrx1: {
     coin: "wrx",
     pair: "inr",

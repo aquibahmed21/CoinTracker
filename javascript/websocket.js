@@ -23,7 +23,7 @@ function wsSubscribe ( callback = null )
 {
 	if ( ws && isWSConnected )
 	{
-		ws.send(JSON.stringify({"event":"subscribe","streams":["!ticker@arr"]}))
+		ws.send( JSON.stringify( { "event": "subscribe", "streams": [ "!ticker@arr" ] } ) );
 		subsCallback = callback;
 	}
 }
