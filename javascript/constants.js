@@ -387,9 +387,17 @@ const JSONDATA = {
   wrx2: {
     coin: "wrx",
     pair: "inr",
-    qty: 1.58328181,
+    qty: 1.58000153,
     price: 60.17,
     term: "commission_y"
+  },
+
+  shib6: {
+    coin: "shib",
+    pair: "inr",
+    qty: 119293,
+    price: 0.001789,
+    term: "yash"
   },
   // yash
 

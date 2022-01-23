@@ -140,6 +140,10 @@ async function LiveUpdateHodlingTable ( event )
 {
   try
   {
+
+    if ( event.event && event.event == "subscribed" )
+      return;
+
     const array = event.data.filter( e => arr.includes( e.s ) );
     const usdtINRArray = array.filter( e => e.s == "usdtinr" );
 

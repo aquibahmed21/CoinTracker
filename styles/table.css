@@ -66,3 +66,8 @@ tfoot td {
   background: #679f67;
   color: #fff;
 }
+
+/* #table tr>*:nth-child(2), #table tr>*:nth-child(4), #table tr>*:nth-child(5), #table tr>*:nth-child(6), #table tr>*:nth-child(7), #table tr>*:nth-child(10)
+{
+  display: none;
+} */
