@@ -9,7 +9,6 @@ const hodlingBody = hodlingTable.getElementsByTagName( "tbody" );
 const plTable = hodlingTable.nextElementSibling;
 const plBody = plTable.getElementsByTagName( "tbody" );
 
-
 const arrTicker = await Const.getTicker();
 let usdtinr = arrTicker.filter( e => e.symbol == ( "usdtinr" ) )[ 0 ].lastPrice;
 
@@ -30,7 +29,6 @@ async function AddHodlingRows_FromJSON ( obj,
     if ( obj.hasOwnProperty( key ) ) {
       const { coin, pair, qty, price, term } = obj[ key ];
       const lastPrice = arrTicker.filter( e => e.symbol == ( coin + pair ) )[ 0 ].lastPrice;
-
 
       const row = isUpdate ? document.querySelector( "#" + key ) :
         document.getElementById( "templatePLRow" ).content.cloneNode( true );
@@ -140,7 +138,6 @@ async function LiveUpdateHodlingTable ( event )
 {
   try
   {
-
     if ( event.event && (event.event == "subscribed" || event.event == "unsubscribed") )
       return;
 
