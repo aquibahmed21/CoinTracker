@@ -234,13 +234,14 @@ const JSONDATA = {
   },
 
   // dip buy
-  shib4: {
-    coin: "shib",
-    pair: "usdt",
-    qty: 245363,
-    price: 0.00001886,
-    term: "dip"
-  },
+
+  // shib4: {
+  //   coin: "shib",
+  //   pair: "usdt",
+  //   qty: 245363,
+  //   price: 0.00001886,
+  //   term: "dip"
+  // },
   dot3: {
     coin: "dot",
     pair: "usdt",
@@ -398,7 +399,7 @@ const JSONDATA = {
   usdt: {
     coin: "usdt",
     pair: "inr",
-    qty: 0.009845,
+    qty: 5.525584,
     price: 78.56,
     term: "short"
   },
@@ -430,7 +431,7 @@ const JSONDATA = {
   wrx1: {
     coin: "wrx",
     pair: "inr",
-    qty:  0.29220812,
+    qty:  0.31139164,
     price: 93.4,
     term: "commission"
   }
@@ -534,6 +535,14 @@ const SoldJSon = {
     soldPrice: 1.36000,
     term: "short"
   },
+  shib4: {
+    coin: "shib",
+    pair: "usdt",
+    qty: 245363,
+    buyPrice: 0.00001886,
+    soldPrice: 0.0000223,
+    term: "dip"
+  }
 };
 
 const ticker24URL = "https://api.wazirx.com/sapi/v1/tickers/24hr";
