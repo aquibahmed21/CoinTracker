@@ -377,17 +377,17 @@ const JSONDATA = {
     price: 10.31,
     term: "yash"
   },
-  shib5: {
-    coin: "shib",
-    pair: "inr",
-    qty: 71428,
-    price: 0.0014,
-    term: "yash"
-  },
+  // shib5: {
+  //   coin: "shib",
+  //   pair: "inr",
+  //   qty: 71428,
+  //   price: 0.0014,
+  //   term: "yash"
+  // },
   wrx2: {
     coin: "wrx",
     pair: "inr",
-    qty: 1.5852439,
+    qty: 1.58328181,
     price: 60.17,
     term: "commission_y"
   },
@@ -542,7 +542,15 @@ const SoldJSon = {
     buyPrice: 0.00001886,
     soldPrice: 0.0000223,
     term: "dip"
-  }
+  },
+  shib5: {
+    coin: "shib",
+    pair: "inr",
+    qty: 71428,
+    buyPrice: 0.0014,
+    soldPrice: 0.001835,
+    term: "yash"
+  },
 };
 
 const ticker24URL = "https://api.wazirx.com/sapi/v1/tickers/24hr";
