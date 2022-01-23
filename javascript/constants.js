@@ -550,7 +550,7 @@ const SoldJSon = {
     buyPrice: 0.0014,
     soldPrice: 0.001835,
     term: "yash"
-  },
+  }
 };
 
 const ticker24URL = "https://api.wazirx.com/sapi/v1/tickers/24hr";
