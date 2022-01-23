@@ -141,7 +141,7 @@ async function LiveUpdateHodlingTable ( event )
   try
   {
 
-    if ( event.event && event.event == "subscribed" )
+    if ( event.event && (event.event == "subscribed" || event.event == "unsubscribed") )
       return;
 
     const array = event.data.filter( e => arr.includes( e.s ) );
@@ -199,7 +199,7 @@ async function LiveUpdateHodlingTable ( event )
         else if ( prevPercentage > 0 && percentage.toFixed(2) < 0 )
         {
           const parent = child.parentNode;
-          parent.insertAfter(child, child.parentNode.querySelectorAll(".Profit:last-child"))
+          parent.insertBefore( child, [ ...child.parentNode.querySelectorAll( ".Profit" ) ].pop().nextElementSibling );
           child.classList = "";
           // move row to below top rows
         }
