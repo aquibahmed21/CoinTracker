@@ -9,7 +9,6 @@ let subsCallback = null;
 ws.onmessage = ( event =>
 {
 	const json = JSON.parse( event.data );
-	console.log(json)
 	if (!isWSConnected && json.event == "connected" )
 		isWSConnected = true;
 	else if( isWSConnected && subsCallback)
