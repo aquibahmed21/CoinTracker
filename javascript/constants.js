@@ -319,6 +319,13 @@ const JSONDATA = {
     price: 35311,
     term: "dip"
   },
+  wrx3: {
+    coin: "wrx",
+    pair: "usdt",
+    qty: 7.1,
+    price: 0.77441,
+    term: "dip"
+  },
 
   // yash
   sushi1: {
@@ -387,7 +394,7 @@ const JSONDATA = {
   wrx2: {
     coin: "wrx",
     pair: "inr",
-    qty: 1.58000153,
+    qty: 1.57656665,
     price: 60.17,
     term: "commission_y"
   },
@@ -397,6 +404,13 @@ const JSONDATA = {
     pair: "inr",
     qty: 119293,
     price: 0.001789,
+    term: "yash"
+  },
+  shib7: {
+    coin: "shib",
+    pair: "inr",
+    qty: 123762,
+    price: 0.001616,
     term: "yash"
   },
   // yash
@@ -439,7 +453,7 @@ const JSONDATA = {
   wrx1: {
     coin: "wrx",
     pair: "inr",
-    qty:  0.31139164,
+    qty:  0.31506844,
     price: 93.4,
     term: "commission"
   }
