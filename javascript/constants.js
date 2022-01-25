@@ -249,13 +249,13 @@ const JSONDATA = {
     price: 17.59,
     term: "dip"
   },
-  doge3: {
-    coin: "doge",
-    pair: "usdt",
-    qty: 40,
-    price: 0.131396,
-    term: "dip"
-  },
+  // doge3: {
+  //   coin: "doge",
+  //   pair: "usdt",
+  //   qty: 40,
+  //   price: 0.131396,
+  //   term: "dip"
+  // },
   coti1: {
     coin: "coti",
     pair: "usdt",
@@ -377,13 +377,13 @@ const JSONDATA = {
     price: 8049.98,
     term: "yash"
   },
-  doge4: {
-    coin: "doge",
-    pair: "inr",
-    qty: 10,
-    price: 10.31,
-    term: "yash"
-  },
+  // doge4: {
+  //   coin: "doge",
+  //   pair: "inr",
+  //   qty: 10,
+  //   price: 10.31,
+  //   term: "yash"
+  // },
   // shib5: {
   //   coin: "shib",
   //   pair: "inr",
@@ -453,84 +453,12 @@ const JSONDATA = {
   wrx1: {
     coin: "wrx",
     pair: "inr",
-    qty:  0.31506844,
+    qty:  0.28670332,
     price: 93.4,
     term: "commission"
   }
 };
 
-// const JSONDATA_YASH = {
-//   sushi1: {
-//     coin: "sushi",
-//     pair: "inr",
-//     qty: 0.282,
-//     price: 355.8,
-//     term: "yash"
-//   },
-//   enj1: {
-//     coin: "enj",
-//     pair: "inr",
-//     qty: 1,
-//     price: 122.65,
-//     term: "yash"
-//   },
-//   gala1: {
-//     coin: "gala",
-//     pair: "inr",
-//     qty: 6,
-//     price: 14.3,
-//     term: "yash"
-//   },
-//   win1: {
-//     coin: "win",
-//     pair: "inr",
-//     qty: 4219,
-//     price: 0.0237,
-//     term: "yash"
-//   },
-//   mana1: {
-//     coin: "mana",
-//     pair: "inr",
-//     qty: 0.6,
-//     price: 158,
-//     term: "yash"
-//   },
-//   fil1: {
-//     coin: "fil",
-//     pair: "inr",
-//     qty: 0.063,
-//     price: 1576.42,
-//     term: "yash"
-//   },
-//   sol4: {
-//     coin: "sol",
-//     pair: "inr",
-//     qty: 0.012,
-//     price: 8049.98,
-//     term: "yash"
-//   },
-//   doge4: {
-//     coin: "doge",
-//     pair: "inr",
-//     qty: 10,
-//     price: 10.31,
-//     term: "yash"
-//   },
-//   shib5: {
-//     coin: "shib",
-//     pair: "inr",
-//     qty: 71428,
-//     price: 0.0014,
-//     term: "yash"
-//   },
-//   wrx2: {
-//     coin: "wrx",
-//     pair: "inr",
-//     qty: 1.5852439,
-//     price: 60.17,
-//     term: "commission_y"
-//   }
-// };
 
 const SoldJSon = {
   shib1: {
@@ -572,7 +500,23 @@ const SoldJSon = {
     buyPrice: 0.0014,
     soldPrice: 0.001835,
     term: "yash"
-  }
+  },
+  doge3: {
+    coin: "doge",
+    pair: "usdt",
+    qty: 40,
+    buyPrice: 0.131396,
+    soldPrice: 0.1386620,
+    term: "dip"
+  },
+  doge4: {
+    coin: "doge",
+    pair: "inr",
+    qty: 10,
+    buyPrice: 10.31,
+    soldPrice: 11.31,
+    term: "yash"
+  },
 };
 
 const ticker24URL = "https://api.wazirx.com/sapi/v1/tickers/24hr";
