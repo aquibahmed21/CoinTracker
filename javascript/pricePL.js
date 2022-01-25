@@ -20,6 +20,24 @@ SummationPLTable(hodlingBody);
 SummationPLTable(plBody);
 webSocket.wsSubscribe( LiveUpdateHodlingTable );
 
+hodlingBody[ 0 ].addEventListener( "click", ( event ) =>
+{
+  const targetRow = event.target.tagName == "TD" ? event.target.parentElement : event.target;
+  const targetID = targetRow.id;
+
+  const existingRow = hodlingBody[ 0 ].querySelector( ".rowSelect" );
+  if ( existingRow ) {
+    if ( existingRow.id == targetID )
+      existingRow.classList.remove( "rowSelect" );
+    else {
+      existingRow.classList.remove( "rowSelect" );
+      targetRow.classList.add( "rowSelect" );
+    }
+  }
+  else
+    targetRow.classList.add( "rowSelect" );
+} );
+
 async function AddHodlingRows_FromJSON ( obj,
                                          isUpdate = false )
 {
