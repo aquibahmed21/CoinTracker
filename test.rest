@@ -1,9 +1,15 @@
+# Root Route
+
 GET http://localhost:3000/
 
 ###
+# User Routes
+###
 
-GET http://localhost:3000/user
+GET http://localhost:3000/api/users
 
 ###
 
-GET http://localhost:3000/userdd
+GET http://localhost:3000/api/auth
+
+###

@@ -10,6 +10,10 @@ const PORT = process.env.PORT || 5000;
 // Connect Database;
 connectDB();
 
+// Define Routes
+app.use( "/api/users", require( "./routes/api/user" ) );
+app.use( "/api/auth", require( "./routes/api/auth" ) );
+
 app.get( '/', ( req, res ) =>
 {
 	res.status( 200 ).send("API running");
