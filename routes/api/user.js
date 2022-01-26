@@ -37,15 +37,12 @@ router.post(
           .status(400)
           .json({ errors: [{ msg: "User already exists" }] });
 
-      console.log(1);
 
       user = new User({
         name,
         email,
         password,
       });
-      console.log(user);
-      console.log(2);
 
       // Encrypt password
       const salt = await bcrycpt.genSalt(10);

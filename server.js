@@ -17,6 +17,8 @@ app.use( express.urlencoded( { extended: false } ) );
 // Define Routes
 app.use( "/api/users", require( "./routes/api/user" ) );
 app.use( "/api/auth", require( "./routes/api/auth" ) );
+app.use( "/api/hodling", require( "./routes/api/hodling" ) );
+app.use( "/api/pllist", require( "./routes/api/pllist" ) );
 
 
 app.get( '/', ( req, res ) =>
