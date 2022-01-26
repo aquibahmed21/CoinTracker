@@ -1,0 +1,49 @@
+/* https://codepen.io/kick-your-ass/pen/pqmjQG */
+
+.visible {
+  animation: movein 0.5s ease forwards, moveout 0.5s 10s ease forwards;
+}
+
+#notif {
+	width: 240px;
+	height: 70px;
+	background: #67d4b0;
+	color: white;
+	border-radius: 3px;
+	font-size: 14px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top: 100px;
+	padding: 8px;
+	line-height: 1.4;
+  left: -250px;
+}
+
+/*#notif {
+  left: 10px;
+  opacity: 0;
+}*/
+
+@keyframes movein {
+  from { left: -250px; }
+  to   { left: 10px; }
+}
+
+@keyframes moveout {
+  from { left: 10px; }
+  to   { left: -250px; }
+}
+
+/*@keyframes movein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes moveout {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}*/
+
+

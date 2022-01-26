@@ -9,6 +9,16 @@ const hodlingBody = hodlingTable.getElementsByTagName( "tbody" );
 const plTable = hodlingTable.nextElementSibling;
 const plBody = plTable.getElementsByTagName( "tbody" );
 
+const notificationBTN = document.getElementById( "notif" );
+window.onanimationend = async (e) => {
+  // stacksnippet's console also has CSS animations...
+  if ( e.type === "animationend" && e.target.id == notificationBTN.id )
+  {
+    await Const.delay( 11000 );
+    notificationBTN.classList.remove( "visible" );
+  }
+}
+
 const arrTicker = await Const.getTicker();
 let usdtinr = arrTicker.filter( e => e.symbol == ( "usdtinr" ) )[ 0 ].lastPrice;
 
@@ -21,7 +31,41 @@ SummationPLTable(plBody);
 webSocket.wsSubscribe( LiveUpdateHodlingTable );
 
 hodlingBody[ 0 ].addEventListener( "click", OnClick_HodlingRows() );
+hodlingBody[ 0 ].addEventListener( "dblclick", OnDBClick_HodlingRows() );
 
+function OnDBClick_HodlingRows ()
+{
+  return ( event ) =>
+  {
+    const targetRow = event.target.tagName == "TD" ? event.target.parentElement : event.target;
+
+    if ( targetRow.tagName !== "TR" )
+      return;
+
+    const countDecimals = ( value ) =>
+    {
+      if ( ( value % 1 ) != 0 )
+        return value.toString().split( "." )[ 1 ].length;
+      return 0;
+    };
+
+    const getStopLossValue = ( price, percentage, decimal = 1 ) =>
+      (price - ((price * percentage)/100)).toFixed(decimal)
+
+    const coinPair = targetRow.children[ 0 ].textContent;
+    const isINR = coinPair.endsWith( "inr" );
+    const buyPrice = +targetRow.children[ 1 ].textContent;
+    const currentPrice = +targetRow.children[ 5 ].textContent.split( " " )[ 0 ];
+    const countNumber = +countDecimals( buyPrice );
+    const margin = +targetRow.children[10].textContent.split( " " )[ 0 ];
+
+    notificationBTN.innerHTML = `<p>Trigger Value at ${ getStopLossValue( currentPrice, 2, countNumber ) } <br />
+    Sale Value at ${ getStopLossValue( currentPrice, 4, countNumber ) } <br />
+    You get ${ getStopLossValue(margin, 4, countNumber) } ${ isINR ? "₹" : "₿" }</p>`;
+
+    notificationBTN.classList.add( "visible" );
+  }
+}
 
 function OnClick_HodlingRows ()
 {
@@ -42,9 +86,9 @@ function OnClick_HodlingRows ()
         targetRow.classList.add( "rowSelect" );
       }
     }
-
     else
       targetRow.classList.add( "rowSelect" );
+
   };
 }
 
