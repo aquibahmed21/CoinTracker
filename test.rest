@@ -58,3 +58,13 @@ Content-Type: application/json
 
 GET http://localhost:3000/api/auth
 x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFmMTFjNzc5OTJlNjFkOTcwN2NkNjFkIn0sImlhdCI6MTY0MzE5MTQxNSwiZXhwIjoxNjQzNTUxNDE1fQ.LoZc6vFaOTW1aHBR1CcTYf9SypfJwTiKdjdzZ_v6n1s
+
+###
+
+POST http://localhost:3000/api/auth
+Content-Type: application/json
+
+{
+	"email": "some2@some.com",
+	"password": "some123"
+}
