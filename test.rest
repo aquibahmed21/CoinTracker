@@ -18,8 +18,8 @@ POST  http://localhost:3000/api/users
 Content-Type: application/json
 
 {
-	"name": "some",
-	"email": "some@some.com",
+	"name": "some2",
+	"email": "some2@some.com",
 	"password": "some123"
 }
 
@@ -53,3 +53,8 @@ Content-Type: application/json
   "soldPrice": 0.00003184,
   "term": "short"
 }
+
+###
+
+GET http://localhost:3000/api/auth
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFmMTFjNzc5OTJlNjFkOTcwN2NkNjFkIn0sImlhdCI6MTY0MzE5MTQxNSwiZXhwIjoxNjQzNTUxNDE1fQ.LoZc6vFaOTW1aHBR1CcTYf9SypfJwTiKdjdzZ_v6n1s
