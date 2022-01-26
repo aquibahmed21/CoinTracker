@@ -312,6 +312,27 @@ const JSONDATA = {
     price: 2450,
     term: "dip"
   },
+  celr1: {
+    coin: "celr",
+    pair: "usdt",
+    qty: 95,
+    price: 0.05329,
+    term: "dip"
+  },
+  bttc1: {
+    coin: "bttc",
+    pair: "usdt",
+    qty: 2450980,
+    price: 0.00000204,
+    term: "dip"
+  },
+  atom1: {
+    coin: "atom",
+    pair: "usdt",
+    qty: 0.15,
+    price: 34.73,
+    term: "dip"
+  },
   // btc4: {
   //   coin: "btc",
   //   pair: "usdt",
@@ -335,13 +356,13 @@ const JSONDATA = {
     price: 355.8,
     term: "yash"
   },
-  enj1: {
-    coin: "enj",
-    pair: "inr",
-    qty: 1,
-    price: 122.65,
-    term: "yash"
-  },
+  // enj1: {
+  //   coin: "enj",
+  //   pair: "inr",
+  //   qty: 1,
+  //   price: 122.65,
+  //   term: "yash"
+  // },
   gala1: {
     coin: "gala",
     pair: "inr",
@@ -356,13 +377,13 @@ const JSONDATA = {
     price: 0.0237,
     term: "yash"
   },
-  mana1: {
-    coin: "mana",
-    pair: "inr",
-    qty: 0.6,
-    price: 158,
-    term: "yash"
-  },
+  // mana1: {
+  //   coin: "mana",
+  //   pair: "inr",
+  //   qty: 0.6,
+  //   price: 158,
+  //   term: "yash"
+  // },
   fil1: {
     coin: "fil",
     pair: "inr",
@@ -572,6 +593,30 @@ const SoldJSon = {
     buyPrice: 0.77441,
     soldPrice: 0.81992,
     term: "dip"
+  },
+  gala1: {
+    coin: "gala",
+    pair: "inr",
+    qty: 6,
+    buyPrice: 14.3,
+    soldPrice: 16.7649,
+    term: "yash"
+  },
+  mana1: {
+    coin: "mana",
+    pair: "inr",
+    qty: 0.6,
+    buyPrice: 158,
+    soldPrice: 179.5599,
+    term: "yash"
+  },
+  enj1: {
+    coin: "enj",
+    pair: "inr",
+    qty: 1,
+    buyPrice: 122.65,
+    soldPrice: 128.6081,
+    term: "yash"
   },
 };
 
