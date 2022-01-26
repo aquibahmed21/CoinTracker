@@ -438,7 +438,7 @@ const JSONDATA = {
   shib7: {
     coin: "shib",
     pair: "inr",
-    qty: 123762,
+    qty: 2235,
     price: 0.001616,
     term: "yash"
   },
@@ -616,6 +616,14 @@ const SoldJSon = {
     qty: 1,
     buyPrice: 122.65,
     soldPrice: 128.6081,
+    term: "yash"
+  },
+  shib7: {
+    coin: "shib",
+    pair: "inr",
+    qty: 121527,
+    buyPrice: 0.001616,
+    soldPrice: 0.001716,
     term: "yash"
   },
 };
