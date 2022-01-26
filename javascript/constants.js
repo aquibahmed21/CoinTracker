@@ -450,9 +450,9 @@ const JSONDATA = {
   usdt: {
     coin: "usdt",
     pair: "inr",
-    qty: 28.39309,
+    qty: 13.121041,
     price: 78.56,
-    term: "short"
+    term: "base"
   },
   // usdt1: {
   //   coin: "usdt",

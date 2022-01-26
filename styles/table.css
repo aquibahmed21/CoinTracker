@@ -69,7 +69,7 @@ tfoot td {
 
 .demo .rowSelect
 {
-  background: rgb(163 166 167);
+  background: rgba(24, 26, 27, 0.3) !important;
 }
 
 #table tr>*:nth-child(3)
