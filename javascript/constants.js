@@ -261,15 +261,15 @@ const JSONDATA = {
     pair: "usdt",
     qty: 20,
     price: 0.2606,
-    term: "dip"
+    term: "sale order"
   },
-  dent3: {
-    coin: "dent",
-    pair: "usdt",
-    qty: 1990,
-    price: 0.002515,
-    term: "dip"
-  },
+  // dent3: {
+  //   coin: "dent",
+  //   pair: "usdt",
+  //   qty: 1990,
+  //   price: 0.002515,
+  //   term: "dip"
+  // },
   celr1: {
     coin: "celr",
     pair: "usdt",
@@ -284,13 +284,13 @@ const JSONDATA = {
   //   price: 352,
   //   term: "dip"
   // },
-  ada4: {
-    coin: "ada",
-    pair: "usdt",
-    qty: 5,
-    price: 1.04004,
-    term: "dip"
-  },
+  // ada4: {
+  //   coin: "ada",
+  //   pair: "usdt",
+  //   qty: 5,
+  //   price: 1.04004,
+  //   term: "dip"
+  // },
   // xrp3: {
   //   coin: "xrp",
   //   pair: "usdt",
@@ -305,13 +305,13 @@ const JSONDATA = {
     price: 0.2231,
     term: "dip"
   },
-  eth4: {
-    coin: "eth",
-    pair: "usdt",
-    qty: 0.002,
-    price: 2450,
-    term: "dip"
-  },
+  // eth4: {
+  //   coin: "eth",
+  //   pair: "usdt",
+  //   qty: 0.002,
+  //   price: 2450,
+  //   term: "dip"
+  // },
   celr1: {
     coin: "celr",
     pair: "usdt",
@@ -363,13 +363,13 @@ const JSONDATA = {
   //   price: 122.65,
   //   term: "yash"
   // },
-  gala1: {
-    coin: "gala",
-    pair: "inr",
-    qty: 6,
-    price: 14.3,
-    term: "yash"
-  },
+  // gala1: {
+  //   coin: "gala",
+  //   pair: "inr",
+  //   qty: 6,
+  //   price: 14.3,
+  //   term: "yash"
+  // },
   win1: {
     coin: "win",
     pair: "inr",
@@ -390,13 +390,6 @@ const JSONDATA = {
     qty: 0.063,
     price: 1576.42,
     term: "yash"
-  },
-  xrp4: {
-    coin: "xrp",
-    pair: "usdt",
-    qty: 8.5,
-    price: 0.633,
-    term: "mistake"
   },
 
   sol4: {
@@ -425,7 +418,7 @@ const JSONDATA = {
     pair: "inr",
     qty: 1.57656665,
     price: 60.17,
-    term: "commission_y"
+    term: "yash"
   },
 
   shib6: {
@@ -450,7 +443,7 @@ const JSONDATA = {
   usdt: {
     coin: "usdt",
     pair: "inr",
-    qty: 13.121041,
+    qty: 34.667031,
     price: 78.56,
     term: "base"
   },
@@ -482,7 +475,7 @@ const JSONDATA = {
   wrx1: {
     coin: "wrx",
     pair: "inr",
-    qty:  0.18031577,
+    qty:  0.09192696,
     price: 93.4,
     term: "commission"
   }
@@ -625,6 +618,30 @@ const SoldJSon = {
     buyPrice: 0.001616,
     soldPrice: 0.001716,
     term: "yash"
+  },
+  dent3: {
+    coin: "dent",
+    pair: "usdt",
+    qty: 1990,
+    buyPrice: 0.002515,
+    soldPrice: 0.002646,
+    term: "dip"
+  },
+  eth4: {
+    coin: "eth",
+    pair: "usdt",
+    qty: 0.002,
+    buyPrice: 2450,
+    soldPrice: 2647.75,
+    term: "dip"
+  },
+  ada4: {
+    coin: "ada",
+    pair: "usdt",
+    qty: 5,
+    buyPrice: 1.04004,
+    soldPrice: 1.12,
+    term: "dip"
   },
 };
 
