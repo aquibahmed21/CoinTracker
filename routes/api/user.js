@@ -1,7 +1,10 @@
-const express = require("express");
+require( 'dotenv' ).config();
+
+const express = require( "express" );
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
-const bcrycpt = require("bcryptjs");
+const bcrycpt = require( "bcryptjs" );
+const jwt = require( "jsonwebtoken" );
 
 const User = require("../../models/Users");
 
@@ -48,9 +51,24 @@ router.post(
       const salt = await bcrycpt.genSalt(10);
       user.password = await bcrycpt.hash(password, salt);
       await user.save();
-      return res.status(200).send("User Registered");
 
       // return jsonwebtoken
+
+      const payload = {
+        user: {
+          id: user.id
+        }
+      }
+
+      jwt.sign( payload,
+        process.env.JWT_SECRET,
+        { expiresIn: process.env.JWT_AUTH_EXPIRES },
+        ( err, token ) =>
+        {
+          if ( err ) console.log( err );
+          else res.json( { token } );
+        } );
+
     } catch (error) {
       return res.status(500).send(error);
     }
