@@ -242,13 +242,13 @@ const JSONDATA = {
   //   price: 0.00001886,
   //   term: "dip"
   // },
-  dot3: {
-    coin: "dot",
-    pair: "usdt",
-    qty: 0.3,
-    price: 17.59,
-    term: "dip"
-  },
+  // dot3: {
+  //   coin: "dot",
+  //   pair: "usdt",
+  //   qty: 0.3,
+  //   price: 17.59,
+  //   term: "dip"
+  // },
   // doge3: {
   //   coin: "doge",
   //   pair: "usdt",
@@ -277,13 +277,13 @@ const JSONDATA = {
     price: 0.05618,
     term: "dip"
   },
-  bnb3: {
-    coin: "bnb",
-    pair: "usdt",
-    qty: 0.015,
-    price: 352,
-    term: "dip"
-  },
+  // bnb3: {
+  //   coin: "bnb",
+  //   pair: "usdt",
+  //   qty: 0.015,
+  //   price: 352,
+  //   term: "dip"
+  // },
   ada4: {
     coin: "ada",
     pair: "usdt",
@@ -312,13 +312,13 @@ const JSONDATA = {
     price: 2450,
     term: "dip"
   },
-  btc4: {
-    coin: "btc",
-    pair: "usdt",
-    qty: 0.00015,
-    price: 35311,
-    term: "dip"
-  },
+  // btc4: {
+  //   coin: "btc",
+  //   pair: "usdt",
+  //   qty: 0.00015,
+  //   price: 35311,
+  //   term: "dip"
+  // },
   wrx3: {
     coin: "wrx",
     pair: "usdt",
@@ -421,7 +421,7 @@ const JSONDATA = {
   usdt: {
     coin: "usdt",
     pair: "inr",
-    qty: 0.027273,
+    qty: 22.596903,
     price: 78.56,
     term: "short"
   },
@@ -453,7 +453,7 @@ const JSONDATA = {
   wrx1: {
     coin: "wrx",
     pair: "inr",
-    qty:  0.28670332,
+    qty:  0.22068108,
     price: 93.4,
     term: "commission"
   }
@@ -516,6 +516,38 @@ const SoldJSon = {
     buyPrice: 10.31,
     soldPrice: 11.31,
     term: "yash"
+  },
+  chr1: {
+    coin: "chr",
+    pair: "usdt",
+    qty: 10,
+    buyPrice: 0.5067,
+    soldPrice: 0.5297,
+    term: "dip"
+  },
+  dot3: {
+    coin: "dot",
+    pair: "usdt",
+    qty: 0.3,
+    buyPrice: 17.59,
+    soldPrice: 18.56,
+    term: "dip"
+  },
+  bnb3: {
+    coin: "bnb",
+    pair: "usdt",
+    qty: 0.015,
+    buyPrice: 352,
+    soldPrice: 378,
+    term: "dip"
+  },
+  btc4: {
+    coin: "btc",
+    pair: "usdt",
+    qty: 0.00015,
+    buyPrice: 35311,
+    soldPrice: 37031,
+    term: "dip"
   },
 };
 
