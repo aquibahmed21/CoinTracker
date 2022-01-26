@@ -291,13 +291,13 @@ const JSONDATA = {
     price: 1.04004,
     term: "dip"
   },
-  xrp3: {
-    coin: "xrp",
-    pair: "usdt",
-    qty: 8.5,
-    price: 0.595,
-    term: "dip"
-  },
+  // xrp3: {
+  //   coin: "xrp",
+  //   pair: "usdt",
+  //   qty: 8.5,
+  //   price: 0.595,
+  //   term: "dip"
+  // },
   hbar1: {
     coin: "hbar",
     pair: "usdt",
@@ -319,13 +319,13 @@ const JSONDATA = {
   //   price: 35311,
   //   term: "dip"
   // },
-  wrx3: {
-    coin: "wrx",
-    pair: "usdt",
-    qty: 7.1,
-    price: 0.77441,
-    term: "dip"
-  },
+  // wrx3: {
+  //   coin: "wrx",
+  //   pair: "usdt",
+  //   qty: 7.1,
+  //   price: 0.77441,
+  //   term: "dip"
+  // },
 
   // yash
   sushi1: {
@@ -370,6 +370,14 @@ const JSONDATA = {
     price: 1576.42,
     term: "yash"
   },
+  xrp4: {
+    coin: "xrp",
+    pair: "usdt",
+    qty: 8.5,
+    price: 0.633,
+    term: "mistake"
+  },
+
   sol4: {
     coin: "sol",
     pair: "inr",
@@ -421,7 +429,7 @@ const JSONDATA = {
   usdt: {
     coin: "usdt",
     pair: "inr",
-    qty: 22.596903,
+    qty: 28.39309,
     price: 78.56,
     term: "short"
   },
@@ -453,7 +461,7 @@ const JSONDATA = {
   wrx1: {
     coin: "wrx",
     pair: "inr",
-    qty:  0.22068108,
+    qty:  0.18031577,
     price: 93.4,
     term: "commission"
   }
@@ -547,6 +555,22 @@ const SoldJSon = {
     qty: 0.00015,
     buyPrice: 35311,
     soldPrice: 37031,
+    term: "dip"
+  },
+  xrp3: {
+    coin: "xrp",
+    pair: "usdt",
+    qty: 8.5,
+    buyPrice: 0.595,
+    soldPrice: 0.62953,
+    term: "dip"
+  },
+  wrx3: {
+    coin: "wrx",
+    pair: "usdt",
+    qty: 7.1,
+    buyPrice: 0.77441,
+    soldPrice: 0.81992,
     term: "dip"
   },
 };
