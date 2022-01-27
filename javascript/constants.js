@@ -266,13 +266,6 @@ const JSONDATA = {
     price: 355.8,
     term: "yash"
   },
-  win1: {
-    coin: "win",
-    pair: "inr",
-    qty: 4219,
-    price: 0.0237,
-    term: "yash"
-  },
   fil1: {
     coin: "fil",
     pair: "inr",
@@ -291,11 +284,17 @@ const JSONDATA = {
   wrx2: {
     coin: "wrx",
     pair: "inr",
-    qty: 1.57656665,
+    qty: 0.07656665,
     price: 60.17,
     term: "yash"
   },
-
+  bttc2: {
+    coin: "bttc",
+    pair: "inr",
+    qty: 602410,
+    price: 0.000166,
+    term: "yash"
+  },
   shib6: {
     coin: "shib",
     pair: "inr",
@@ -498,6 +497,22 @@ const SoldJSon = {
     buyPrice: 0.2606,
     soldPrice: 0.27999,
     term: "dip"
+  },
+  win1: {
+    coin: "win",
+    pair: "inr",
+    qty: 4219,
+    buyPrice: 0.0237,
+    soldPrice: 0.0248,
+    term: "yash"
+  },
+  wrx2: {
+    coin: "wrx",
+    pair: "inr",
+    qty: 1.5,
+    buyPrice: 60.17,
+    soldPrice: 67.17,
+    term: "yash"
   },
 };
 
