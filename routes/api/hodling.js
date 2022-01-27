@@ -7,11 +7,15 @@ const Hodling = require("../../models/Hodling");
 // @route 		GET api/hodling
 // @desc 			Get Hodling amout details
 // @access 		Public
-router.get( "/", ( req, res ) =>
+router.get( "/", async ( req, res ) =>
 {
-	res.send( "hodling route" );
+  const record = await Hodling.find();
+	res.status( 200 ).json( record );
 } );
 
+// @route 		POST api/hodling
+// @desc 			POST Hodling amout details
+// @access 		Public
 router.post(
   "/",
   [
@@ -46,5 +50,38 @@ router.post(
     }
   }
 );
+
+// @route 		POST api/hodling/update
+// @desc 			Get Hodling amout details
+// @access 		Public
+router.post( "/update", async ( req, res ) =>
+{
+  const { id, coin, coinOld, pair, qty, price, term } = req.body;
+  await Hodling.updateOne(
+    {
+      "coin": coinOld,
+      "pair": "inr",
+    },
+    {
+      $set: {
+        "coin": coin,
+      }
+    }
+  );
+  res.status( 200 ).json( { status: "ok" } );
+} );
+
+// @route 		POST api/hodling/delete
+// @desc 			Delete Hodling amout details
+// @access 		Public
+router.post( "/delete", async ( req, res ) =>
+{
+  const { id, coin, coinOld, pair, qty, price, term } = req.body;
+  await Hodling.deleteOne( {
+    "coin": coinOld,
+    "pair": "inr",
+  } );
+  res.status( 200 ).json( { status: "ok" } );
+} );
 
 module.exports = router;

@@ -68,3 +68,25 @@ Content-Type: application/json
 	"email": "some2@some.com",
 	"password": "some123"
 }
+
+
+###
+POST http://localhost:3000/api/hodling/update
+Content-Type: application/json
+
+{
+  "coinOld": "usdt",
+  "coin": "brc"
+}
+
+###
+
+GET http://localhost:3000/api/hodling
+
+###
+POST http://localhost:3000/api/hodling/delete
+Content-Type: application/json
+
+{
+  "coinOld": "brc"
+}
