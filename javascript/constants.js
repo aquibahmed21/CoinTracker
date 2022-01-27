@@ -496,7 +496,7 @@ const SoldJSon = {
     pair: "usdt",
     qty: 20,
     buyPrice: 0.2606,
-    soldPrice: 27999,
+    soldPrice: 0.27999,
     term: "dip"
   },
 };
