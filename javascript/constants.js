@@ -221,13 +221,7 @@ const JSONDATA = {
 
   // dip buy
 
-  coti1: {
-    coin: "coti",
-    pair: "usdt",
-    qty: 20,
-    price: 0.2606,
-    term: "sale order"
-  },
+
   celr1: {
     coin: "celr",
     pair: "usdt",
@@ -322,14 +316,14 @@ const JSONDATA = {
   usdt: {
     coin: "usdt",
     pair: "inr",
-    qty: 34.667031,
+    qty: 40.266831,
     price: 78.56,
     term: "base"
   },
   wrx1: {
     coin: "wrx",
     pair: "inr",
-    qty:  0.09192696,
+    qty:  0.08791895,
     price: 93.4,
     term: "commission"
   }
@@ -495,6 +489,14 @@ const SoldJSon = {
     qty: 5,
     buyPrice: 1.04004,
     soldPrice: 1.12,
+    term: "dip"
+  },
+  coti1: {
+    coin: "coti",
+    pair: "usdt",
+    qty: 20,
+    buyPrice: 0.2606,
+    soldPrice: 27999,
     term: "dip"
   },
 };
