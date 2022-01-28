@@ -258,6 +258,35 @@ const JSONDATA = {
     term: "dip"
   },
 
+  ftm1: {
+    coin: "ftm",
+    pair: "usdt",
+    qty: 1.2,
+    price: 1.94,
+    term: "ordered"
+  },
+  ftm2: {
+    coin: "ftm",
+    pair: "usdt",
+    qty: 1.5,
+    price: 2.018,
+    term: "ordered"
+  },
+  ada5: {
+    coin: "ada",
+    pair: "usdt",
+    qty: 2.5,
+    price: 1,
+    term: "ordered"
+  },
+  ada6: {
+    coin: "ada",
+    pair: "usdt",
+    qty: 3,
+    price: 1.02,
+    term: "ordered"
+  },
+
   // yash
   sushi1: {
     coin: "sushi",
