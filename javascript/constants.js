@@ -284,7 +284,7 @@ const JSONDATA = {
     pair: "usdt",
     qty: 3,
     price: 1.02,
-    term: "ordered"
+    term: "dip"
   },
 
   // yash
