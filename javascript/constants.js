@@ -350,24 +350,28 @@ const JSONDATA = {
     pair: "inr",
     qty: 0.04,
     price: 4075.99,
+    term: "yash"
   },
   atom2: {
     coin: "atom",
     pair: "inr",
     qty: 0.08,
     price: 2331.98,
+    term: "yash"
   },
   hbar2: {
     coin: "hbar",
     pair: "inr",
     qty: 11.5,
     price: 16.99464,
+    term: "yash"
   },
   xec: {
     coin: "xec",
     pair: "inr",
     qty: 30247,
     price: 0.0057943,
+    term: "yash"
   },
   // yash
 
