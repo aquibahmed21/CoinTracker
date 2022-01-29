@@ -258,13 +258,6 @@ const JSONDATA = {
     term: "dip"
   },
 
-  ftm1: {
-    coin: "ftm",
-    pair: "usdt",
-    qty: 1.2,
-    price: 1.94,
-    term: "ordered"
-  },
   ftm2: {
     coin: "ftm",
     pair: "usdt",
@@ -272,13 +265,7 @@ const JSONDATA = {
     price: 2.018,
     term: "dip"
   },
-  ada5: {
-    coin: "ada",
-    pair: "usdt",
-    qty: 2.5,
-    price: 1,
-    term: "ordered"
-  },
+
   ada6: {
     coin: "ada",
     pair: "usdt",
@@ -292,6 +279,20 @@ const JSONDATA = {
     qty: 0.1,
     price: 50.7,
     term: "dip"
+  },
+  win2: {
+    coin: "win",
+    pair: "usdt",
+    qty: 32450,
+    price: 0.0003082,
+    term: "dip"
+  },
+  doge2: {
+    coin: "doge",
+    pair: "usdt",
+    qty: 35,
+    price: 0.1432999,
+    term: "long"
   },
 
   // yash
@@ -359,18 +360,19 @@ const JSONDATA = {
     price: 2331.98,
     term: "yash"
   },
-  hbar2: {
-    coin: "hbar",
+
+  ftm3: {
+    coin: "ftm",
     pair: "inr",
-    qty: 11.5,
-    price: 16.99464,
+    qty: 0.6,
+    price: 172.156,
     term: "yash"
   },
-  xec: {
-    coin: "xec",
+  gala2: {
+    coin: "gala",
     pair: "inr",
-    qty: 30247,
-    price: 0.0057943,
+    qty: 7,
+    price: 15.85,
     term: "yash"
   },
   // yash
@@ -379,14 +381,14 @@ const JSONDATA = {
   usdt: {
     coin: "usdt",
     pair: "inr",
-    qty: 40.266831,
+    qty: 14.099748,
     price: 78.56,
     term: "base"
   },
   wrx1: {
     coin: "wrx",
     pair: "inr",
-    qty:  0.08791895,
+    qty:  0.03336982,
     price: 93.4,
     term: "commission"
   }
@@ -584,6 +586,22 @@ const SoldJSon = {
     qty: 5.03,
     buyPrice: 19.875,
     soldPrice: 19.694,
+    term: "yash"
+  },
+  hbar2: {
+    coin: "hbar",
+    pair: "inr",
+    qty: 11.5,
+    buyPrice: 16.99464,
+    soldPrice: 17.51669,
+    term: "yash"
+  },
+  xec: {
+    coin: "xec",
+    pair: "inr",
+    qty: 30247,
+    buyPrice: 0.0057943,
+    soldPrice: 0.0061544,
     term: "yash"
   },
 };
