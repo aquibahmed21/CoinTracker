@@ -286,6 +286,13 @@ const JSONDATA = {
     price: 1.02,
     term: "dip"
   },
+  luna1: {
+    coin: "luna",
+    pair: "usdt",
+    qty: 0.1,
+    price: 50.7,
+    term: "dip"
+  },
 
   // yash
   sushi1: {
@@ -337,6 +344,30 @@ const JSONDATA = {
     qty: 2235,
     price: 0.001616,
     term: "yash"
+  },
+  luna2: {
+    coin: "luna",
+    pair: "inr",
+    qty: 0.04,
+    price: 4075.99,
+  },
+  atom2: {
+    coin: "atom",
+    pair: "inr",
+    qty: 0.08,
+    price: 2331.98,
+  },
+  hbar2: {
+    coin: "hbar",
+    pair: "inr",
+    qty: 11.5,
+    price: 16.99464,
+  },
+  xec: {
+    coin: "xec",
+    pair: "inr",
+    qty: 30247,
+    price: 0.0057943,
   },
   // yash
 
@@ -541,6 +572,14 @@ const SoldJSon = {
     qty: 1.5,
     buyPrice: 60.17,
     soldPrice: 67.17,
+    term: "yash"
+  },
+  pha1: {
+    coin: "pha",
+    pair: "inr",
+    qty: 5.03,
+    buyPrice: 19.875,
+    soldPrice: 19.694,
     term: "yash"
   },
 };
