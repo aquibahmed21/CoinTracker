@@ -375,6 +375,13 @@ const JSONDATA = {
     price: 15.85,
     term: "yash"
   },
+  reef1: {
+    coin: "reef",
+    pair: "inr",
+    qty: 288,
+    price: 0.8022,
+    term: "yash"
+  },
   // yash
 
   // dip buy
@@ -625,13 +632,21 @@ const baseFun = (url) =>
     xhr.send();
   } );
 
-const  getTicker = async () =>
+const getTicker = async () =>
 {
-  let symbolArr = [ "usdtinr" ];
-  Object.entries( JSONDATA ).filter( ( [ k, v ] ) => symbolArr.push( v.coin + v.pair ) );
-  symbolArr = removeDuplicate( symbolArr );
-  const allTicker = await baseFun( ticker24URL );
-  return allTicker.filter( e => symbolArr.includes( e.symbol ) );
+  try
+  {
+    let symbolArr = [ "usdtinr" ];
+    Object.entries( JSONDATA ).filter( ( [ k, v ] ) => symbolArr.push( v.coin + v.pair ) );
+    symbolArr = removeDuplicate( symbolArr );
+    const allTicker = await baseFun( ticker24URL );
+    return allTicker.filter( e => symbolArr.includes( e.symbol ) );
+  }
+  catch ( e )
+  {
+    console.log( e );
+    return null;
+  }
 };
 
 export { JSONDATA, SoldJSon, delay, baseFun, getTicker, fearGreed };
