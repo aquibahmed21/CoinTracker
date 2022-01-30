@@ -303,14 +303,20 @@ const JSONDATA = {
     price: 355.8,
     term: "yash"
   },
-  fil1: {
-    coin: "fil",
+  front1: {
+    coin: "front",
     pair: "inr",
-    qty: 0.063,
-    price: 1576.42,
+    qty: 4.91,
+    price: 40.619,
     term: "yash"
   },
-
+  coti2: {
+    coin: "coti",
+    pair: "inr",
+    qty: 8,
+    price: 25.088,
+    term: "yash"
+  },
   sol4: {
     coin: "sol",
     pair: "inr",
@@ -366,20 +372,6 @@ const JSONDATA = {
     pair: "inr",
     qty: 0.6,
     price: 172.156,
-    term: "yash"
-  },
-  gala2: {
-    coin: "gala",
-    pair: "inr",
-    qty: 7,
-    price: 15.85,
-    term: "yash"
-  },
-  reef1: {
-    coin: "reef",
-    pair: "inr",
-    qty: 288,
-    price: 0.8022,
     term: "yash"
   },
   // yash
@@ -609,6 +601,30 @@ const SoldJSon = {
     qty: 30247,
     buyPrice: 0.0057943,
     soldPrice: 0.0061544,
+    term: "yash"
+  },
+  reef1: {
+    coin: "reef",
+    pair: "inr",
+    qty: 288,
+    buyPrice: 0.8022,
+    soldPrice: 0.8261,
+    term: "yash"
+  },
+  gala2: {
+    coin: "gala",
+    pair: "inr",
+    qty: 7,
+    buyPrice: 15.85,
+    soldPrice: 16.2071,
+    term: "yash"
+  },
+  fil1: {
+    coin: "fil",
+    pair: "inr",
+    qty: 0.063,
+    buyPrice: 1576.42,
+    soldPrice: 1658.15,
     term: "yash"
   },
 };
