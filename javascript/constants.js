@@ -251,22 +251,6 @@ const JSONDATA = {
     price: 34.73,
     term: "dip"
   },
-
-  ftm2: {
-    coin: "ftm",
-    pair: "usdt",
-    qty: 1.5,
-    price: 2.018,
-    term: "dip"
-  },
-
-  ada6: {
-    coin: "ada",
-    pair: "usdt",
-    qty: 3,
-    price: 1.02,
-    term: "dip"
-  },
   luna1: {
     coin: "luna",
     pair: "usdt",
@@ -302,13 +286,6 @@ const JSONDATA = {
     pair: "inr",
     qty: 4.91,
     price: 40.619,
-    term: "yash"
-  },
-  coti2: {
-    coin: "coti",
-    pair: "inr",
-    qty: 8,
-    price: 25.088,
     term: "yash"
   },
   sol4: {
@@ -381,7 +358,7 @@ const JSONDATA = {
   usdt: {
     coin: "usdt",
     pair: "inr",
-    qty: 15.892662,
+    qty: 22.147587,
     price: 78.56,
     term: "base"
   },
@@ -643,6 +620,23 @@ const SoldJSon = {
     buyPrice: 25.088,
     soldPrice: 26.311,
     term: "yash"
+  },
+  ftm2: {
+    coin: "ftm",
+    pair: "usdt",
+    qty: 1.5,
+    buyPrice: 2.018,
+    soldPrice: 2.0783,
+    term: "dip"
+  },
+
+  ada6: {
+    coin: "ada",
+    pair: "usdt",
+    qty: 3,
+    buyPrice: 1.02,
+    soldPrice: 1.04582,
+    term: "dip"
   },
 };
 
