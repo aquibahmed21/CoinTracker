@@ -34,7 +34,7 @@ a[href^="http"]:empty::before {
 
 /* ! Input caret color */
 input {
-  caret-color: red;
+  caret-color: #25bda2;
 }
 
 body {

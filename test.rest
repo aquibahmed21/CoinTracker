@@ -86,7 +86,9 @@ GET http://localhost:3000/api/hodling
 ###
 POST http://localhost:3000/api/hodling/delete
 Content-Type: application/json
-
 {
   "coinOld": "brc"
 }
+
+###
+GET http://localhost:3000/api/allOrders

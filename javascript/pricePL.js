@@ -3,6 +3,24 @@
 import * as Const from "./constants.js";
 import * as webSocket from "./websocket.js";
 
+// javascript enum for the different types of notifications
+const Side = {
+  SELL: "sell",
+  BUY: "buy"
+};
+
+const Type = {
+  LIMIT: "limit",
+  STOP_LIMIT: "stop_limit"
+};
+
+const Route = {
+  ORDER: "",
+  FUNDS: ""
+}
+
+const arr = [];
+
 const hodlingTable = document.getElementById( "table" );
 const hodlingBody = hodlingTable.getElementsByTagName( "tbody" );
 
@@ -10,6 +28,49 @@ const plTable = hodlingTable.nextElementSibling;
 const plBody = plTable.getElementsByTagName( "tbody" );
 
 const notificationBTN = document.getElementById( "notif" );
+const caption = hodlingTable.getElementsByTagName( "caption" )[ 0 ];
+const coinDetailsPopup = document.getElementsByClassName( "signup-container" )[ 0 ];
+
+const arrTicker = await Const.getTicker() || await Const.getTicker();
+
+document.addEventListener('long-press', async function(e) {
+
+  // https://github.com/john-doherty/long-press-event
+  // stop the event from bubbling up
+  e.preventDefault()
+
+  const targetRow = e.target.tagName == "TD" ? e.target.parentElement : e.target;
+
+
+  if ( targetRow.tagName !== "TR" )
+    return;
+
+  const coinpair = targetRow.children[0].textContent.trim();
+  const side = Side.SELL; //Enum
+  const qty = targetRow.children[2].textContent;
+  const currentPrice = targetRow.children[ 5 ].textContent.split( " " )[ 0 ];
+  const type = Type.LIMIT; //Enum
+
+  // try
+  // {
+  //   const rawResponse = await fetch( '/order/test',
+  //   {
+  //     method: 'POST',
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify( { coinpair, side, qty, currentPrice, type } )
+  //   });
+
+  //   const content = await rawResponse.json();
+  //   console.log(content);
+
+  // } catch (error) {
+  //   console.log(error);
+  // }
+});
+
 window.onanimationend = async (e) => {
   // stacksnippet's console also has CSS animations...
   if ( e.type === "animationend" && e.target.id == notificationBTN.id )
@@ -19,10 +80,79 @@ window.onanimationend = async (e) => {
   }
 }
 
-const arrTicker = await Const.getTicker();
-let usdtinr = arrTicker.filter( e => e.symbol == ( "usdtinr" ) )[ 0 ].lastPrice;
+coinDetailsPopup.addEventListener( "click", async ( event ) =>
+{
+  event.preventDefault();
+  const target = event.target;
+  switch ( target.id ) {
+    case "back": {
+      ResetForm();
+      coinDetailsPopup.classList.add( "Util_hide" );
+    }
+      break;
+    case "next":
+    {
+      const coin = coinDetailsPopup.querySelector( "#pets-name" ).value;
+      const pair = coinDetailsPopup.querySelector( "[checked]" )?.value || "usdt";
+      const qty = +coinDetailsPopup.querySelector( "#pets-breed" ).value;
+      const price = +coinDetailsPopup.querySelector( "#pets-birthday" ).value;
+      const term = coinDetailsPopup.querySelector( "#divCommentTerm" ).textContent;
 
-const arr = [];
+      if ( !coin || !pair || !qty || !price ) {
+        notificationBTN.innerHTML = `<p>Please fill all the fields</p>`;
+        notificationBTN.classList.add( "visible" );
+        return;
+      }
+      else {
+        coinDetailsPopup.classList.add( "Util_hide" );
+        ResetForm();
+      }
+
+      const jsonStringyfied = { coin, pair, qty, price, term };
+
+      try
+      {
+        const rawResponse = await fetch( '/api/hodling',
+        {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(jsonStringyfied)
+        });
+
+        const content = await rawResponse.json();
+        console.log(content);
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
+  function ResetForm ()
+  {
+    coinDetailsPopup.querySelector( "#pets-name" ).value = "";
+    coinDetailsPopup.querySelector( "#pets-breed" ).value = "";
+    coinDetailsPopup.querySelector( "#pets-birthday" ).value = "";
+    coinDetailsPopup.querySelector( "#divCommentTerm" ).textContent = "";
+    coinDetailsPopup.querySelector( "[checked]" )?.removeAttribute( "checked" );
+    coinDetailsPopup.querySelector( "#pet-gender-female" ).checked = true;
+  }
+},
+
+  caption.addEventListener( "click", () =>
+  {
+    coinDetailsPopup.classList.remove( "Util_hide" );
+    coinDetailsPopup.querySelector( "#pets-name" ).focus();
+  } ) );
+
+
+if ( !arrTicker )
+  window.alert( "Error: No ticker found, Please refresh.." );
+
+let usdtinr = arrTicker.filter( e => e.symbol == ( "usdtinr" ) )[ 0 ].lastPrice;
 
 await AddHodlingRows_FromJSON( Const.JSONDATA );
 await AddPLRows_FromJSON( Const.SoldJSon );
@@ -32,6 +162,8 @@ webSocket.wsSubscribe( LiveUpdateHodlingTable );
 
 hodlingBody[ 0 ].addEventListener( "click", OnClick_HodlingRows() );
 hodlingBody[ 0 ].addEventListener( "dblclick", OnDBClick_HodlingRows() );
+
+
 
 function OnDBClick_HodlingRows ()
 {
@@ -52,8 +184,6 @@ function OnDBClick_HodlingRows ()
     const getStopLossValue = ( price, percentage, decimal = 1 ) =>
       (price - ((price * percentage)/100)).toFixed(decimal)
 
-    const coinPair = targetRow.children[ 0 ].textContent;
-    const isINR = coinPair.endsWith( "inr" );
     const buyPrice = +targetRow.children[ 1 ].textContent;
     const currentPrice = +targetRow.children[ 5 ].textContent.split( " " )[ 0 ];
     const countNumber = +countDecimals( buyPrice );
@@ -61,7 +191,7 @@ function OnDBClick_HodlingRows ()
 
     notificationBTN.innerHTML = `<p>Trigger Value at ${ getStopLossValue( currentPrice, 2, countNumber ) } <br />
     Sale Value at ${ getStopLossValue( currentPrice, 4, countNumber ) } <br />
-    You get ${ getStopLossValue(margin, 4, countNumber) } ${ isINR ? "₹" : "₿" }</p>`;
+    You get ${ getStopLossValue(margin, 4, countNumber) } ₹</p>`;
 
     notificationBTN.classList.add( "visible" );
   }
@@ -78,7 +208,8 @@ function OnClick_HodlingRows ()
       return;
 
     const existingRow = hodlingBody[ 0 ].querySelector( ".rowSelect" );
-    if ( existingRow ) {
+    if ( existingRow )
+    {
       if ( existingRow.id == targetID )
         existingRow.classList.remove( "rowSelect" );
       else {
@@ -88,8 +219,43 @@ function OnClick_HodlingRows ()
     }
     else
       targetRow.classList.add( "rowSelect" );
-
   };
+}
+
+function SummationPLTable (body)
+{
+  const children = body[ 0 ].children;
+  const footChild = body[ 0 ].nextElementSibling.children[ 0 ].children;
+
+  let beforeDollar = 0, beforeInr = 0, percentage = 0, afterDollar = 0, afterInr = 0, portFolio = 0;
+
+  for ( let child of children )
+  {
+    beforeDollar += +child.querySelector( "#tdTotalDollar" ).textContent.split( " " )[ 0 ];
+    beforeInr += +child.querySelector( "#tdTotalinr" ).textContent.split( " " )[ 0 ];
+    percentage += +child.querySelector( "#tdPLPercentage" ).textContent.split( " " )[ 0 ];
+    afterDollar += +child.querySelector( "#tdMarginDol" ).textContent.split( " " )[ 0 ];
+    afterInr += +child.querySelector( "#tdMarginINR" ).textContent.split( " " )[ 0 ];
+
+    if (child.querySelector( "#tdCurTotalinr" ))
+      portFolio += +child.querySelector( "#tdCurTotalinr" ).textContent.split( " " )[ 0 ];
+  }
+
+  footChild[ 0 ].textContent = "₿ Invested: " + beforeDollar.toFixed( 2 );
+  footChild[ 1 ].textContent = "₹ Invested: " + beforeInr.toFixed( 2 );
+  footChild[ 2 ].textContent = "Average Percentage: " + ( percentage / children.length ).toFixed( 2 );
+  footChild[ 3 ].textContent = "₿ Gain: " + afterDollar.toFixed( 2 );
+  footChild[ 4 ].textContent = "₹ Gain: " + afterInr.toFixed( 2 );
+
+  if ( portFolio )
+  {
+    const lastPrice = +footChild[ 5 ].getAttribute( "lastPrice") || 0;
+    const currentPrice = portFolio.toFixed( 2 );
+    const color = lastPrice.toFixed( 2 ) == currentPrice ? "" : ( lastPrice < currentPrice ? "green" : "red" );
+    footChild[ 5 ].setAttribute( "lastPrice", currentPrice );
+    footChild[ 5 ].textContent = "Portfolio: " + currentPrice;
+    footChild[ 5 ].style.color = color;
+  }
 }
 
 async function AddHodlingRows_FromJSON ( obj,
@@ -257,7 +423,6 @@ async function LiveUpdateHodlingTable ( event )
         child.querySelector( "#tdMarginDol" ).style.color = color;
         child.querySelector( "#tdMarginINR" ).style.color = color;
 
-        // ! ------------------------- TBT
         if ( prevPercentage < 0 && percentage.toFixed(2) > 0 )
         {
           // move row to top
@@ -272,48 +437,11 @@ async function LiveUpdateHodlingTable ( event )
           child.classList = "";
           // move row to below top rows
         }
-        // ! ----------------------
       }
     }
     SummationPLTable( hodlingBody );
   } catch ( error ) {
     console.log( error );
-  }
-}
-
-function SummationPLTable (body)
-{
-  const children = body[ 0 ].children;
-  const footChild = body[ 0 ].nextElementSibling.children[ 0 ].children;
-
-  let beforeDollar = 0, beforeInr = 0, percentage = 0, afterDollar = 0, afterInr = 0, portFolio = 0;
-
-  for ( let child of children )
-  {
-    beforeDollar += +child.querySelector( "#tdTotalDollar" ).textContent.split( " " )[ 0 ];
-    beforeInr += +child.querySelector( "#tdTotalinr" ).textContent.split( " " )[ 0 ];
-    percentage += +child.querySelector( "#tdPLPercentage" ).textContent.split( " " )[ 0 ];
-    afterDollar += +child.querySelector( "#tdMarginDol" ).textContent.split( " " )[ 0 ];
-    afterInr += +child.querySelector( "#tdMarginINR" ).textContent.split( " " )[ 0 ];
-
-    if (child.querySelector( "#tdCurTotalinr" ))
-      portFolio += +child.querySelector( "#tdCurTotalinr" ).textContent.split( " " )[ 0 ];
-  }
-
-  footChild[ 0 ].textContent = "₿ Invested: " + beforeDollar.toFixed( 2 );
-  footChild[ 1 ].textContent = "₹ Invested: " + beforeInr.toFixed( 2 );
-  footChild[ 2 ].textContent = "Average Percentage: " + ( percentage / children.length ).toFixed( 2 );
-  footChild[ 3 ].textContent = "₿ Gain: " + afterDollar.toFixed( 2 );
-  footChild[ 4 ].textContent = "₹ Gain: " + afterInr.toFixed( 2 );
-
-  if ( portFolio )
-  {
-    const lastPrice = +footChild[ 5 ].getAttribute( "lastPrice") || 0;
-    const currentPrice = portFolio.toFixed( 2 );
-    const color = lastPrice.toFixed( 2 ) == currentPrice ? "" : ( lastPrice < currentPrice ? "green" : "red" );
-    footChild[ 5 ].setAttribute( "lastPrice", currentPrice );
-    footChild[ 5 ].textContent = "Portfolio: " + currentPrice;
-    footChild[ 5 ].style.color = color;
   }
 }
 

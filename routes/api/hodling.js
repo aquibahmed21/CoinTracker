@@ -1,6 +1,11 @@
-const express = require("express");
+const express = require( "express" );
+const app = express();
 const router = express.Router();
-const { check, validationResult } = require("express-validator");
+const { check, validationResult } = require( "express-validator" );
+const cors = require( 'cors' );
+
+app.use(cors());
+app.options('*', cors());
 
 const Hodling = require("../../models/Hodling");
 
@@ -26,11 +31,15 @@ router.post(
 		check("term", "Add Term/Comment").not().isEmpty(),
   ],
   async (req, res) => {
-    const errors = validationResult(req);
+    const errors = validationResult( req );
+    const { coin, pair, qty, price, term } = req.body;
+    console.log(req.body);
     if (!errors.isEmpty())
       return res.status(400).json({ errors: errors.array() });
 
-    const { coin, pair, qty, price, term } = req.body;
+
+
+    // const { coin, pair, qty, price, term } = req.body;
     try {
 
      const coinPair = new Hodling({
@@ -42,7 +51,7 @@ router.post(
       });
 
       await coinPair.save();
-      return res.status(200).send("Hodling row inserted");
+      return res.status( 200 ).json( { msg: "Hodling row inserted" });
 
       // return jsonwebtoken
     } catch (error) {
