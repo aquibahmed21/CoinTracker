@@ -92,3 +92,6 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/api/allOrders
+
+###
+GET http://localhost:3000/api/funds
