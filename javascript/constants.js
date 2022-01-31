@@ -243,13 +243,7 @@ const JSONDATA = {
     price: 0.05329,
     term: "dip"
   },
-  bttc1: {
-    coin: "bttc",
-    pair: "usdt",
-    qty: 2450980,
-    price: 0.00000204,
-    term: "dip"
-  },
+
   atom1: {
     coin: "atom",
     pair: "usdt",
@@ -374,21 +368,28 @@ const JSONDATA = {
     price: 172.156,
     term: "yash"
   },
+  push1: {
+    coin: "push",
+    pair: "inr",
+    qty: 2.45,
+    price: 101.875,
+    term: "yash"
+  },
   // yash
 
   // dip buy
   usdt: {
     coin: "usdt",
     pair: "inr",
-    qty: 14.099748,
+    qty: 15.892662,
     price: 78.56,
     term: "base"
   },
   wrx1: {
     coin: "wrx",
-    pair: "inr",
-    qty:  0.03336982,
-    price: 93.4,
+    pair: "usdt",
+    qty:  4.24252767,
+    price: 0.80299,
     term: "commission"
   }
 };
@@ -625,6 +626,22 @@ const SoldJSon = {
     qty: 0.063,
     buyPrice: 1576.42,
     soldPrice: 1658.15,
+    term: "yash"
+  },
+  bttc1: {
+    coin: "bttc",
+    pair: "usdt",
+    qty: 2450980,
+    buyPrice: 0.00000204,
+    soldPrice: 0.00000211,
+    term: "dip"
+  },
+  coti3: {
+    coin: "coti",
+    pair: "inr",
+    qty: 8,
+    buyPrice: 25.088,
+    soldPrice: 26.311,
     term: "yash"
   },
 };
