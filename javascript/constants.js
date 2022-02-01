@@ -344,14 +344,14 @@ const JSONDATA = {
   usdt: {
     coin: "usdt",
     pair: "inr",
-    qty: 22.147587,
+    qty: 27.537587,
     price: 78.56,
     term: "base"
   },
   wrx1: {
     coin: "wrx",
     pair: "usdt",
-    qty:  4.24252767,
+    qty:  4.21386264,
     price: 0.80299,
     term: "commission"
   }
