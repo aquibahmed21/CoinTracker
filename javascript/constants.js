@@ -335,12 +335,12 @@ const JSONDATA = {
     price: 78.56,
     term: "base"
   },
-  wrx1: {
-    coin: "wrx",
-    pair: "usdt",
-    qty:  4.21386264,
-    price: 0.80299,
-    term: "commission"
+  hot1: {
+    coin: "hot",
+    pair: "inr",
+    qty: 271,
+    price: 0.368,
+    term: "yash"
   }
 };
 
@@ -642,6 +642,24 @@ const SoldJSon = {
     qty: 0.04,
     buyPrice: 4075.99,
     soldPrice: 4245.32,
+    term: "yash"
+  },
+
+  wrx1: {
+    coin: "wrx",
+    pair: "usdt",
+    qty:  4.2,
+    buyPrice: 0.80299,
+    soldPrice: 1.06084,
+    term: "commission"
+  },
+
+  wrx4: {
+    coin: "wrx",
+    pair: "inr",
+    qty: 2.2,
+    buyPrice: 87.45,
+    soldPrice: 83.01,
     term: "yash"
   },
 };
