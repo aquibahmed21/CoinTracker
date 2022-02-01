@@ -274,13 +274,7 @@ const JSONDATA = {
     price: 40.619,
     term: "yash"
   },
-  sol4: {
-    coin: "sol",
-    pair: "inr",
-    qty: 0.012,
-    price: 8049.98,
-    term: "yash"
-  },
+
   wrx2: {
     coin: "wrx",
     pair: "inr",
@@ -307,13 +301,6 @@ const JSONDATA = {
     pair: "inr",
     qty: 2235,
     price: 0.001616,
-    term: "yash"
-  },
-  luna2: {
-    coin: "luna",
-    pair: "inr",
-    qty: 0.04,
-    price: 4075.99,
     term: "yash"
   },
   atom2: {
@@ -639,6 +626,23 @@ const SoldJSon = {
     buyPrice: 0.2231,
     soldPrice: 0.2309,
     term: "ordered"
+  },
+  sol4: {
+    coin: "sol",
+    pair: "inr",
+    qty: 0.012,
+    buyPrice: 8049.98,
+    soldPrice: 8462.98,
+    term: "yash"
+  },
+
+  luna2: {
+    coin: "luna",
+    pair: "inr",
+    qty: 0.04,
+    buyPrice: 4075.99,
+    soldPrice: 4245.32,
+    term: "yash"
   },
 };
 
