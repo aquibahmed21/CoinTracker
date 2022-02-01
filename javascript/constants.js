@@ -229,13 +229,6 @@ const JSONDATA = {
     price: 0.05618,
     term: "dip"
   },
-  hbar1: {
-    coin: "hbar",
-    pair: "usdt",
-    qty: 22.5,
-    price: 0.2231,
-    term: "dip"
-  },
   celr1: {
     coin: "celr",
     pair: "usdt",
@@ -249,13 +242,6 @@ const JSONDATA = {
     pair: "usdt",
     qty: 0.15,
     price: 34.73,
-    term: "dip"
-  },
-  luna1: {
-    coin: "luna",
-    pair: "usdt",
-    qty: 0.1,
-    price: 50.7,
     term: "dip"
   },
   win2: {
@@ -637,6 +623,22 @@ const SoldJSon = {
     buyPrice: 1.02,
     soldPrice: 1.04582,
     term: "dip"
+  },
+  luna1: {
+    coin: "luna",
+    pair: "usdt",
+    qty: 0.1,
+    buyPrice: 50.7,
+    soldPrice: 53.9,
+    term: "dip"
+  },
+  hbar1: {
+    coin: "hbar",
+    pair: "usdt",
+    qty: 22.5,
+    buyPrice: 0.2231,
+    soldPrice: 0.2309,
+    term: "ordered"
   },
 };
 
