@@ -244,13 +244,7 @@ const JSONDATA = {
     price: 34.73,
     term: "dip"
   },
-  doge2: {
-    coin: "doge",
-    pair: "usdt",
-    qty: 35,
-    price: 0.1432999,
-    term: "long"
-  },
+
 
   // yash
   sushi1: {
@@ -275,13 +269,7 @@ const JSONDATA = {
     price: 60.17,
     term: "yash"
   },
-  bttc2: {
-    coin: "bttc",
-    pair: "inr",
-    qty: 602410,
-    price: 0.000166,
-    term: "yash"
-  },
+
   shib6: {
     coin: "shib",
     pair: "inr",
@@ -318,23 +306,37 @@ const JSONDATA = {
     price: 101.875,
     term: "yash"
   },
-  // yash
-
-  // dip buy
-  usdt: {
-    coin: "usdt",
-    pair: "inr",
-    qty: 47.203152,
-    price: 78.56,
-    term: "base"
-  },
   hot1: {
     coin: "hot",
     pair: "inr",
     qty: 271,
     price: 0.368,
     term: "yash"
-  }
+  },
+  coti4: {
+    coin: "coti",
+    pair: "inr",
+    qty: 11.2,
+    price: 24.997,
+    term: "yash"
+  },
+  // yash
+  coti5: {
+    coin: "coti",
+    pair: "usdt",
+    qty: 16,
+    price: 0.3151,
+    term: "dip"
+  },
+  // dip buy
+  usdt: {
+    coin: "usdt",
+    pair: "inr",
+    qty: 42.151469,
+    price: 78.56,
+    term: "base"
+  },
+
 };
 
 
@@ -655,13 +657,29 @@ const SoldJSon = {
     soldPrice: 83.01,
     term: "yash"
   },
+  bttc2: {
+    coin: "bttc",
+    pair: "inr",
+    qty: 602410,
+    buyPrice: 0.000166,
+    soldPrice: 0.0001727,
+    term: "yash"
+  },
   win2: {
     coin: "win",
     pair: "usdt",
     qty: 32450,
     buyPrice: 0.0003082,
     soldPrice: 0.0003088,
-    term: "ordered"
+    term: "dip"
+  },
+  doge2: {
+    coin: "doge",
+    pair: "usdt",
+    qty: 35,
+    buyPrice: 0.1432999,
+    soldPrice: 0.1464816,
+    term: "long-ordered"
   },
 };
 
