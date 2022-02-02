@@ -244,13 +244,6 @@ const JSONDATA = {
     price: 34.73,
     term: "dip"
   },
-  win2: {
-    coin: "win",
-    pair: "usdt",
-    qty: 32450,
-    price: 0.0003082,
-    term: "dip"
-  },
   doge2: {
     coin: "doge",
     pair: "usdt",
@@ -331,7 +324,7 @@ const JSONDATA = {
   usdt: {
     coin: "usdt",
     pair: "inr",
-    qty: 27.537587,
+    qty: 37.537587,
     price: 78.56,
     term: "base"
   },
@@ -625,7 +618,7 @@ const SoldJSon = {
     qty: 22.5,
     buyPrice: 0.2231,
     soldPrice: 0.2309,
-    term: "ordered"
+    term: "dip"
   },
   sol4: {
     coin: "sol",
@@ -661,6 +654,14 @@ const SoldJSon = {
     buyPrice: 87.45,
     soldPrice: 83.01,
     term: "yash"
+  },
+  win2: {
+    coin: "win",
+    pair: "usdt",
+    qty: 32450,
+    buyPrice: 0.0003082,
+    soldPrice: 0.0003088,
+    term: "ordered"
   },
 };
 
