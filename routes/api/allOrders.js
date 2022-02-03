@@ -15,6 +15,7 @@ const Method = {
 	POST: "POST"
 };
 
+const delay = ( ms ) => new Promise( ( res ) => setTimeout( res, ms ) );
 const signature = ( queryData, secret ) => CryptoJS.HmacSHA256( queryData, secret ).toString( CryptoJS.enc.Hex );
 
 // @route 		GET api/allOrders
@@ -34,6 +35,8 @@ router.get( "/", async ( req, res ) =>
 	let burl = baseURL + API.TICKER;
 
 	try {
+		// !-----------------
+		// ! Get Ticker
 		rawResponse = await fetch( burl,
 			{
 				method: Method.GET,
@@ -43,14 +46,20 @@ router.get( "/", async ( req, res ) =>
 					'X-Api-Key': process.env.API_KEY,
 				},
 			} );
+
+		// ! Get Symbols from Ticker
 		content = await rawResponse.json();
 		content.forEach( e => arr.push( e.symbol ) );
+		// !-----------------
+
 
 		for ( symbol of arr ) {
 			queryData = `symbol=${ symbol }&recvWindow=20000&timestamp=` + ( new Date().getTime() );
 			burl = baseURL + API.ALLORDERBOOK + "?" + queryData +
 				"&signature=" + signature( queryData, process.env.SECRET_KEY );
 
+			// !-----------------
+			// ! Get All Order Book from each symbol
 			rawResponse = await fetch( burl,
 				{
 					method: Method.GET,
@@ -62,7 +71,11 @@ router.get( "/", async ( req, res ) =>
 				} );
 
 			content = await rawResponse.json();
+			console.log( { content: content } );
+			await delay( 2100 );
+			// !-----------------
 
+			// ! Push to Array
 			if ( content && content.length )
 				arrHistory.push( content );
 		}

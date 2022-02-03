@@ -182,6 +182,24 @@
 				</tr>
 			</tfoot>
 		</table>
+
+		<table class="demo Util_hide" id="tableHistory">
+			<caption>History Table(Aquib)</caption>
+			<thead>
+				<tr>
+					<th>Coin Name</th>
+					<th>Price</th>
+					<th>Quantity</th>
+					<th>Total Price</th>
+					<th>Type</th>
+					<th>Side</th>
+					<th>Status</th>
+					<th>Created Time</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
 	</div>
 
 	<template id="templatePL1Row">
@@ -196,6 +214,19 @@
 			<td id="tdMarginDol"></td>
 			<td id="tdMarginINR"></td>
 			<td id="tdTerm"></td>
+		</tr>
+	</template>
+
+	<template id="historyRow">
+		<tr>
+			<td id="symbol"></td>
+			<td id="price"></td>
+			<td id="qty"></td>
+			<td id="totalPrice"></td>
+			<td id="type"></td>
+			<td id="side"></td>
+			<td id="status"></td>
+			<td id="createdTime"></td>
 		</tr>
 	</template>
 

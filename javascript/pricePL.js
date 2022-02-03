@@ -2,6 +2,7 @@
 
 import * as Const from "./constants.js";
 import * as webSocket from "./websocket.js";
+// import * as history from "./jsonformatter.js";
 
 // javascript enum for the different types of notifications
 const Side = {
@@ -33,9 +34,32 @@ const coinDetailsPopup = document.getElementsByClassName( "signup-container" )[ 
 
 const arrTicker = await Const.getTicker() || await Const.getTicker();
 
+if ( !arrTicker )
+  window.alert( "Error: No ticker found, Please refresh.." );
+
+let usdtinr = arrTicker.filter( e => e.symbol == ( "usdtinr" ) )[ 0 ].lastPrice;
+
+await AddHodlingRows_FromJSON( Const.JSONDATA );
+await AddPLRows_FromJSON( Const.SoldJSon );
+SummationPLTable( hodlingBody );
+SummationPLTable( plBody );
+webSocket.wsSubscribe( LiveUpdateHodlingTable );
+// AddAllHistory_FromDB( history.aquibHistory );
+
+hodlingBody[ 0 ].addEventListener( "click", OnClick_HodlingRows() );
+hodlingBody[ 0 ].addEventListener( "dblclick", OnDBClick_HodlingRows() );
+
+window.onanimationend = async ( e ) =>
+{
+  // stacksnippet's console also has CSS animations...
+  if ( e.type === "animationend" && e.target.id == notificationBTN.id ) {
+    await Const.delay( 11000 );
+    notificationBTN.classList.remove( "visible" );
+  }
+};
+
 document.addEventListener( 'long-press', async function ( e )
 {
-
   // https://github.com/john-doherty/long-press-event
   // stop the event from bubbling up
   e.preventDefault();
@@ -71,15 +95,6 @@ document.addEventListener( 'long-press', async function ( e )
   //   console.log(error);
   // }
 } );
-
-window.onanimationend = async ( e ) =>
-{
-  // stacksnippet's console also has CSS animations...
-  if ( e.type === "animationend" && e.target.id == notificationBTN.id ) {
-    await Const.delay( 11000 );
-    notificationBTN.classList.remove( "visible" );
-  }
-};
 
 coinDetailsPopup.addEventListener( "click", async ( event ) =>
 {
@@ -148,22 +163,29 @@ coinDetailsPopup.addEventListener( "click", async ( event ) =>
     coinDetailsPopup.querySelector( "#pets-name" ).focus();
   } ) );
 
+function AddAllHistory_FromDB ( history )
+{
+  const hodlingTable = document.getElementById( "tableHistory" );
+  const hodlingBody = hodlingTable.getElementsByTagName( "tbody" );
+  for ( let loop of history )
+    for ( let coin of loop )
+    {
+      const { id, symbol, type, side, status, price, origQty, createdTime } = coin;
+      const row = document.getElementById( "historyRow" ).content.cloneNode( true );
+      const isINR = symbol.endsWith( "inr" );
+      row.querySelector( "#symbol" ).textContent = symbol;
+      row.querySelector( "#price" ).textContent = price;
+      row.querySelector( "#qty" ).textContent = origQty;
+      row.querySelector( "#type" ).textContent = type;
+      row.querySelector( "#side" ).textContent = side;
+      row.querySelector( "#status" ).textContent = status;
+      row.querySelector( "#createdTime" ).textContent = Const.GetDisplayTime( createdTime );
+      row.querySelector( "#totalPrice" ).textContent = ( price * origQty ).toFixed( 2 ) + ( isINR ? " ₹" : " ₿" );
+      hodlingBody[ 0 ].appendChild( row );
 
-if ( !arrTicker )
-  window.alert( "Error: No ticker found, Please refresh.." );
+    }
 
-let usdtinr = arrTicker.filter( e => e.symbol == ( "usdtinr" ) )[ 0 ].lastPrice;
-
-await AddHodlingRows_FromJSON( Const.JSONDATA );
-await AddPLRows_FromJSON( Const.SoldJSon );
-SummationPLTable( hodlingBody );
-SummationPLTable( plBody );
-webSocket.wsSubscribe( LiveUpdateHodlingTable );
-
-hodlingBody[ 0 ].addEventListener( "click", OnClick_HodlingRows() );
-hodlingBody[ 0 ].addEventListener( "dblclick", OnDBClick_HodlingRows() );
-
-
+}
 
 function OnDBClick_HodlingRows ()
 {
