@@ -272,7 +272,48 @@ const JSONDATA = {
     price: 34.73,
     term: "dip"
   },
-
+  enj3: {
+    coin: "enj",
+    pair: "usdt",
+    qty: 3.1,
+    price: 1.663,
+    term: "dip"
+  },
+  lrc3 : {
+    coin: "lrc",
+    pair: "usdt",
+    qty: 6,
+    price: 0.8431,
+    term: "dip"
+  },
+  dent4: {
+    coin: "dent",
+    pair: "usdt",
+    qty: 2000,
+    price: 0.002501,
+    term: "dip"
+  },
+  doge5: {
+    coin: "doge",
+    pair: "usdt",
+    qty: 36,
+    price: 0.1373723,
+    term: "dip"
+  },
+  link1: {
+    coin: "link",
+    pair: "usdt",
+    qty: 0.32,
+    price: 15.84,
+    term: "dip"
+  },
+  matic1: {
+    coin: "matic",
+    pair: "usdt",
+    qty: 3.3,
+    price: 1.51403,
+    term: "dip"
+  },
 
   // yash
   sushi1: {
@@ -362,14 +403,14 @@ const JSONDATA = {
   wrx5: {
     coin: "wrx",
     pair: "usdt",
-    qty: 2.19718973,
+    qty: 2.12993662,
     price: 0.92799,
     term: "commission"
   },
   usdt: {
     coin: "usdt",
     pair: "inr",
-    qty: 30.336386,
+    qty: 0.109984,
     price: 78.56,
     term: "base"
   },
@@ -756,4 +797,69 @@ const getTicker = async () =>
   }
 };
 
-export { JSONDATA, SoldJSon, delay, baseFun, getTicker, fearGreed };
+function GetDisplayTime (timeSent)
+{
+  const CALENDAR_DAYS = ["Sun","Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+  const CALENDAR_MONTHS =
+          ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  if(timeSent == 0)
+    return "--";
+  let dateTimeSent= new Date(timeSent);
+  let date= new Date();
+  let minutes = dateTimeSent.getMinutes();
+  // REF: https://stackoverflow.com/questions/54741141/why-i-canot-get-the-same-result-using-the-getday-method-and-the-getutcday-me
+  // let dayPart = CALENDAR_DAYS[dateTimeSent.getUTCDay()]; // dateTimeSent.getUTCDay() is giving 0(Sunday) instead of
+  let dayPart = dateTimeSent.getHours() >= 0 && dateTimeSent.getHours() < 6 ? // minor work around to check if time +530GMT
+                        CALENDAR_DAYS[dateTimeSent.getUTCDay() + 1] ||  CALENDAR_DAYS[dateTimeSent.getDay()]:
+                        CALENDAR_DAYS[dateTimeSent.getUTCDay()];
+  //
+  let dayMonthPart = CALENDAR_MONTHS[dateTimeSent.getUTCMonth()] + " " + dateTimeSent.getDate();
+  let day = dateTimeSent.getUTCDate();
+  let month = dateTimeSent.getUTCMonth() + 1;
+  let year = dateTimeSent.getUTCFullYear().toLocaleString().substring(3);
+  let time;
+  let hours =  dateTimeSent.getHours() % 12;
+  // hours = !this.GetUserSettings().Is24Hour ? hours ? hours : 12 : dateTimeSent.getHours();
+  // let am_pm = !this.GetUserSettings().Is24Hour ? dateTimeSent.getHours() >= 12 ? "pm" : "am" : "";
+  let am_pm = dateTimeSent.getHours() >= 12 ? "pm" : "am";
+  let actualTime = ("00" + hours).slice(-2) + ":" + ("00" + minutes).slice(-2);
+  // let timePart = !this.GetUserSettings().Is24Hour ? actualTime + " " + am_pm : actualTime;
+  let timePart = actualTime + " " + am_pm;
+  if(dateTimeSent.getDate() > date.getDate())
+    time = dateTimeSent.getDate() - date.getDate();
+  else
+    time = date.getDate() - dateTimeSent.getDate();
+  if(dateTimeSent.getUTCFullYear() == new Date().getUTCFullYear() &&
+      dateTimeSent.getUTCMonth() == new Date().getUTCMonth() &&
+        dateTimeSent.getUTCDate() == new Date().getUTCDate())
+    return timePart;
+  else  if(dateTimeSent.getUTCFullYear() == new Date().getUTCFullYear() &&
+            dateTimeSent.getUTCMonth() == new Date().getUTCMonth() &&
+              date.getUTCDate() -  dateTimeSent.getDate() == 1)
+  return "Y'day" + ", " + timePart;
+  else if(dateTimeSent.getUTCFullYear() == new Date().getUTCFullYear() &&
+            dateTimeSent.getUTCMonth() == new Date().getUTCMonth() &&
+              dateTimeSent.getUTCDay() != new Date().getUTCDay() && time <= 7)
+    return dayPart + ", " + timePart;
+  // To check if it's same day/date
+  else if (dateTimeSent.getUTCFullYear() == date.getUTCFullYear() &&
+           dateTimeSent.getMonth() == date.getMonth() &&
+           dateTimeSent.getDate() == date.getDate())
+    return timePart;
+  else if(dateTimeSent.getUTCFullYear() == new Date().getUTCFullYear())
+    return dayMonthPart + ", " + timePart;
+  else
+  {
+    if(month < 10 && day < 10)
+      return "0" + day + "/" + "0" + month + "/" + year + ", " + timePart;
+    else if(day < 10)
+      return "0" + day + "/" + month + "/" + year + ", " + timePart;
+    else if (month < 10)
+      return day + "/" + "0" + month + "/" + year + ", " + timePart;
+    else
+      return day + "/" + month + "/" + year + ", " + timePart;
+  }
+}
+
+export { JSONDATA, SoldJSon, delay, baseFun, getTicker, fearGreed, GetDisplayTime };
