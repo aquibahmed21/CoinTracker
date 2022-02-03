@@ -221,6 +221,34 @@ const JSONDATA = {
 
   // dip buy
 
+  coti5: {
+    coin: "coti",
+    pair: "usdt",
+    qty: 16,
+    price: 0.3151,
+    term: "dip"
+  },
+  doge2: {
+    coin: "doge",
+    pair: "usdt",
+    qty: 35,
+    price: 0.1432999,
+    term: "long-ordered"
+  },
+  enj2: {
+    coin: "enj",
+    pair: "usdt",
+    qty: 3,
+    price: 1.73,
+    term: "dip"
+  },
+  lrc1: {
+    coin: "lrc",
+    pair: "usdt",
+    qty: 5,
+    price: 0.9122,
+    term: "dip"
+  },
 
   celr1: {
     coin: "celr",
@@ -313,26 +341,35 @@ const JSONDATA = {
     price: 0.368,
     term: "yash"
   },
-  coti4: {
-    coin: "coti",
+  lrc2: {
+    coin: "lrc",
     pair: "inr",
-    qty: 11.2,
-    price: 24.997,
+    qty: 2.6,
+    price: 74.99915,
+    term: "yash"
+  },
+  gala3: {
+    coin: "gala",
+    pair: "inr",
+    qty: 5,
+    price: 14.8,
     term: "yash"
   },
   // yash
-  coti5: {
-    coin: "coti",
-    pair: "usdt",
-    qty: 16,
-    price: 0.3151,
-    term: "dip"
-  },
+
   // dip buy
+
+  wrx5: {
+    coin: "wrx",
+    pair: "usdt",
+    qty: 2.19718973,
+    price: 0.92799,
+    term: "commission"
+  },
   usdt: {
     coin: "usdt",
     pair: "inr",
-    qty: 42.151469,
+    qty: 30.336386,
     price: 78.56,
     term: "base"
   },
@@ -673,13 +710,13 @@ const SoldJSon = {
     soldPrice: 0.0003088,
     term: "dip"
   },
-  doge2: {
-    coin: "doge",
-    pair: "usdt",
-    qty: 35,
-    buyPrice: 0.1432999,
-    soldPrice: 0.1464816,
-    term: "long-ordered"
+  coti4: {
+    coin: "coti",
+    pair: "inr",
+    qty: 11.2,
+    buyPrice: 24.997,
+    soldPrice: 25.0001,
+    term: "yash"
   },
 };
 
