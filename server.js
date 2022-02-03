@@ -2,6 +2,7 @@
 
 require( 'dotenv' ).config();
 const express = require( "express" );
+const auth = require( "./middleware/auth" );
 const connectDB = require( "./config/db" );
 
 const path = require( 'path' );
@@ -18,8 +19,8 @@ connectDB();
 
 // Init Middleware
 app.use( express.json() );
-app.use( express.urlencoded( { extended: false } ) );
-app.use(express.static(__dirname ));
+app.use( express.urlencoded( { extended: true } ) );
+app.use( express.static( __dirname, { index: false } ) );
 
 // Define Routes
 app.use( "/api/users", require( "./routes/api/user" ) );
@@ -32,8 +33,12 @@ app.use( "/api/allOrders", require( "./routes/api/allOrders" ) );
 
 app.get( '/', ( req, res ) =>
 {
-	res.status( 200).sendFile(path.join(__dirname, 'index.html'));
+	res.status( 200).sendFile(path.join(__dirname, "/html/signin.html"));
 } );
 
+app.get( "/home", ( req, res ) =>
+{
+	res.status( 200).sendFile(path.join(__dirname, 'index.html'));
+} );
 
 app.listen( PORT, () => console.log( "listening to " + PORT ) );

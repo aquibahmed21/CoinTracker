@@ -22,7 +22,6 @@ router.get( "/", ( req, res ) =>
 router.post(
   "/",
   [
-    check( "name", "Name is required!" ).not().isEmpty(),
     check( "email", "Please input valid email" ).isEmail(),
     check(
       "password",
@@ -35,7 +34,7 @@ router.post(
     if ( !errors.isEmpty() )
       return res.status( 400 ).json( { errors: errors.array() } );
 
-    const { name, email, password } = req.body;
+    const { email, password } = req.body;
 
     try {
       // See if user exists
@@ -47,7 +46,6 @@ router.post(
 
 
       user = new User( {
-        name,
         email,
         password,
       } );
@@ -70,8 +68,10 @@ router.post(
         { expiresIn: 360000 },
         ( err, token ) =>
         {
-          if ( err ) console.log( err );
-          else res.json( { token } );
+          if ( err )
+            return console.log( err );
+          else
+            res.header( "x-auth-token", token ).json( { token } );
         } );
 
     } catch ( error ) {

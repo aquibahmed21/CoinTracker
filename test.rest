@@ -55,9 +55,8 @@ Content-Type: application/json
 }
 
 ###
-
 GET http://localhost:3000/api/auth
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFmMTFjNzc5OTJlNjFkOTcwN2NkNjFkIn0sImlhdCI6MTY0MzE5MTQxNSwiZXhwIjoxNjQzNTUxNDE1fQ.LoZc6vFaOTW1aHBR1CcTYf9SypfJwTiKdjdzZ_v6n1s
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFmMTFjNzc5OTJlNjFkOTcwN2NkNjFkIn0sImlhdCI6MTY0MzgxNDg2OSwiZXhwIjoxNjQ0MTc0ODY5fQ.LJzz_ecYYoIU9-5AuySTUiBkdvyKqX1iu4axVNF3zIQ
 
 ###
 
@@ -89,6 +88,9 @@ Content-Type: application/json
 {
   "coinOld": "brc"
 }
+
+###
+GET http://localhost:3000/signin
 
 ###
 GET http://localhost:3000/api/allOrders
