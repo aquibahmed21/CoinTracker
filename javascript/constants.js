@@ -221,13 +221,7 @@ const JSONDATA = {
 
   //! dip buy
 
-  celr1: {
-    coin: "celr",
-    pair: "usdt",
-    qty: 90,
-    price: 0.05618,
-    term: "dip"
-  },
+
   atom1: {
     coin: "atom",
     pair: "usdt",
@@ -705,6 +699,14 @@ const SoldJSon = {
     qty: 5,
     buyPrice: 0.9122,
     soldPrice: 0.9402,
+    term: "dip"
+  },
+  celr1: {
+    coin: "celr",
+    pair: "usdt",
+    qty: 90,
+    buyPrice: 0.05618,
+    soldPrice: 0.05997,
     term: "dip"
   },
   atom2: {
