@@ -302,6 +302,38 @@ const JSONDATA = {
     term: "buy-order"
   },
 
+  celr2: {
+    coin: "celr",
+    pair: "usdt",
+    qty: 100,
+    price: 0.05504,
+    term: "dip"
+  },
+
+  coti4: {
+    coin: "coti",
+    pair: "usdt",
+    qty: 16.5,
+    price: 0.3041,
+    term: "dip"
+  },
+
+  doge4: {
+    coin: "doge",
+    pair: "usdt",
+    qty: 26,
+    price: 0.1561978,
+    term: "dip"
+  },
+
+  hbar4: {
+    coin: "hbar",
+    pair: "usdt",
+    qty: 40.6,
+    price: 0.2464,
+    term: "dip"
+  },
+
   //? yash
 
   wrx2: {
@@ -312,7 +344,69 @@ const JSONDATA = {
     term: "commission-y"
   },
 
+  coti5: {
+    coin: "coti",
+    pair: "inr",
+    qty: 6.2,
+    price: 23.998,
+    term: "yash"
+  },
 
+  hbar5: {
+    coin: "hbar",
+    pair: "inr",
+    qty: 10.4,
+    price: 19.22976,
+    term: "yash"
+  },
+
+  doge6:  {
+    coin: "doge",
+    pair: "inr",
+    qty: 8,
+    price: 12.2054,
+    term: "yash"
+  },
+
+  gala4:  {
+    coin: "gala",
+    pair: "inr",
+    qty: 7,
+    price: 25.8,
+    term: "yash"
+  },
+
+  mana4:  {
+    coin: "mana",
+    pair: "inr",
+    qty: 0.7,
+    price: 251.5999,
+    term: "yash"
+  },
+
+  celr4:  {
+    coin: "celr",
+    pair: "inr",
+    qty: 46,
+    price: 4.2974,
+    term: "yash"
+  },
+
+  win3: {
+    coin: "win",
+    pair: "inr",
+    qty: 3663,
+    price: 0.0273,
+    term: "yash"
+  },
+
+  reef4:  {
+    coin: "reef",
+    pair: "inr",
+    qty: 106,
+    price: 0.941,
+    term: "yash"
+  },
 
   //? yash
 
