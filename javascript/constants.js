@@ -230,23 +230,65 @@ const JSONDATA = {
     term: "dip"
   },
 
+  mana2: {
+    coin: "mana",
+    pair: "usdt",
+    qty: 1.7,
+    price: 3.12,
+    term: "dip"
+  },
+
+  ftm3: {
+    coin: "ftm",
+    pair: "usdt",
+    qty: 2.3,
+    price: 2.2,
+    term: "dip"
+  },
+
+  hnt1: {
+    coin: "hnt",
+    pair: "usdt",
+    qty: 0.105,
+    price: 28.790,
+    term: "dip"
+  },
+
+  atom3: {
+    coin: "atom",
+    pair: "usdt",
+    qty: 0.12,
+    price: 30.3,
+    term: "buy-order"
+  },
+
+  mana3: {
+    coin: "mana",
+    pair: "usdt",
+    qty: 1.7,
+    price: 2.98,
+    term: "buy-order"
+  },
+
+  avax1: {
+    coin: "avax",
+    pair: "usdt",
+    qty: 0.06,
+    price: 77.91,
+    term: "buy-order"
+  },
+
   //? yash
 
   wrx2: {
     coin: "wrx",
     pair: "usdt",
-    qty: 2.17233829,
+    qty: 2.07233829,
     price: 0.98714,
     term: "commission-y"
   },
 
-  usdt2: {
-    coin: "usdt",
-    pair: "inr",
-    qty: 16.487048,
-    price: 77.85,
-    term: "base-y"
-  },
+
 
   //? yash
 
@@ -804,6 +846,14 @@ const SoldJSon = {
     buyPrice: 77.75,
     soldPrice: 77.75,
     term: "yash"
+  },
+  usdt2: {
+    coin: "usdt",
+    pair: "inr",
+    qty: 16.487048,
+    buyPrice: 77.85,
+    soldPrice: 78.59,
+    term: "base-y"
   },
 };
 
