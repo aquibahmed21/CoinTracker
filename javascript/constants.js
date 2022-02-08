@@ -259,7 +259,7 @@ const JSONDATA = {
     pair: "usdt",
     qty: 0.12,
     price: 30.3,
-    term: "buy-order"
+    term: "dip"
   },
 
   mana3: {
@@ -275,6 +275,30 @@ const JSONDATA = {
     pair: "usdt",
     qty: 0.06,
     price: 77.91,
+    term: "buy-order"
+  },
+
+  luna3: {
+    coin: "luna",
+    pair: "usdt",
+    qty: 0.1,
+    price: 55.8,
+    term: "dip"
+  },
+
+  enj4: {
+    coin: "enj",
+    pair: "usdt",
+    qty: 2.8,
+    price: 1.8,
+    term: "dip"
+  },
+
+  ada5: {
+    coin: "ada",
+    pair: "usdt",
+    qty: 4.5,
+    price: 1.13,
     term: "buy-order"
   },
 
