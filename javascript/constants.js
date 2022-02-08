@@ -291,7 +291,7 @@ const JSONDATA = {
     pair: "usdt",
     qty: 2.8,
     price: 1.8,
-    term: "dip"
+    term: "buy-order"
   },
 
   ada5: {
