@@ -353,14 +353,6 @@ const JSONDATA = {
     term: "yash"
   },
 
-  hbar5: {
-    coin: "hbar",
-    pair: "inr",
-    qty: 10.4,
-    price: 19.22976,
-    term: "yash"
-  },
-
   doge6:  {
     coin: "doge",
     pair: "inr",
@@ -370,13 +362,7 @@ const JSONDATA = {
   },
 
 
-  mana4:  {
-    coin: "mana",
-    pair: "inr",
-    qty: 0.7,
-    price: 251.5999,
-    term: "yash"
-  },
+
 
   celr4:  {
     coin: "celr",
@@ -993,6 +979,24 @@ const SoldJSon = {
     soldPrice: 3.3,
     term: "dip"
   },
+
+  mana4:  {
+    coin: "mana",
+    pair: "inr",
+    qty: 0.7,
+    buyPrice: 251.5999,
+    soldPrice: 259.8743,
+    term: "yash"
+  },
+
+  hbar5: {
+    coin: "hbar",
+    pair: "inr",
+    qty: 10.4,
+    buyPrice: 19.22976,
+    soldPrice: 20.05205,
+    term: "yash"
+  },
 };
 
 const ticker24URL = "https://api.wazirx.com/sapi/v1/tickers/24hr";
@@ -1026,7 +1030,6 @@ const getTicker = async () =>
   }
   catch ( e )
   {
-    console.log( e );
     return null;
   }
 };

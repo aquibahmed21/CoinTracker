@@ -67,8 +67,7 @@ signinform.addEventListener( 'click', async ( event ) =>
 			if ( res_data.status === "success" )
 			{
 				localStorage.setItem("token", res_data.token);
-				console.log( res_data.token );
-				// window.location.href = "/index.html";
+				// window.location.href = "/dashboard
 			}
 		break;
 		case 'btnsignup': break;
