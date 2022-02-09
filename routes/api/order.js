@@ -20,24 +20,24 @@ router.post( "/", async ( req, res ) =>
 	const api = "/sapi/v1/order/";
 	const burl = baseURL + api + "?" + queryData + "&signature=" + signature( queryData, process.env.SECRET_KEY );
 
-	// try
-	// {
-	// 	const rawResponse = await fetch( burl,
-	// 	{
-	// 		method: 'POST',
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 			"Content-Type": "application/x-www-form-urlencoded",
-	// 			'X-Api-Key': process.env.API_KEY,
-	// 		},
-	// 	});
+	try
+	{
+		const rawResponse = await fetch( burl,
+		{
+			method: 'POST',
+			headers: {
+				"Content-Type": "application/json",
+				"Content-Type": "application/x-www-form-urlencoded",
+				'X-Api-Key': process.env.API_KEY,
+			},
+		});
 
-	// 	const content = await rawResponse.json();
-	// 	res.status( 200 ).json( content );
+		const content = await rawResponse.json();
+		res.status( 200 ).json( content );
 
-	// } catch (error) {
-	// 	res.status( 500 ).json( error );
-	// }
+	} catch (error) {
+		res.status( 500 ).json( error );
+	}
 
 } );
 

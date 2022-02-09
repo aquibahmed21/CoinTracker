@@ -56,7 +56,17 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/api/auth
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFmMTFjNzc5OTJlNjFkOTcwN2NkNjFkIn0sImlhdCI6MTY0MzgxNDg2OSwiZXhwIjoxNjQ0MTc0ODY5fQ.LJzz_ecYYoIU9-5AuySTUiBkdvyKqX1iu4axVNF3zIQ
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjIwMjdhMzQ4N2Q2MTc4MmZlNjI1NjIyIn0sImlhdCI6MTY0NDMyOTUyNCwiZXhwIjoxNjQ0Njg5NTI0fQ.pejxYqA89VORDazeNShTZ_Q0JtUcdap3AXoP4Xp0kls
+
+###
+
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+	"email": "some2@some.com",
+	"password": "some123"
+}
 
 ###
 

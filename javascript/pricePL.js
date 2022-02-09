@@ -76,24 +76,24 @@ document.addEventListener( 'long-press', async function ( e )
   const currentPrice = targetRow.children[ 5 ].textContent.split( " " )[ 0 ];
   const type = Type.LIMIT; //Enum
 
-  // try
-  // {
-  //   const rawResponse = await fetch( '/api/order',
-  //   {
-  //     method: 'POST',
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify( { coinpair, side, qty, currentPrice, type, side } )
-  //   });
+  try
+  {
+    const rawResponse = await fetch( '/api/order',
+    {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify( { coinpair, side, qty, currentPrice, type, side } )
+    });
 
-  //   const content = await rawResponse.json();
-  //   console.log(content);
+    const content = await rawResponse.json();
+    console.log(content);
 
-  // } catch (error) {
-  //   console.log(error);
-  // }
+  } catch (error) {
+    console.log(error);
+  }
 } );
 
 coinDetailsPopup.addEventListener( "click", async ( event ) =>

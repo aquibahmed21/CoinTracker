@@ -71,7 +71,7 @@ router.post(
           if ( err )
             return console.log( err );
           else
-            res.header( "x-auth-token", token ).json( { token } );
+            res.status( 200).json( { token } );
         } );
 
     } catch ( error ) {

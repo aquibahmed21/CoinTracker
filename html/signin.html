@@ -9,7 +9,8 @@
     <title>Signin/Register/Reset</title>
   </head>
   <body>
-    <form id="signinform" method="post" action="/api/auth">
+    <!-- <form id="signinform" method="post" action="/api/auth"> -->
+      <div id="signinform" route="/api/auth">
       <input checked id="signin" name="action" type="radio" value="signin" />
       <label for="signin">Sign in</label>
       <input id="signup" name="action" type="radio" value="signup" />
@@ -22,8 +23,8 @@
         <input id="pass" name="password" placeholder="Password" type="password" />
         <input id="repass" name="repassword" placeholder="Repeat password" type="password" />
       </div>
-      <button type="submit">
-        <span>
+      <button type="submit" id="btnsignin">
+        <span id="btnsignin">
           Reset password
           <br />
           Sign in
@@ -31,7 +32,7 @@
           Sign up
         </span>
       </button>
-    </form>
+    </div>
   </body>
 	<script src="../javascript/signin.js" defer></script>
 </html>
