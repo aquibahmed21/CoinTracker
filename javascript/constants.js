@@ -262,21 +262,21 @@ const JSONDATA = {
     term: "dip"
   },
 
-  mana3: {
-    coin: "mana",
-    pair: "usdt",
-    qty: 1.7,
-    price: 2.98,
-    term: "buy-order"
-  },
+  // mana3: {
+  //   coin: "mana",
+  //   pair: "usdt",
+  //   qty: 1.7,
+  //   price: 2.98,
+  //   term: "buy-order"
+  // },
 
-  avax1: {
-    coin: "avax",
-    pair: "usdt",
-    qty: 0.06,
-    price: 77.91,
-    term: "buy-order"
-  },
+  // avax1: {
+  //   coin: "avax",
+  //   pair: "usdt",
+  //   qty: 0.06,
+  //   price: 77.91,
+  //   term: "buy-order"
+  // },
 
   luna3: {
     coin: "luna",
@@ -286,21 +286,21 @@ const JSONDATA = {
     term: "dip"
   },
 
-  enj4: {
-    coin: "enj",
-    pair: "usdt",
-    qty: 2.8,
-    price: 1.8,
-    term: "buy-order"
-  },
+  // enj4: {
+  //   coin: "enj",
+  //   pair: "usdt",
+  //   qty: 2.8,
+  //   price: 1.8,
+  //   term: "buy-order"
+  // },
 
-  ada5: {
-    coin: "ada",
-    pair: "usdt",
-    qty: 4.5,
-    price: 1.13,
-    term: "buy-order"
-  },
+  // ada5: {
+  //   coin: "ada",
+  //   pair: "usdt",
+  //   qty: 4.5,
+  //   price: 1.13,
+  //   term: "buy-order"
+  // },
 
   celr2: {
     coin: "celr",
@@ -422,7 +422,7 @@ const JSONDATA = {
   usdt: {
     coin: "usdt",
     pair: "inr",
-    qty: 57.15141,
+    qty: 0.68114,
     price: 78.56,
     term: "base"
   },
