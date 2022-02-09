@@ -36,9 +36,9 @@ app.get( '/', ( req, res ) =>
 	res.status( 200).sendFile(path.join(__dirname, "/html/signin.html"));
 } );
 
-app.get( "/home", ( req, res ) =>
+app.get( "/dashboard", ( req, res ) =>
 {
-	res.status( 200).sendFile(path.join(__dirname, 'index.html'));
+	res.status( 200 ).sendFile( path.join( __dirname, 'index.html' ) );
 } );
 
 app.listen( PORT, () => console.log( "listening to " + PORT ) );

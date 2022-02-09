@@ -1,5 +1,25 @@
 const signinform = document.querySelector( '#signinform' );
 
+window.addEventListener( 'load', async () =>
+{
+	const token = localStorage.getItem( 'token' );
+	if ( token ) {
+		const res = await fetch( "/api/auth", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				"x-auth-token": token,
+			},
+		} );
+		const user = await res.json();
+		if ( user ) {
+			console.log( user.email );
+			console.log( "user is logged in" );
+		}
+		window.location.href = "/dashboard";
+	}
+} );
+
 signinform.addEventListener( 'click', async ( event ) =>
 {
 	// event.preventDefault();
@@ -25,8 +45,8 @@ signinform.addEventListener( 'click', async ( event ) =>
 		case 'btnsignin':
 
 			const email = signinform.querySelector( "#email" ).value,
-				password = signinform.querySelector( "#pass" ).value,
-				route = signinform.getAttribute( 'route' );
+						password = signinform.querySelector( "#pass" ).value,
+						route = signinform.getAttribute( 'route' );
 
 
 			if ( !email.length || !password.length )
@@ -42,8 +62,14 @@ signinform.addEventListener( 'click', async ( event ) =>
 					},
 					body: JSON.stringify(data)
 			} )
-			const token = await res.json();
-			console.log(token);
+			const res_data = await res.json();
+
+			if ( res_data.status === "success" )
+			{
+				localStorage.setItem("token", res_data.token);
+				console.log( res_data.token );
+				// window.location.href = "/index.html";
+			}
 		break;
 		case 'btnsignup': break;
 		case 'btnsignreset': break;
