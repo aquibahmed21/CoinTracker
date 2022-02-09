@@ -368,13 +368,6 @@ const JSONDATA = {
     term: "yash"
   },
 
-  gala4:  {
-    coin: "gala",
-    pair: "inr",
-    qty: 7,
-    price: 25.8,
-    term: "yash"
-  },
 
   mana4:  {
     coin: "mana",
@@ -408,6 +401,14 @@ const JSONDATA = {
     term: "yash"
   },
 
+  lrc4: {
+    coin: "lrc",
+    pair: "inr",
+    qty: 2.3,
+    price: 84.0,
+    term: "yash"
+  },
+
   //? yash
 
   //! dip buy
@@ -415,7 +416,7 @@ const JSONDATA = {
   wrx5: {
     coin: "wrx",
     pair: "usdt",
-    qty: 2.12993662,
+    qty: 1.9491493,
     price: 0.92799,
     term: "commission"
   },
@@ -972,6 +973,15 @@ const SoldJSon = {
     buyPrice: 77.85,
     soldPrice: 78.59,
     term: "base-y"
+  },
+
+  gala4:  {
+    coin: "gala",
+    pair: "inr",
+    qty: 7,
+    buyPrice: 25.8,
+    soldPrice: 28.7007,
+    term: "yash"
   },
 };
 
