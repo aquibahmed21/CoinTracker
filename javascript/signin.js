@@ -16,7 +16,7 @@ window.addEventListener( 'load', async () =>
 			console.log( user.email );
 			console.log( "user is logged in" );
 		}
-		window.location.href = "/dashboard";
+		// window.location.href = "/dashboard";
 	}
 } );
 
@@ -50,24 +50,29 @@ signinform.addEventListener( 'click', async ( event ) =>
 
 
 			if ( !email.length || !password.length )
-				alert( "Please enter email and password" );
+				return alert( "Please enter email and password" );
 
 			const data = { email, password };
-
-			const res = await fetch(route, {
+			let res = null, res_data = null;
+			try
+			{
+				res = await fetch( route, {
 					method: 'POST',
 					headers: {
 						'Accept': 'application/json, text/plain, */*',
 						'Content-Type': 'application/json'
 					},
-					body: JSON.stringify(data)
-			} )
-			const res_data = await res.json();
+					body: JSON.stringify( data )
+				} );
+				res_data = await res.json();
+			} catch (e) {}
 
-			if ( res_data.status === "success" )
-			{
-				localStorage.setItem("token", res_data.token);
-				// window.location.href = "/dashboard
+			if ( res_data && res_data.status === "success" ) {
+				localStorage.setItem( "token", res_data.token );
+				window.location.href = "/dashboard";
+			}
+			else if ( res_data.status == "invalid" ) {
+				alert( "user/password invalid" );
 			}
 		break;
 		case 'btnsignup': break;

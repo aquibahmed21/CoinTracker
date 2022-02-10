@@ -56,7 +56,7 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/api/auth
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjIwMjdhMzQ4N2Q2MTc4MmZlNjI1NjIyIn0sImlhdCI6MTY0NDMyOTUyNCwiZXhwIjoxNjQ0Njg5NTI0fQ.pejxYqA89VORDazeNShTZ_Q0JtUcdap3AXoP4Xp0kls
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjIwMjgxZTcyNTg3MTJkY2U3NDU0NTE5In0sImlhdCI6MTY0NDQ5NDc5NywiZXhwIjoxNjQ0ODU0Nzk3fQ.yU__Jagc6hmNhBNn4NM0TWOq1u-qj_9EURVeNPnso4w
 
 ###
 
@@ -75,7 +75,7 @@ Content-Type: application/json
 
 {
 	"email": "some2@some.com",
-	"password": "some123"
+	"password": "some123!"
 }
 
 
@@ -107,3 +107,11 @@ GET http://localhost:3000/api/allOrders
 
 ###
 GET http://localhost:3000/api/funds
+
+###
+POST http://localhost:3000/dashboard
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjIwMjgxZTcyNTg3MTJkY2U3NDU0NTE5In0sImlhdCI6MTY0NDQ5NDc5NywiZXhwIjoxNjQ0ODU0Nzk3fQ.yU__Jagc6hmNhBNn4NM0TWOq1u-qj_9EURVeNPnso4w"
+}

@@ -4,6 +4,7 @@ require( 'dotenv' ).config();
 const express = require( "express" );
 const auth = require( "./middleware/auth" );
 const connectDB = require( "./config/db" );
+const fetch = require( "node-fetch" );
 
 const path = require( 'path' );
 const cors = require('cors');
@@ -39,6 +40,29 @@ app.get( '/', ( req, res ) =>
 app.get( "/dashboard", ( req, res ) =>
 {
 	res.status( 200 ).sendFile( path.join( __dirname, 'index.html' ) );
+} );
+
+app.post( "/dashboard", async ( req, res ) =>
+{
+	const { token } = req.body;
+	console.log( token );
+console.log(__dirname)
+	try {
+		const rawResponse = await fetch( __dirname + "/routes/api/auth",
+			{
+				method: "GET",
+				headers: {
+					"x-auth-token": token,
+				},
+			} );
+
+
+		const content = await rawResponse.json();
+		console.log( content );
+	} catch (error) {
+console.log( error );
+	}
+	// res.status( 200 ).sendFile( path.join( __dirname, 'index.html' ) );
 } );
 
 app.listen( PORT, () => console.log( "listening to " + PORT ) );
