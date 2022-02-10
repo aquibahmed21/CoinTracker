@@ -239,13 +239,7 @@ const JSONDATA = {
     term: "dip"
   },
 
-  hnt1: {
-    coin: "hnt",
-    pair: "usdt",
-    qty: 0.105,
-    price: 28.790,
-    term: "dip"
-  },
+
 
   atom3: {
     coin: "atom",
@@ -295,21 +289,6 @@ const JSONDATA = {
   //   term: "buy-order"
   // },
 
-  celr2: {
-    coin: "celr",
-    pair: "usdt",
-    qty: 100,
-    price: 0.05504,
-    term: "dip"
-  },
-
-  coti4: {
-    coin: "coti",
-    pair: "usdt",
-    qty: 16.5,
-    price: 0.3041,
-    term: "dip"
-  },
 
   doge4: {
     coin: "doge",
@@ -319,13 +298,6 @@ const JSONDATA = {
     term: "dip"
   },
 
-  hbar4: {
-    coin: "hbar",
-    pair: "usdt",
-    qty: 40.6,
-    price: 0.2464,
-    term: "dip"
-  },
 
   lrc5: {
     coin: "lrc",
@@ -345,11 +317,27 @@ const JSONDATA = {
     term: "commission-y"
   },
 
-  coti5: {
-    coin: "coti",
+  bttc3: {
+    coin: "bttc",
     pair: "inr",
-    qty: 6.2,
-    price: 23.998,
+    qty: 553097,
+    price: 0.0001808,
+    term: "yash"
+  },
+
+  xec1: {
+    coin: "xec",
+    pair: "inr",
+    qty: 13443,
+    price: 0.0074383,
+    term: "yash"
+  },
+
+  ooki1: {
+    coin: "ooki",
+    pair: "inr",
+    qty: 57,
+    price: 1.7302,
     term: "yash"
   },
 
@@ -358,33 +346,6 @@ const JSONDATA = {
     pair: "inr",
     qty: 8,
     price: 12.2054,
-    term: "yash"
-  },
-
-
-
-
-  celr4:  {
-    coin: "celr",
-    pair: "inr",
-    qty: 46,
-    price: 4.2974,
-    term: "yash"
-  },
-
-  win3: {
-    coin: "win",
-    pair: "inr",
-    qty: 3663,
-    price: 0.0273,
-    term: "yash"
-  },
-
-  reef4:  {
-    coin: "reef",
-    pair: "inr",
-    qty: 106,
-    price: 0.941,
     term: "yash"
   },
 
@@ -997,6 +958,80 @@ const SoldJSon = {
     soldPrice: 20.05205,
     term: "yash"
   },
+
+
+  hbar4: {
+    coin: "hbar",
+    pair: "usdt",
+    qty: 40.6,
+    buyPrice: 0.2464,
+    soldPrice: 0.2543,
+    term: "dip"
+  },
+
+  celr2: {
+    coin: "celr",
+    pair: "usdt",
+    qty: 100,
+    buyPrice: 0.05504,
+    soldPrice: 0.05799,
+    term: "dip"
+  },
+
+  coti6: {
+    coin: "coti",
+    pair: "usdt",
+    qty: 16.5,
+    buyPrice: 0.3041,
+    soldPrice: 0.314,
+    term: "dip"
+  },
+
+  hnt1: {
+    coin: "hnt",
+    pair: "usdt",
+    qty: 0.105,
+    buyPrice: 28.790,
+    soldPrice: 30,
+    term: "dip"
+  },
+
+  reef4:  {
+    coin: "reef",
+    pair: "inr",
+    qty: 106,
+    buyPrice: 0.941,
+    soldPrice: 0.9856,
+    term: "yash"
+  },
+
+  celr4:  {
+    coin: "celr",
+    pair: "inr",
+    qty: 46,
+    buyPrice: 4.2974,
+    soldPrice: 4.4569,
+    term: "yash"
+  },
+
+  win3: {
+    coin: "win",
+    pair: "inr",
+    qty: 3663,
+    buyPrice: 0.0273,
+    soldPrice: 0.028,
+    term: "yash"
+  },
+
+  coti7: {
+    coin: "coti",
+    pair: "inr",
+    qty: 6.2,
+    buyPrice: 23.998,
+    soldPrice: 25.15,
+    term: "yash"
+  },
+
 };
 
 const ticker24URL = "https://api.wazirx.com/sapi/v1/tickers/24hr";
