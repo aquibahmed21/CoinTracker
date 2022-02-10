@@ -25,6 +25,11 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/api/hodling
+Content-Type: application/json
+
+{
+  "user": "620281e7258712dce7454519"
+}
 
 ###
 GET http://localhost:3000/api/pllist
@@ -34,11 +39,12 @@ POST http://localhost:3000/api/hodling
 Content-Type: application/json
 
 {
-  "coin": "usdt",
+  "coin": "usd1tdd",
   "pair": "inr",
   "qty": 0.027273,
   "price": 78.56,
-  "term": "short"
+  "term": "short",
+  "user": "620281e7258712dce7454519d"
 }
 
 ###
@@ -46,6 +52,7 @@ POST http://localhost:3000/api/pllist
 Content-Type: application/json
 
 {
+  "uid": "620281e7258712dce7454519",
   "coin": "shib",
   "pair": "usdt",
   "qty": 165837,

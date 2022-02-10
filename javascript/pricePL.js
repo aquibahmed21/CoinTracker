@@ -4,6 +4,25 @@ import * as Const from "./constants.js";
 import * as webSocket from "./websocket.js";
 // import * as history from "./jsonformatter.js";
 
+window.addEventListener( 'load', async () =>
+{
+	const token = localStorage.getItem( 'token' );
+	if ( token ) {
+		let res_data = null;
+		res_data = await fetch( "/api/auth",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					"x-auth-token": token,
+				},
+			} );
+		res_data = await res_data.json();
+    if ( res_data && res_data.status === "success" )
+      document.getElementsByTagName( "body" )[ 0 ].setAttribute( "uid", res_data.user._id );
+	}
+} );
+
 // javascript enum for the different types of notifications
 const Side = {
   SELL: "sell",
@@ -33,6 +52,8 @@ const caption = hodlingTable.getElementsByTagName( "caption" )[ 0 ];
 const coinDetailsPopup = document.getElementsByClassName( "signup-container" )[ 0 ];
 
 const arrTicker = await Const.getTicker() || await Const.getTicker();
+
+
 
 if ( !arrTicker )
   window.alert( "Error: No ticker found, Please refresh.." );
@@ -76,45 +97,44 @@ document.addEventListener( 'long-press', async function ( e )
   const currentPrice = targetRow.children[ 5 ].textContent.split( " " )[ 0 ];
   const type = Type.LIMIT; //Enum
 
-  // try
-  // {
-  //   const rawResponse = await fetch( '/api/order',
-  //   {
-  //     method: 'POST',
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify( { coinpair, side, qty, currentPrice, type, side } )
-  //   });
+  try {
+    const rawResponse = await fetch( '/api/order',
+      {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify( { coinpair, side, qty, currentPrice, type, side } )
+      } );
 
-  //   const content = await rawResponse.json();
-  //   console.log(content);
+    const content = await rawResponse.json();
+    console.log( content );
 
-  // } catch (error) {
-  //   console.log(error);
-  // }
+  } catch ( error ) {
+    console.log( error );
+  }
 } );
 
 coinDetailsPopup.addEventListener( "click", async ( event ) =>
 {
-  event.preventDefault();
   const target = event.target;
   switch ( target.id ) {
-    case "back": {
-      ResetForm();
-      coinDetailsPopup.classList.add( "Util_hide" );
-    }
+    case "back":
+      {
+        ResetForm();
+        coinDetailsPopup.classList.add( "Util_hide" );
+      }
       break;
     case "next":
       {
+        const uid = document.getElementsByTagName( "body" )[ 0 ].getAttribute( "uid" );
         const coin = coinDetailsPopup.querySelector( "#pets-name" ).value;
         const pair = coinDetailsPopup.querySelector( "[checked]" )?.value || "usdt";
         const qty = +coinDetailsPopup.querySelector( "#pets-breed" ).value;
         const price = +coinDetailsPopup.querySelector( "#pets-birthday" ).value;
         const term = coinDetailsPopup.querySelector( "#divCommentTerm" ).textContent;
-
-        if ( !coin || !pair || !qty || !price ) {
+        if ( !uid || !coin || !pair || !qty || !price ) {
           notificationBTN.innerHTML = `<p>Please fill all the fields</p>`;
           notificationBTN.classList.add( "visible" );
           return;
@@ -123,9 +143,7 @@ coinDetailsPopup.addEventListener( "click", async ( event ) =>
           coinDetailsPopup.classList.add( "Util_hide" );
           ResetForm();
         }
-
-        const jsonStringyfied = { coin, pair, qty, price, term };
-
+        const jsonStringyfied = { coin, pair, qty, price, term, uid };
         try {
           const rawResponse = await fetch( '/api/hodling',
             {
@@ -136,10 +154,8 @@ coinDetailsPopup.addEventListener( "click", async ( event ) =>
               },
               body: JSON.stringify( jsonStringyfied )
             } );
-
           const content = await rawResponse.json();
           console.log( content );
-
         } catch ( error ) {
           console.log( error );
         }
@@ -168,8 +184,7 @@ function AddAllHistory_FromDB ( history )
   const hodlingTable = document.getElementById( "tableHistory" );
   const hodlingBody = hodlingTable.getElementsByTagName( "tbody" );
   for ( let loop of history )
-    for ( let coin of loop )
-    {
+    for ( let coin of loop ) {
       const { id, symbol, type, side, status, price, origQty, createdTime } = coin;
       const row = document.getElementById( "historyRow" ).content.cloneNode( true );
       const isINR = symbol.endsWith( "inr" );

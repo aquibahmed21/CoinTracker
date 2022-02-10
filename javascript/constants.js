@@ -231,24 +231,6 @@ const JSONDATA = {
   },
 
 
-  ftm3: {
-    coin: "ftm",
-    pair: "usdt",
-    qty: 2.3,
-    price: 2.2,
-    term: "dip"
-  },
-
-
-
-  atom3: {
-    coin: "atom",
-    pair: "usdt",
-    qty: 0.12,
-    price: 30.3,
-    term: "dip"
-  },
-
   // mana3: {
   //   coin: "mana",
   //   pair: "usdt",
@@ -265,13 +247,7 @@ const JSONDATA = {
   //   term: "buy-order"
   // },
 
-  luna3: {
-    coin: "luna",
-    pair: "usdt",
-    qty: 0.1,
-    price: 55.8,
-    term: "dip"
-  },
+
 
   // enj4: {
   //   coin: "enj",
@@ -290,13 +266,7 @@ const JSONDATA = {
   // },
 
 
-  doge4: {
-    coin: "doge",
-    pair: "usdt",
-    qty: 26,
-    price: 0.1561978,
-    term: "dip"
-  },
+
 
 
   lrc5: {
@@ -1030,6 +1000,42 @@ const SoldJSon = {
     buyPrice: 23.998,
     soldPrice: 25.15,
     term: "yash"
+  },
+
+  ftm4: {
+    coin: "ftm",
+    pair: "usdt",
+    qty: 2.3,
+    buyPrice: 2.2,
+    soldPrice: 2.22158,
+    term: "sell-order"
+  },
+
+  atom3: {
+    coin: "atom",
+    pair: "usdt",
+    qty: 0.12,
+    buyPrice: 30.3,
+    soldPrice: 30.49,
+    term: "dip"
+  },
+
+  luna3: {
+    coin: "luna",
+    pair: "usdt",
+    qty: 0.1,
+    buyPrice: 55.8,
+    soldPrice: 56.75,
+    term: "dip"
+  },
+
+  doge7: {
+    coin: "doge",
+    pair: "usdt",
+    qty: 26,
+    buyPrice: 0.1561978,
+    soldPrice: 0.1571003,
+    term: "dip"
   },
 
 };

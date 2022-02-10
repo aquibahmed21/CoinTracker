@@ -20,6 +20,10 @@ const UserSchema = new mongoose.Schema( {
 	term: {
 		type: String,
 		required: true,
+	},
+	user: {
+		type: String,
+		required: true
 	}
 } );
 

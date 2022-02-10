@@ -14,8 +14,13 @@ const Hodling = require( "../../models/Hodling" );
 // @access 		Public
 router.get( "/", async ( req, res ) =>
 {
-  const record = await Hodling.find();
-  res.status( 200 ).json( record );
+  const { user } = req.body;
+  let record = null;
+  if ( user )
+    record = await Hodling.find( { user } );
+  else
+    record = await Hodling.find();
+  res.status( 200 ).json({status: "success", message: record});
 } );
 
 // @route 		POST api/hodling
@@ -29,15 +34,16 @@ router.post(
     check( "qty", "Coin quantity required" ).not().isEmpty(),
     check( "price", "Price required" ).not().isEmpty(),
     check( "term", "Add Term/Comment" ).not().isEmpty(),
+    check ( "user", "User ID required" ).not().isEmpty()
   ],
   async ( req, res ) =>
   {
     const errors = validationResult( req );
-    const { coin, pair, qty, price, term } = req.body;
+    const { coin, pair, qty, price, term, user } = req.body;
+
 
     if ( !errors.isEmpty() )
-      return res.status( 400 ).json( { errors: errors.array() } );
-
+      return res.status( 200 ).json( { status: "invalid", msg: errors.array() } );
     // const { coin, pair, qty, price, term } = req.body;
     try {
 
@@ -46,15 +52,16 @@ router.post(
         pair,
         qty,
         price,
-        term
+        term,
+        user
       } );
-
       await coinPair.save();
-      return res.status( 200 ).json( { msg: "Hodling row inserted" } );
+      console.log( coinPair );
+      return res.status( 200 ).json( { status: "success", msg: "Hodling row inserted" } );
 
       // return jsonwebtoken
     } catch ( error ) {
-      return res.status( 500 ).send( error );
+      return res.status( 200 ).json( { status: "invalid", msg: errors } );
     }
   }
 );
@@ -64,7 +71,7 @@ router.post(
 // @access 		Public
 router.post( "/update", async ( req, res ) =>
 {
-  const { id, coin, coinOld, pair, qty, price, term } = req.body;
+  const { id, coin, coinOld, pair, qty, price, term, uid } = req.body;
   await Hodling.updateOne(
     {
       "coin": coinOld,

@@ -7,13 +7,13 @@ const connectDB = require( "./config/db" );
 const fetch = require( "node-fetch" );
 
 const path = require( 'path' );
-const cors = require('cors');
+const cors = require( 'cors' );
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
-app.options('*', cors());
+app.use( cors() );
+app.options( '*', cors() );
 
 // Connect Database;
 connectDB();
@@ -34,7 +34,7 @@ app.use( "/api/allOrders", require( "./routes/api/allOrders" ) );
 
 app.get( '/', ( req, res ) =>
 {
-	res.status( 200).sendFile(path.join(__dirname, "/html/signin.html"));
+	res.status( 200 ).sendFile( path.join( __dirname, "/html/signin.html" ) );
 } );
 
 app.get( "/dashboard", ( req, res ) =>
@@ -44,25 +44,7 @@ app.get( "/dashboard", ( req, res ) =>
 
 app.post( "/dashboard", async ( req, res ) =>
 {
-	const { token } = req.body;
-	console.log( token );
-console.log(__dirname)
-	try {
-		const rawResponse = await fetch( __dirname + "/routes/api/auth",
-			{
-				method: "GET",
-				headers: {
-					"x-auth-token": token,
-				},
-			} );
-
-
-		const content = await rawResponse.json();
-		console.log( content );
-	} catch (error) {
-console.log( error );
-	}
-	// res.status( 200 ).sendFile( path.join( __dirname, 'index.html' ) );
+	res.status( 200 ).sendFile( path.join( __dirname, 'index.html' ) );
 } );
 
 app.listen( PORT, () => console.log( "listening to " + PORT ) );

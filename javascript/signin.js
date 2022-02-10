@@ -4,19 +4,18 @@ window.addEventListener( 'load', async () =>
 {
 	const token = localStorage.getItem( 'token' );
 	if ( token ) {
-		const res = await fetch( "/api/auth", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				"x-auth-token": token,
-			},
-		} );
-		const user = await res.json();
-		if ( user ) {
-			console.log( user.email );
-			console.log( "user is logged in" );
-		}
-		// window.location.href = "/dashboard";
+		let res_data = null;
+		res_data = await fetch( "/api/auth",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					"x-auth-token": token,
+				},
+			} );
+		res_data = await res_data.json();
+		if ( res_data && res_data.status === "success" )
+			window.location.href = "/dashboard";
 	}
 } );
 
@@ -25,28 +24,27 @@ signinform.addEventListener( 'click', async ( event ) =>
 	// event.preventDefault();
 	if ( !event.target.id ) return;
 	const { id } = event.target;
-	switch ( id )
-	{
+	switch ( id ) {
 		case 'signin':
-			signinform.setAttribute( 'route' , "/api/auth" );
+			signinform.setAttribute( 'route', "/api/auth" );
 			signinform.getElementsByTagName( "button" )[ 0 ].setAttribute( "id", "btnsignin" );
 			signinform.getElementsByTagName( "button" )[ 0 ].getElementsByTagName( "span" )[ 0 ].setAttribute( "id", "btnsignin" );
-		break;
+			break;
 		case 'signup':
 			signinform.setAttribute( 'route', "/api/users" );
 			signinform.getElementsByTagName( "button" )[ 0 ].setAttribute( "id", "btnsignup" );
 			signinform.getElementsByTagName( "button" )[ 0 ].getElementsByTagName( "span" )[ 0 ].setAttribute( "id", "btnsignup" );
-		break;
+			break;
 		case 'reset':
 			signinform.setAttribute( 'route', "/api/reset" );
 			signinform.getElementsByTagName( "button" )[ 0 ].setAttribute( "id", "btnsignreset" );
 			signinform.getElementsByTagName( "button" )[ 0 ].getElementsByTagName( "span" )[ 0 ].setAttribute( "id", "btnsignreset" );
-		break;
+			break;
 		case 'btnsignin':
 
 			const email = signinform.querySelector( "#email" ).value,
-						password = signinform.querySelector( "#pass" ).value,
-						route = signinform.getAttribute( 'route' );
+				password = signinform.querySelector( "#pass" ).value,
+				route = signinform.getAttribute( 'route' );
 
 
 			if ( !email.length || !password.length )
@@ -54,8 +52,7 @@ signinform.addEventListener( 'click', async ( event ) =>
 
 			const data = { email, password };
 			let res = null, res_data = null;
-			try
-			{
+			try {
 				res = await fetch( route, {
 					method: 'POST',
 					headers: {
@@ -65,16 +62,16 @@ signinform.addEventListener( 'click', async ( event ) =>
 					body: JSON.stringify( data )
 				} );
 				res_data = await res.json();
-			} catch (e) {}
+			} catch ( e ) { }
 
 			if ( res_data && res_data.status === "success" ) {
 				localStorage.setItem( "token", res_data.token );
 				window.location.href = "/dashboard";
 			}
-			else if ( res_data.status == "invalid" ) {
-				alert( "user/password invalid" );
+			else if ( res_data && res_data.status == "invalid" ) {
+				alert( res_data.msg );
 			}
-		break;
+			break;
 		case 'btnsignup': break;
 		case 'btnsignreset': break;
 

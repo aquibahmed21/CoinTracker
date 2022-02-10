@@ -14,13 +14,13 @@ const User = require( "../../models/Users" );
 // @access 		Public
 router.get( "/", auth, async ( req, res ) =>
 {
-	try {
-		const user = await User.findById( req.user.id ).select( "-password" );
-		res.json( user );
-	} catch ( error ) {
-		console.log( error );
-		res.status( 500 ).send( "Server Error" );
-	}
+  try {
+    const user = await User.findById( req.user.id ).select( "-password" );
+    res.status( 200 ).json( { status: "success", user } );
+  } catch ( error ) {
+    console.log( error );
+    res.status( 200 ).json( { status: "invalid", error } );
+  }
 } );
 
 // @route 		POST api/auth
@@ -50,19 +50,15 @@ router.post(
 
       if ( !user )
         return res
-          .status( 200 ).json( { status: "invalid" } );
-          // .status( 400 )
-          // .json( { errors: [ { msg: "Invalid Credentials" } ] } );
+          .status( 200 ).json( { status: "invalid", msg: "User does not exist" } );
 
-			const isMatch = await bcrycpt.compare( password, user.password );
+      const isMatch = await bcrycpt.compare( password, user.password );
 
-			if ( !isMatch )
-				return res
-        .status( 200 ).json( { status: "invalid" } );
-				// .status( 400 )
-				// .json( { errors: [ { msg: "Invalid Credentials" } ] } );
+      if ( !isMatch )
+        return res
+          .status( 200 ).json( { status: "invalid", msg: "Passwords do not match" } );
 
-			// return jsonwebtoken
+      // return jsonwebtoken
 
       const payload = {
         user: {
@@ -78,8 +74,8 @@ router.post(
           if ( err )
             console.log( err );
           else
-            res.status(200).json( { status: 'success', token } );
-``
+            res.status( 200 ).json( { status: 'success', token } );
+          ``;
         } );
 
     } catch ( error ) {
