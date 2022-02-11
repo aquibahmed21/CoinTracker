@@ -230,41 +230,6 @@ const JSONDATA = {
     term: "dip"
   },
 
-
-  // mana3: {
-  //   coin: "mana",
-  //   pair: "usdt",
-  //   qty: 1.7,
-  //   price: 2.98,
-  //   term: "buy-order"
-  // },
-
-  // avax1: {
-  //   coin: "avax",
-  //   pair: "usdt",
-  //   qty: 0.06,
-  //   price: 77.91,
-  //   term: "buy-order"
-  // },
-
-
-
-  // enj4: {
-  //   coin: "enj",
-  //   pair: "usdt",
-  //   qty: 2.8,
-  //   price: 1.8,
-  //   term: "buy-order"
-  // },
-
-  // ada5: {
-  //   coin: "ada",
-  //   pair: "usdt",
-  //   qty: 4.5,
-  //   price: 1.13,
-  //   term: "buy-order"
-  // },
-
   ach1: {
     coin: "ach",
     pair: "usdt",
@@ -289,9 +254,14 @@ const JSONDATA = {
     term: "dip"
   },
 
-
-
-
+  ftm4: {
+    coin: "ftm",
+    pair: "usdt",
+    qty: 2.3,
+    price: 2.2,
+    // soldPrice: 2.22158,
+    term: "dip"
+  },
 
   lrc5: {
     coin: "lrc",
@@ -300,6 +270,51 @@ const JSONDATA = {
     price: 1.0725,
     term: "dip"
   },
+
+// -----------
+  rune1: {
+    coin: "rune",
+    pair: "usdt",
+    qty: 1.1,
+    price: 4.553,
+    term: "dip"
+  },
+  enj4: {
+    coin: "enj",
+    pair: "usdt",
+    qty: 2.5,
+    price: 2.036,
+    term: "dip"
+  },
+  dot4: {
+    coin: "dot",
+    pair: "usdt",
+    qty: 0.25,
+    price: 20.5479,
+    term: "dip"
+  },
+  bnb4: {
+    coin: "bnb",
+    pair: "usdt",
+    qty: 0.012,
+    price: 417.7999,
+    term: "dip"
+  },
+  hbar6: {
+    coin: "hbar",
+    pair: "usdt",
+    qty: 20,
+    price: 0.2512,
+    term: "dip"
+  },
+  doge8: {
+    coin: "doge",
+    pair: "usdt",
+    qty: 35,
+    price: 0.1534996,
+    term: "dip"
+  },
+// -----------
 
   //? yash
 
@@ -382,14 +397,14 @@ const JSONDATA = {
   wrx5: {
     coin: "wrx",
     pair: "usdt",
-    qty: 1.992650174,
+    qty: 1.79533279,
     price: 0.92799,
     term: "commission"
   },
   usdt: {
     coin: "usdt",
     pair: "inr",
-    qty: 0.92864,
+    qty: 17.962615,
     price: 78.56,
     term: "base"
   },
@@ -1050,14 +1065,6 @@ const SoldJSon = {
     term: "yash"
   },
 
-  ftm4: {
-    coin: "ftm",
-    pair: "usdt",
-    qty: 2.3,
-    buyPrice: 2.2,
-    soldPrice: 2.22158,
-    term: "sell-order"
-  },
 
   atom3: {
     coin: "atom",
