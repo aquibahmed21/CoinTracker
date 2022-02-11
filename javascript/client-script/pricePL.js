@@ -4,26 +4,7 @@ import * as Const from "./constants.js";
 import * as webSocket from "./websocket.js";
 // import * as history from "./jsonformatter.js";
 
-window.addEventListener( 'load', async () =>
-{
-	const token = localStorage.getItem( 'token' );
-	if ( token ) {
-		let res_data = null;
-		res_data = await fetch( "/api/auth",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					"x-auth-token": token,
-				},
-			} );
-		res_data = await res_data.json();
-    if ( res_data && res_data.status === "success" )
-      document.getElementsByTagName( "body" )[ 0 ].setAttribute( "uid", res_data.user._id );
-	}
-} );
-
-// javascript enum for the different types of notifications
+// javascript enums
 const Side = {
   SELL: "sell",
   BUY: "buy"
@@ -34,10 +15,44 @@ const Type = {
   STOP_LIMIT: "stop_limit"
 };
 
-const Route = {
-  ORDER: "",
-  FUNDS: ""
+const Method = {
+  GET: "GET",
+  POST: "POST",
+  PUT: "PUT",
+  DELETE: "DELETE"
 };
+
+const Routes = {
+  AUTH_GET: "/api/auth",
+  ORDER_POST: "/api/order",
+  HODLING_POST: "/api/hodling",
+  PL_LIST_POST: "/api/pllist",
+  FUNDS_GET: "/api/funds",
+  ALL_ORDER_GET: "/api/allOrders",
+};
+
+
+const PORT = 3000;
+let PL_LIST = Const.SoldJSon;
+let HODLING = Const.JSONDATA;
+
+window.addEventListener( 'load', async () =>
+{
+	const token = localStorage.getItem( 'token' );
+	if ( token ) {
+		const res_data = await Const.fetchUtils(Routes.AUTH_GET, Method.GET);
+    if ( res_data && res_data.status === "success" )
+      localStorage.setItem( "uid", res_data.user._id );
+
+    if ( location.port && location.port == PORT )
+    {
+      debugger;
+      PL_LIST = await Const.fetchUtils( Routes.PL_LIST_POST, Method.GET );
+      HODLING = await Const.fetchUtils( Routes.HODLING_POST, Method.GET );
+    }
+	}
+} );
+
 
 const arr = [];
 
@@ -53,15 +68,19 @@ const coinDetailsPopup = document.getElementsByClassName( "signup-container" )[ 
 
 const arrTicker = await Const.getTicker() || await Const.getTicker();
 
-
+function ShowNotification ( content )
+{
+  notificationBTN.innerHTML = content;
+  notificationBTN.classList.add( "visible" );
+}
 
 if ( !arrTicker )
   window.alert( "Error: No ticker found, Please refresh.." );
 
 let usdtinr = arrTicker.filter( e => e.symbol == ( "usdtinr" ) )[ 0 ].lastPrice;
 
-await AddHodlingRows_FromJSON( Const.JSONDATA );
-await AddPLRows_FromJSON( Const.SoldJSon );
+await AddHodlingRows_FromJSON( HODLING );
+await AddPLRows_FromJSON( PL_LIST );
 SummationPLTable( hodlingBody );
 SummationPLTable( plBody );
 webSocket.wsSubscribe( LiveUpdateHodlingTable );
@@ -96,25 +115,12 @@ document.addEventListener( 'long-press', async function ( e )
   const qty = targetRow.children[ 2 ].textContent;
   const currentPrice = targetRow.children[ 5 ].textContent.split( " " )[ 0 ];
   const type = Type.LIMIT; //Enum
-
-  try {
-    const rawResponse = await fetch( '/api/order',
-      {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify( { coinpair, side, qty, currentPrice, type, side } )
-      } );
-
-    const content = await rawResponse.json();
-    console.log( content );
-
-  } catch ( error ) {
-    console.log( error );
-  }
+  const body = { coinpair, side, qty, currentPrice, type, side };
+  const response = await Const.fetchUtils(Routes.ORDER_POST, Method.POST, body);
+  console.log( response.msg );
 } );
+
+
 
 coinDetailsPopup.addEventListener( "click", async ( event ) =>
 {
@@ -135,30 +141,16 @@ coinDetailsPopup.addEventListener( "click", async ( event ) =>
         const price = +coinDetailsPopup.querySelector( "#pets-birthday" ).value;
         const term = coinDetailsPopup.querySelector( "#divCommentTerm" ).textContent;
         if ( !uid || !coin || !pair || !qty || !price ) {
-          notificationBTN.innerHTML = `<p>Please fill all the fields</p>`;
-          notificationBTN.classList.add( "visible" );
-          return;
+          const content = `<p>Please fill all the fields</p>`;
+          return ShowNotification( content );
         }
         else {
           coinDetailsPopup.classList.add( "Util_hide" );
           ResetForm();
         }
-        const jsonStringyfied = { coin, pair, qty, price, term, uid };
-        try {
-          const rawResponse = await fetch( '/api/hodling',
-            {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify( jsonStringyfied )
-            } );
-          const content = await rawResponse.json();
-          console.log( content );
-        } catch ( error ) {
-          console.log( error );
-        }
+        const body = { coin, pair, qty, price, term, uid };
+        const response = await Const.fetchUtils( Routes.HODLING_POST, Method.POST, body );
+        console.log( response.msg );
       }
   }
 
@@ -225,12 +217,11 @@ function OnDBClick_HodlingRows ()
     const currentPrice = +targetRow.children[ 5 ].textContent.split( " " )[ 0 ];
     const countNumber = +countDecimals( buyPrice );
     const margin = +targetRow.children[ 10 ].textContent.split( " " )[ 0 ];
-
-    notificationBTN.innerHTML = `<p>Trigger Value at ${ getStopLossValue( currentPrice, 2, countNumber ) } <br />
+    const content = `<p>Trigger Value at ${ getStopLossValue( currentPrice, 2, countNumber ) } <br />
     Sale Value at ${ getStopLossValue( currentPrice, 4, countNumber ) } <br />
     You get ${ getStopLossValue( margin, 4, countNumber ) } ₹</p>`;
 
-    notificationBTN.classList.add( "visible" );
+    ShowNotification( content );
   };
 }
 

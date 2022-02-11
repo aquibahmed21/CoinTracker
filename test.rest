@@ -34,6 +34,10 @@ Content-Type: application/json
 ###
 GET http://localhost:3000/api/pllist
 
+{
+  "user": "620281e7258712dce7454519"
+}
+
 ###
 POST http://localhost:3000/api/hodling
 Content-Type: application/json
@@ -115,10 +119,3 @@ GET http://localhost:3000/api/allOrders
 ###
 GET http://localhost:3000/api/funds
 
-###
-POST http://localhost:3000/dashboard
-Content-Type: application/json
-
-{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjIwMjgxZTcyNTg3MTJkY2U3NDU0NTE5In0sImlhdCI6MTY0NDQ5NDc5NywiZXhwIjoxNjQ0ODU0Nzk3fQ.yU__Jagc6hmNhBNn4NM0TWOq1u-qj_9EURVeNPnso4w"
-}

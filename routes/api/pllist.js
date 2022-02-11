@@ -7,9 +7,15 @@ const Hodling = require("../../models/PLlist");
 // @route 		GET api/pllist
 // @desc 			Get Profit / Loss Details
 // @access 		Public
-router.get( "/", ( req, res ) =>
+router.get( "/", async ( req, res ) =>
 {
-	res.send( "hodling route" );
+	const { user } = req.body;
+  let record = null;
+  if ( user )
+    record = await Hodling.find( { user } );
+  else
+    record = await Hodling.find();
+  res.status( 200 ).json({status: "success", message: record});
 } );
 
 router.post(

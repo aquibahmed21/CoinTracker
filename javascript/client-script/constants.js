@@ -314,6 +314,13 @@ const JSONDATA = {
     price: 0.1534996,
     term: "dip"
   },
+  sol5: {
+    coin: "sol",
+    pair: "usdt",
+    qty: 0.047,
+    price: 106.942,
+    term: "dip"
+  },
 // -----------
 
   //? yash
@@ -1130,6 +1137,27 @@ const getTicker = async () =>
   }
 };
 
+// Utils fetch functions
+async function fetchUtils ( url, method, body = null )
+{
+  body = body ? JSON.stringify( body ) : null;
+  try {
+    const res_data = await fetch( url,
+      {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": localStorage.getItem( "token" ),
+          "user": localStorage.getItem( "uid" )
+        },
+        body: body
+      } );
+    return await res_data.json();
+  } catch (err) {
+    return { status: "invalid", msg: err };
+  }
+}
+
 function GetDisplayTime (timeSent)
 {
   const CALENDAR_DAYS = ["Sun","Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
@@ -1195,4 +1223,4 @@ function GetDisplayTime (timeSent)
   }
 }
 
-export { JSONDATA, SoldJSon, delay, baseFun, getTicker, fearGreed, GetDisplayTime };
+export { JSONDATA, SoldJSon, delay, baseFun, getTicker, fearGreed, GetDisplayTime, fetchUtils };
