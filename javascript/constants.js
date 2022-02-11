@@ -265,6 +265,30 @@ const JSONDATA = {
   //   term: "buy-order"
   // },
 
+  ach1: {
+    coin: "ach",
+    pair: "usdt",
+    qty: 40,
+    price: 0.05131,
+    term: "dip"
+  },
+
+  dusk1: {
+    coin: "dusk",
+    pair: "usdt",
+    qty: 4,
+    price: 0.5109,
+    term: "dip"
+  },
+
+  spell1: {
+    coin: "spell",
+    pair: "usdt",
+    qty: 285,
+    price: 0.00704,
+    term: "dip"
+  },
+
 
 
 
@@ -324,6 +348,30 @@ const JSONDATA = {
     pair: "inr",
     qty: 2.3,
     price: 84.0,
+    term: "yash"
+  },
+
+  shib8: {
+    coin: "shib",
+    pair: "inr",
+    qty: 40096,
+    price: 0.002494,
+    term: "yash"
+  },
+
+  win4: {
+    coin: "win",
+    pair: "inr",
+    qty: 3597,
+    price: 0.0278,
+    term: "yash"
+  },
+
+  reef5: {
+    coin: "reef",
+    pair: "inr",
+    qty: 196,
+    price: 1.0153,
     term: "yash"
   },
 
