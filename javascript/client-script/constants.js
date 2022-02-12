@@ -321,6 +321,20 @@ const JSONDATA = {
     price: 106.942,
     term: "dip"
   },
+  dot5: {
+    coin: "dot",
+    pair: "usdt",
+    qty: 0.35,
+    price: 18.81,
+    term: "dip"
+  },
+  celr5: {
+    coin: "celr",
+    pair: "usdt",
+    qty: 100,
+    price: 0.04998,
+    term: "dip"
+  },
 // -----------
 
   //? yash
@@ -397,6 +411,28 @@ const JSONDATA = {
     term: "yash"
   },
 
+  hot2: {
+    coin: "hot",
+    pair: "inr",
+    qty: 159,
+    price: 0.389,
+    term: "yash"
+  },
+  shib9: {
+    coin: "shib",
+    pair: "inr",
+    qty: 44072,
+    price: 0.002269,
+    term: "yash"
+  },
+  celr6: {
+    coin: "celr",
+    pair: "inr",
+    qty: 25,
+    price: 3.9827,
+    term: "yash"
+  },
+
   //? yash
 
   //! dip buy
@@ -404,14 +440,14 @@ const JSONDATA = {
   wrx5: {
     coin: "wrx",
     pair: "usdt",
-    qty: 1.79533279,
+    qty: 1.76129602,
     price: 0.92799,
     term: "commission"
   },
   usdt: {
     coin: "usdt",
     pair: "inr",
-    qty: 17.962615,
+    qty: 0.073959,
     price: 78.56,
     term: "base"
   },
