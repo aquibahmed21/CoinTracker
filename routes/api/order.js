@@ -1,4 +1,4 @@
-require( 'dotenv' ).config();
+require( "dotenv" ).config();
 
 const express = require( "express" );
 const fetch = require( "node-fetch" );
@@ -24,11 +24,11 @@ router.post( "/", async ( req, res ) =>
 	{
 		const rawResponse = await fetch( burl,
 		{
-			method: 'POST',
+			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 				"Content-Type": "application/x-www-form-urlencoded",
-				'X-Api-Key': process.env.API_KEY,
+				"X-Api-Key": process.env.API_KEY,
 			},
 		});
 

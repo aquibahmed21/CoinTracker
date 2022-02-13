@@ -30,7 +30,7 @@ function wsSubscribe ( callback = null )
 		{
 			document.addEventListener( "visibilitychange", () =>
 			{
-				(document.visibilityState === 'visible') ?
+				(document.visibilityState === "visible") ?
 					ws.send( JSON.stringify( subscribeTicker ) ) :
 					ws.send( JSON.stringify( unSubscribeTicker ) );
 			});

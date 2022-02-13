@@ -1,4 +1,4 @@
-require( 'dotenv' ).config();
+require( "dotenv" ).config();
 
 const express = require( "express" );
 const fetch = require( "node-fetch" );
@@ -41,9 +41,9 @@ router.get( "/", async ( req, res ) =>
 			{
 				method: Method.GET,
 				headers: {
-					// 'Accept': 'application/json',
-					// 'Content-Type': 'application/json',
-					'X-Api-Key': process.env.API_KEY,
+					// "Accept": "application/json",
+					// "Content-Type": "application/json",
+					"X-Api-Key": process.env.API_KEY,
 				},
 			} );
 
@@ -64,9 +64,9 @@ router.get( "/", async ( req, res ) =>
 				{
 					method: Method.GET,
 					headers: {
-						// 'Accept': 'application/json',
-						// 'Content-Type': 'application/json',
-						'X-Api-Key': process.env.API_KEY,
+						// "Accept": "application/json",
+						// "Content-Type": "application/json",
+						"X-Api-Key": process.env.API_KEY,
 					},
 				} );
 

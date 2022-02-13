@@ -1,6 +1,6 @@
 "use strict";
 
-require( 'dotenv' ).config();
+require( "dotenv" ).config();
 const mongoose = require( "mongoose" );
 const db = process.env.DB_Connection_String;
 

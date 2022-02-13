@@ -36,21 +36,21 @@ const PORT = 3000;
 let PL_LIST = Const.SoldJSon;
 let HODLING = Const.JSONDATA;
 
-window.addEventListener( 'load', async () =>
+window.addEventListener( "load", async () =>
 {
-	const token = localStorage.getItem( 'token' );
-	if ( token ) {
-		const res_data = await Const.fetchUtils(Routes.AUTH_GET, Method.GET);
+  const token = localStorage.getItem( "token" );
+  if ( token ) {
+    const res_data = await Const.fetchUtils( Routes.AUTH_GET, Method.GET );
     if ( res_data && res_data.status === "success" )
       localStorage.setItem( "uid", res_data.user._id );
 
-    if ( location.port && location.port == PORT )
-    {
-      debugger;
+    if ( location.port && location.port == PORT ) {
       PL_LIST = await Const.fetchUtils( Routes.PL_LIST_POST, Method.GET );
+      PL_LIST = PL_LIST.message;
       HODLING = await Const.fetchUtils( Routes.HODLING_POST, Method.GET );
+      HODLING = HODLING.message;
     }
-	}
+  }
 } );
 
 
@@ -91,14 +91,14 @@ hodlingBody[ 0 ].addEventListener( "dblclick", OnDBClick_HodlingRows() );
 
 window.onanimationend = async ( e ) =>
 {
-  // stacksnippet's console also has CSS animations...
+  // stacksnippet"s console also has CSS animations...
   if ( e.type === "animationend" && e.target.id == notificationBTN.id ) {
     await Const.delay( 11000 );
     notificationBTN.classList.remove( "visible" );
   }
 };
 
-document.addEventListener( 'long-press', async function ( e )
+document.addEventListener( "long-press", async function ( e )
 {
   // https://github.com/john-doherty/long-press-event
   // stop the event from bubbling up
@@ -116,7 +116,7 @@ document.addEventListener( 'long-press', async function ( e )
   const currentPrice = targetRow.children[ 5 ].textContent.split( " " )[ 0 ];
   const type = Type.LIMIT; //Enum
   const body = { coinpair, side, qty, currentPrice, type, side };
-  const response = await Const.fetchUtils(Routes.ORDER_POST, Method.POST, body);
+  const response = await Const.fetchUtils( Routes.ORDER_POST, Method.POST, body );
   console.log( response.msg );
 } );
 

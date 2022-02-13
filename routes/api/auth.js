@@ -1,4 +1,4 @@
-require( 'dotenv' ).config();
+require( "dotenv" ).config();
 
 const express = require( "express" );
 const router = express.Router();
@@ -74,7 +74,7 @@ router.post(
           if ( err )
             console.log( err );
           else
-            res.status( 200 ).json( { status: 'success', token } );
+            res.status( 200 ).json( { status: "success", token } );
           ``;
         } );
 

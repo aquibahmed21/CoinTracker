@@ -2,10 +2,10 @@ const express = require( "express" );
 const app = express();
 const router = express.Router();
 const { check, validationResult } = require( "express-validator" );
-const cors = require( 'cors' );
+const cors = require( "cors" );
 
 app.use( cors() );
-app.options( '*', cors() );
+app.options( "*", cors() );
 
 const Hodling = require( "../../models/Hodling" );
 
