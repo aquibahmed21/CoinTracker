@@ -307,13 +307,6 @@ const JSONDATA = {
     price: 0.2512,
     term: "dip"
   },
-  doge8: {
-    coin: "doge",
-    pair: "usdt",
-    qty: 35,
-    price: 0.1534996,
-    term: "dip"
-  },
   sol5: {
     coin: "sol",
     pair: "usdt",
@@ -328,13 +321,17 @@ const JSONDATA = {
     price: 18.81,
     term: "dip"
   },
+
   celr5: {
     coin: "celr",
     pair: "usdt",
     qty: 100,
     price: 0.04998,
-    term: "dip"
+    // buyPrice: 0.04998,
+    // soldPrice: 0.05145,
+    term: "40% sold"
   },
+
 // -----------
 
   //? yash
@@ -1133,6 +1130,16 @@ const SoldJSon = {
     qty: 26,
     buyPrice: 0.1561978,
     soldPrice: 0.1571003,
+    term: "dip"
+  },
+
+
+  doge8: {
+    coin: "doge",
+    pair: "usdt",
+    qty: 35,
+    buyPrice: 0.1534996,
+    soldPrice: 0.1571998,
     term: "dip"
   },
 
