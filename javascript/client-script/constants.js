@@ -332,6 +332,14 @@ const JSONDATA = {
     term: "40% sold"
   },
 
+  gala5: {
+    coin: "gala",
+    pair: "usdt",
+    qty: 26,
+    price: 0.28358,
+    term: "dip"
+  },
+
 // -----------
 
   //? yash
