@@ -36,7 +36,7 @@ const PORT = 3000;
 let PL_LIST = Const.SoldJSon;
 let HODLING = Const.JSONDATA;
 
-window.addEventListener( "load", async () =>
+window.addEventListener( "DOMContentLoaded", async () =>
 {
   const token = localStorage.getItem( "token" );
   if ( token ) {
@@ -51,10 +51,8 @@ window.addEventListener( "load", async () =>
       HODLING = HODLING.message;
     }
   }
-} );
 
-
-const arr = [];
+  const arr = [];
 
 const hodlingTable = document.getElementById( "table" );
 const hodlingBody = hodlingTable.getElementsByTagName( "tbody" );
@@ -469,3 +467,8 @@ async function UpdateFearGreedIndex ( usdtinr, isUpdate = false )
     divFearGreedContainer[ 0 ].querySelector( "#spanClassification" ).textContent = fearGreed.data[ 0 ].value_classification;
   }
 }
+
+
+} );
+
+

@@ -34,12 +34,12 @@ router.post(
     check( "qty", "Coin quantity required" ).not().isEmpty(),
     check( "price", "Price required" ).not().isEmpty(),
     check( "term", "Add Term/Comment" ).not().isEmpty(),
-    check ( "user", "User ID required" ).not().isEmpty()
+    check ( "uid", "User ID required" ).not().isEmpty()
   ],
   async ( req, res ) =>
   {
     const errors = validationResult( req );
-    const { coin, pair, qty, price, term, user } = req.body;
+    const { coin, pair, qty, price, term, uid } = req.body;
 
 
     if ( !errors.isEmpty() )
@@ -53,7 +53,7 @@ router.post(
         qty,
         price,
         term,
-        user
+        uid
       } );
       await coinPair.save();
       console.log( coinPair );

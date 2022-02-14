@@ -61,7 +61,7 @@ class UI
 	static async NavigateToHome ()
 	{
 		const auth = await Auth.VerifyToken();
-		if ( auth && auth.status === "success" ) {
+		if ( auth && auth.status === "success" && auth.user) {
 			window.location.href = "/dashboard";
 		}
 	}

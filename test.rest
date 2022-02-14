@@ -42,12 +42,12 @@ POST http://localhost:3000/api/hodling
 Content-Type: application/json
 
 {
-  "coin": "usd1tdd",
+  "coin": "usdt",
   "pair": "inr",
-  "qty": 0.027273,
-  "price": 78.56,
+  "qty": 58935,
+  "price": 75.56,
   "term": "short",
-  "user": "620281e7258712dce7454519d"
+  "uid": "620a3530de00e6281d3c51da"
 }
 
 ###
