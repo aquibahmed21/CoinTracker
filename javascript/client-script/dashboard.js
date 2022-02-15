@@ -77,8 +77,40 @@ window.addEventListener( "load", async () =>
   const plBody = plTable.getElementsByTagName( "tbody" );
 
   const notificationBTN = document.getElementById( "notif" );
-  const caption = hodlingTable.getElementsByTagName( "caption" )[ 0 ];
+  const hodlingCaption = hodlingTable.getElementsByTagName( "caption" )[ 0 ];
+  const plCaption = plTable.getElementsByTagName( "caption" )[ 0 ];
   const coinDetailsPopup = document.getElementsByClassName( "signup-container" )[ 0 ];
+  const LongPressPopup = document.getElementsByClassName( "divLongPressPopUp" )[ 0 ];
+
+  LongPressPopup.addEventListener( "click", ( event ) =>
+  {
+    const data = JSON.parse( LongPressPopup.getAttribute( "data" ) );
+    const target = event.target.id;
+    debugger;
+    switch ( target ) {
+
+      case "btnEdit":
+        break;
+      case "btnSell":
+        break;
+      case "btnSL":
+        break;
+      case "btnSLValue":
+        LongPressPopup.classList.add( "Util_hide" );
+        ShowSLFunction( document.getElementById(data.targetID), ShowNotification );
+        break;
+      case "btnDelete":
+        LongPressPopup.classList.add( "Util_hide" );
+        document.getElementById(data.targetID).remove();
+        break;
+      case "btnCls":
+        LongPressPopup.removeAttribute( "data" );
+        LongPressPopup.classList.add( "Util_hide" );
+        break;
+
+      default: break;
+    }
+  } );
 
   const arrTicker = await Const.getTicker() || await Const.getTicker();
 
@@ -125,13 +157,22 @@ window.addEventListener( "load", async () =>
       return;
 
     const coinpair = targetRow.children[ 0 ].textContent.trim();
-    const side = Side.SELL; //Enum
+    const isINR = coinpair.includes( "inr" );
+    const coin = coinpair.split( isINR ? "inr" : "usdt" )[ 0 ];
+    const pair = isINR ? "inr" : "usdt";
     const qty = targetRow.children[ 2 ].textContent;
-    const currentPrice = targetRow.children[ 5 ].textContent.split( " " )[ 0 ];
+    const buyPrice = +targetRow.children[ 1 ].textContent;
+    const soldPrice = targetRow.children[ 5 ].textContent.split( " " )[ 0 ];
+    const comment = targetRow.querySelector( "#tdTerm" ).textContent;
+    const side = Side.SELL; //Enum
     const type = Type.LIMIT; //Enum
-    const body = { coinpair, side, qty, currentPrice, type, side };
-    const response = await Const.fetchUtils( Routes.ORDER_POST, Method.POST, body );
-    console.log( response.msg );
+    const targetID = targetRow.id;
+    // const body = { coinpair, side, qty, currentPrice: soldPrice, type, side };
+
+    LongPressPopup.setAttribute( "data", JSON.stringify( { coin, pair, buyPrice, soldPrice, qty, comment, targetID } ) );
+    LongPressPopup.classList.remove( "Util_hide" );
+    // const response = await Const.fetchUtils( Routes.ORDER_POST, Method.POST, body );
+    // console.log( response.msg );
   } );
 
 
@@ -153,7 +194,12 @@ window.addEventListener( "load", async () =>
           const pair = coinDetailsPopup.querySelector( "[checked]" )?.value || "usdt";
           const qty = +coinDetailsPopup.querySelector( "#pets-breed" ).value;
           const price = +coinDetailsPopup.querySelector( "#pets-birthday" ).value;
+          const buyPrice = +coinDetailsPopup.querySelector( "#pets-birthday" ).value;
           const term = coinDetailsPopup.querySelector( "#divCommentTerm" ).textContent;
+          const soldPrice = +coinDetailsPopup.querySelector( "#pets-birthday2" ).value;
+
+          const isPLList = !coinDetailsPopup.querySelector( "#divSoldPrice" ).classList.contains( "Util_hide" );
+
           if ( !uid || !coin || !pair || !qty || !price ) {
             const content = `<p>Please fill all the fields</p>`;
             return ShowNotification( content );
@@ -162,10 +208,12 @@ window.addEventListener( "load", async () =>
             coinDetailsPopup.classList.add( "Util_hide" );
             ResetForm();
           }
-          const body = { coin, pair, qty, price, term, uid };
-          const response = await Const.fetchUtils( Routes.HODLING_POST, Method.POST, body );
+          const body = { coin, pair, qty, price, term, uid, soldPrice, buyPrice };
+          const response = await Const.fetchUtils( ( isPLList ? Routes.PL_LIST_POST : Routes.HODLING_POST ), Method.POST, body );
           console.log( response.msg );
-          await AddHodlingRows_FromJSON( [ { coin, pair, qty, price, term, uid } ] );
+          isPLList ?
+            await AddPLRows_FromJSON( [ body ] ) :
+            await AddHodlingRows_FromJSON( [ body ] );
         }
     }
 
@@ -174,17 +222,28 @@ window.addEventListener( "load", async () =>
       coinDetailsPopup.querySelector( "#pets-name" ).value = "";
       coinDetailsPopup.querySelector( "#pets-breed" ).value = "";
       coinDetailsPopup.querySelector( "#pets-birthday" ).value = "";
+      coinDetailsPopup.querySelector( "#pets-birthday2" ).value = "";
       coinDetailsPopup.querySelector( "#divCommentTerm" ).textContent = "";
       coinDetailsPopup.querySelector( "[checked]" )?.removeAttribute( "checked" );
       coinDetailsPopup.querySelector( "#pet-gender-female" ).checked = true;
+
+      coinDetailsPopup.querySelector( "#divSoldPrice" ).classList.add( "Util_hide" );
     }
   },
 
-    caption.addEventListener( "click", () =>
+    hodlingCaption.addEventListener( "click", () =>
     {
       coinDetailsPopup.classList.remove( "Util_hide" );
       coinDetailsPopup.querySelector( "#pets-name" ).focus();
+      coinDetailsPopup.querySelector( "#divSoldPrice" ).classList.add( "Util_hide" );
     } ) );
+
+  plCaption.addEventListener( "click", () =>
+  {
+    coinDetailsPopup.classList.remove( "Util_hide" );
+    coinDetailsPopup.querySelector( "#pets-name" ).focus();
+    coinDetailsPopup.querySelector( "#divSoldPrice" ).classList.remove( "Util_hide" );
+  } );
 
   function AddAllHistory_FromDB ( history )
   {
@@ -218,25 +277,7 @@ window.addEventListener( "load", async () =>
       if ( targetRow.tagName !== "TR" )
         return;
 
-      const countDecimals = ( value ) =>
-      {
-        if ( ( value % 1 ) != 0 )
-          return value.toString().split( "." )[ 1 ].length;
-        return 0;
-      };
-
-      const getStopLossValue = ( price, percentage, decimal = 1 ) =>
-        ( price - ( ( price * percentage ) / 100 ) ).toFixed( decimal );
-
-      const buyPrice = +targetRow.children[ 1 ].textContent;
-      const currentPrice = +targetRow.children[ 5 ].textContent.split( " " )[ 0 ];
-      const countNumber = +countDecimals( buyPrice );
-      const margin = +targetRow.children[ 10 ].textContent.split( " " )[ 0 ];
-      const content = `<p>Trigger Value at ${ getStopLossValue( currentPrice, 2, countNumber ) } <br />
-    Sale Value at ${ getStopLossValue( currentPrice, 4, countNumber ) } <br />
-    You get ${ getStopLossValue( margin, 4, countNumber ) } ₹</p>`;
-
-      ShowNotification( content );
+      ShowSLFunction( targetRow, ShowNotification );
     };
   }
 
@@ -487,3 +528,31 @@ window.addEventListener( "load", async () =>
 
 
 }, false );
+
+function ShowSLFunction ( targetRow, ShowNotification )
+{
+  const { getStopLossValue, currentPrice, countNumber, margin } = CalculateSLValue( targetRow );
+  const content = `<p>Trigger Value at ${ getStopLossValue( currentPrice, 2, countNumber ) } <br />
+    Sale Value at ${ getStopLossValue( currentPrice, 4, countNumber ) } <br />
+    You get ${ getStopLossValue( margin, 4, countNumber ) } ₹</p>`;
+
+  ShowNotification( content );
+}
+
+function CalculateSLValue ( targetRow )
+{
+  const countDecimals = ( value ) =>
+  {
+    if ( ( value % 1 ) != 0 )
+      return value.toString().split( "." )[ 1 ].length;
+    return 0;
+  };
+
+  const getStopLossValue = ( price, percentage, decimal = 1 ) => ( price - ( ( price * percentage ) / 100 ) ).toFixed( decimal );
+
+  const buyPrice = +targetRow.children[ 1 ].textContent;
+  const currentPrice = +targetRow.children[ 5 ].textContent.split( " " )[ 0 ];
+  const countNumber = +countDecimals( buyPrice );
+  const margin = +targetRow.children[ 10 ].textContent.split( " " )[ 0 ];
+  return { getStopLossValue, currentPrice, countNumber, margin };
+}

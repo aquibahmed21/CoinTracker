@@ -52,8 +52,12 @@
 						<input id="pets-breed" placeholder="Coin"s Quantity"" type="number" required>
 					</div>
 					<div class="pets-birthday">
-						<label for="pets-birthday">Price</label>
+						<label for="pets-birthday">Buying Price</label>
 						<input id="pets-birthday" placeholder="Buying Price" type="number" required>
+					</div>
+					<div id="divSoldPrice" class="pets-birthday Util_hide">
+						<label for="pets-birthday">Sold Price</label>
+						<input id="pets-birthday2" placeholder="Sold Price" type="number" required>
 					</div>
 				</div>
 				<!-- <div class="set">
@@ -205,6 +209,19 @@
 <!-- navbar -->
 
 <div id="notif" ></div>
+
+	<div class="divLongPressPopUp Util_card Util_hide">
+		<h3>What do you want to do ?</h3>
+		<div class="btnContainer">
+			<button id="btnEdit" class="btnLongPressPopUp Util_disable">Edit</button>
+			<button id="btnSell" class="btnLongPressPopUp">Sell</button>
+			<button id="btnSL" class="btnLongPressPopUp">Apply Stoploss</button>
+			<button id="btnSLValue" class="btnLongPressPopUp">Stoploss Values</button>
+			<button id="btnDelete" class="btnLongPressPopUp">Delete</button>
+			<button id="btnCls" class="btnLongPressPopUp">Close</button>
+		</div>
+
+	</div>
 
 	<div class="divMainParent">
 		<div class="divFearGreedIndex">

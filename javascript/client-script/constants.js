@@ -298,15 +298,11 @@ const JSONDATA = {
     pair: "usdt",
     qty: 0.012,
     price: 417.7999,
-    term: "dip"
+    // buyPrice: 417.7999,
+    // soldPrice: 429.9,
+    term: "sell-order"
   },
-  hbar6: {
-    coin: "hbar",
-    pair: "usdt",
-    qty: 20,
-    price: 0.2512,
-    term: "dip"
-  },
+  
   sol5: {
     coin: "sol",
     pair: "usdt",
@@ -421,14 +417,14 @@ const JSONDATA = {
   wrx5: {
     coin: "wrx",
     pair: "usdt",
-    qty: 1.69295854,
+    qty: 1.68165717,
     price: 0.92799,
     term: "commission"
   },
   usdt: {
     coin: "usdt",
     pair: "inr",
-    qty: 17.406697,
+    qty: 22.566697,
     price: 78.56,
     term: "base"
   },
@@ -1151,6 +1147,14 @@ const SoldJSon = {
     qty: 26,
     buyPrice: 0.28358,
     soldPrice: 0.28596,
+    term: "dip"
+  },
+  hbar6: {
+    coin: "hbar",
+    pair: "usdt",
+    qty: 20,
+    buyPrice: 0.2512,
+    soldPrice: 0.258,
     term: "dip"
   },
 
