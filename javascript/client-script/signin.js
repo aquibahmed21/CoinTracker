@@ -93,8 +93,6 @@ class UI
 window.addEventListener( "DOMContentLoaded", UI.NavigateToHome );
 const signinform = document.querySelector( "#signinform" );
 
-
-
 signinform.addEventListener( "click", async ( event ) =>
 {
 	// event.preventDefault();
