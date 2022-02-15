@@ -314,31 +314,7 @@ const JSONDATA = {
     price: 106.942,
     term: "dip"
   },
-  dot5: {
-    coin: "dot",
-    pair: "usdt",
-    qty: 0.35,
-    price: 18.81,
-    term: "dip"
-  },
 
-  celr5: {
-    coin: "celr",
-    pair: "usdt",
-    qty: 100,
-    price: 0.04998,
-    // buyPrice: 0.04998,
-    // soldPrice: 0.05145,
-    term: "40% sold"
-  },
-
-  gala5: {
-    coin: "gala",
-    pair: "usdt",
-    qty: 26,
-    price: 0.28358,
-    term: "dip"
-  },
 
 // -----------
 
@@ -445,14 +421,14 @@ const JSONDATA = {
   wrx5: {
     coin: "wrx",
     pair: "usdt",
-    qty: 1.76129602,
+    qty: 1.69295854,
     price: 0.92799,
     term: "commission"
   },
   usdt: {
     coin: "usdt",
     pair: "inr",
-    qty: 0.073959,
+    qty: 17.406697,
     price: 78.56,
     term: "base"
   },
@@ -1148,6 +1124,33 @@ const SoldJSon = {
     qty: 35,
     buyPrice: 0.1534996,
     soldPrice: 0.1571998,
+    term: "dip"
+  },
+
+  dot5: {
+    coin: "dot",
+    pair: "usdt",
+    qty: 0.35,
+    buyPrice: 18.81,
+    soldPrice: 18.9699,
+    term: "dip"
+  },
+
+  celr5: {
+    coin: "celr",
+    pair: "usdt",
+    qty: 100,
+    buyPrice: 0.04998,
+    soldPrice: 0.05145,
+    term: "dip"
+  },
+
+  gala5: {
+    coin: "gala",
+    pair: "usdt",
+    qty: 26,
+    buyPrice: 0.28358,
+    soldPrice: 0.28596,
     term: "dip"
   },
 
