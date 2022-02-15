@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema( {
 		type: String,
 		required: true,
 	},
-	user: {
+	uid: {
 		type: String,
 		required: true
 	}

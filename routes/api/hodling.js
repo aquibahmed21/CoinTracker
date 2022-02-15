@@ -14,13 +14,13 @@ const Hodling = require( "../../models/Hodling" );
 // @access 		Public
 router.get( "/", async ( req, res ) =>
 {
-  const { user } = req.body;
+  const uid = req.headers[ "uid" ];
   let record = null;
-  if ( user )
-    record = await Hodling.find( { user } );
+  if ( uid )
+    record = await Hodling.find( { uid } );
   else
     record = await Hodling.find();
-  res.status( 200 ).json({status: "success", message: record});
+  res.status( 200 ).json( { status: "success", message: record } );
 } );
 
 // @route 		POST api/hodling
@@ -56,7 +56,6 @@ router.post(
         uid
       } );
       await coinPair.save();
-      console.log( coinPair );
       return res.status( 200 ).json( { status: "success", msg: "Hodling row inserted" } );
 
       // return jsonwebtoken

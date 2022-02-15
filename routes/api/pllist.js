@@ -9,10 +9,11 @@ const Hodling = require( "../../models/PLlist" );
 // @access 		Public
 router.get( "/", async ( req, res ) =>
 {
-  const { user } = req.body;
+  // Get header from request
+  const uid = req.headers[ "uid" ];
   let record = null;
-  if ( user )
-    record = await Hodling.find( { user } );
+  if ( uid )
+    record = await Hodling.find( { uid } );
   else
     record = await Hodling.find();
   res.status( 200 ).json( { status: "success", message: record } );

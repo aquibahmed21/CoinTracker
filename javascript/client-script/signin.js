@@ -93,6 +93,24 @@ class UI
 window.addEventListener( "DOMContentLoaded", UI.NavigateToHome );
 const signinform = document.querySelector( "#signinform" );
 
+// function SetIntialState ()
+// {
+// 	const isSetData = localStorage.getItem( "data" );
+// 	if ( !isSetData ) { 
+// 		localStorage.setItem( "data", "true" );
+// 		localStorage.setItem("API_KEY" , "M8PSxBKaSyKZuaW5qykQ9oXqVKPm7rglHHCAvGsrHHPiAtILMKQJ1Pp754OxDXqw");
+// 		localStorage.setItem("SECRET_KEY" , "5NWh4mrcBTgmvUXZtjUPtsHOxP41q1RtzggauUfX");
+// 		localStorage.setItem("BASE_URL" , "https://api.wazirx.com");
+// 		localStorage.setItem("PORT" , "3000");
+// 		localStorage.setItem("DB_Name" , "DevConnector");
+// 		localStorage.setItem("DB_UserName" , "aquib007");
+// 		localStorage.setItem("DB_Password" , "UAuoqco7g4Mywq3P");
+// 		localStorage.setItem("DB_Connection_String" , "mongodb+srv://aquib007:UAuoqco7g4Mywq3P@devconnector.sucyl.mongodb.net/DevConnector?retryWrites=true&w=majority");
+// 		localStorage.setItem("JWT_SECRET" , "5050maskachaska");
+// 		localStorage.setItem("JWT_AUTH_EXPIRES" , 360000);
+// 	}
+// }
+
 signinform.addEventListener( "click", async ( event ) =>
 {
 	// event.preventDefault();
