@@ -141,3 +141,44 @@
   border: 1px solid rgba(0, 0, 0, 0.1);
   color: #fff;
 }
+
+/* add media query */
+@media screen and (max-width: 480px)
+{
+  .right-container .set
+  {
+    flex-direction: column;
+  }
+
+  .right-container .set button
+  {
+    width: 80%;
+    margin: 4px auto;
+  }
+
+  .right-container label, .right-container input, .right-container .pets-photo {
+    width: 100%;
+  }
+
+  .radio-container {
+    width: 100%;
+  }
+
+  .right-container,
+  .signup-container {
+    width: 80%;
+    min-width: 80%;
+  }
+
+  .pets-weight,
+  .pets-breed,
+  .pets-birthday,
+  .pets-gender,
+  .pets-name {
+    margin: 12px 0;
+  }
+
+  .set.mobile {
+    flex-direction: column-reverse;
+  }
+}

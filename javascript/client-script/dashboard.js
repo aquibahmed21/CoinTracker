@@ -86,7 +86,6 @@ window.addEventListener( "load", async () =>
   {
     const data = JSON.parse( LongPressPopup.getAttribute( "data" ) );
     const target = event.target.id;
-    debugger;
     switch ( target ) {
 
       case "btnEdit":
