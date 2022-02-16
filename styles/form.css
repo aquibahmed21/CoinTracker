@@ -166,8 +166,8 @@
 
   .right-container,
   .signup-container {
-    width: 80%;
-    min-width: 80%;
+    /* width: 80%; */
+    min-width: 400px;
   }
 
   .pets-weight,

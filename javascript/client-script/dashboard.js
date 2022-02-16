@@ -132,7 +132,7 @@ window.addEventListener( "load", async () =>
   // AddAllHistory_FromDB( history.aquibHistory );
 
   hodlingBody[ 0 ].addEventListener( "click", OnClick_HodlingRows() );
-  hodlingBody[ 0 ].addEventListener( "dblclick", OnDBClick_HodlingRows() );
+  // hodlingBody[ 0 ].addEventListener( "dblclick", OnDBClick_HodlingRows() );
 
   window.onanimationend = async ( e ) =>
   {
@@ -143,7 +143,7 @@ window.addEventListener( "load", async () =>
     }
   };
 
-  document.addEventListener( "long-press", async function ( e )
+  document.addEventListener( "dblclick", async function ( e )
   {
     // https://github.com/john-doherty/long-press-event
     // stop the event from bubbling up
