@@ -230,13 +230,7 @@ const JSONDATA = {
     term: "dip"
   },
 
-  ach1: {
-    coin: "ach",
-    pair: "usdt",
-    qty: 40,
-    price: 0.05131,
-    term: "dip"
-  },
+  
 
   dusk1: {
     coin: "dusk",
@@ -259,7 +253,6 @@ const JSONDATA = {
     pair: "usdt",
     qty: 2.3,
     price: 2.2,
-    // soldPrice: 2.22158,
     term: "dip"
   },
 
@@ -293,15 +286,7 @@ const JSONDATA = {
     price: 20.5479,
     term: "dip"
   },
-  bnb4: {
-    coin: "bnb",
-    pair: "usdt",
-    qty: 0.012,
-    price: 417.7999,
-    // buyPrice: 417.7999,
-    // soldPrice: 429.9,
-    term: "sell-order"
-  },
+
   
   sol5: {
     coin: "sol",
@@ -417,14 +402,14 @@ const JSONDATA = {
   wrx5: {
     coin: "wrx",
     pair: "usdt",
-    qty: 1.68165717,
+    qty: 1.668546,
     price: 0.92799,
     term: "commission"
   },
   usdt: {
     coin: "usdt",
     pair: "inr",
-    qty: 22.566697,
+    qty: 29.964297,
     price: 78.56,
     term: "base"
   },
@@ -1155,6 +1140,23 @@ const SoldJSon = {
     qty: 20,
     buyPrice: 0.2512,
     soldPrice: 0.258,
+    term: "dip"
+  },
+
+  bnb4: {
+    coin: "bnb",
+    pair: "usdt",
+    qty: 0.012,
+    buyPrice: 417.7999,
+    soldPrice: 429.9,
+    term: "dip"
+  },
+  ach1: {
+    coin: "ach",
+    pair: "usdt",
+    qty: 40,
+    buyPrice: 0.05131,
+    soldPrice: 0.05597,
     term: "dip"
   },
 
