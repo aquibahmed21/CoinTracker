@@ -18,7 +18,6 @@ router.get( "/", auth, async ( req, res ) =>
     const user = await User.findById( req.user.id ).select( "-password" );
     res.status( 200 ).json( { status: "success", user } );
   } catch ( error ) {
-    console.log( error );
     res.status( 200 ).json( { status: "invalid", error } );
   }
 } );

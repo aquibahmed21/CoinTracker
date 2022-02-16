@@ -29,6 +29,7 @@ app.use( "/api/pllist", require( "./routes/api/pllist" ) );
 app.use( "/api/funds", require( "./routes/api/funds" ) );
 app.use( "/api/order", require( "./routes/api/order" ) );
 app.use( "/api/allOrders", require( "./routes/api/allOrders" ) );
+app.use( "/api/keys", require( "./routes/api/keys" ) );
 
 app.get( "/", ( req, res ) =>
 {

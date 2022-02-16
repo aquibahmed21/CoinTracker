@@ -118,3 +118,20 @@ GET http://localhost:3000/api/allOrders
 ###
 GET http://localhost:3000/api/funds
 
+###
+GET http://localhost:3000/api/keys
+
+{
+  "uid": "620a796f5829dab41f6ed7c11"
+}
+
+###
+
+POST http://localhost:3000/api/keys
+Content-Type: application/json
+
+{
+  "uid": "620a796f5829dab41f6ed7c11",
+  "api": "somekey",
+  "sec": "somesecret"
+}

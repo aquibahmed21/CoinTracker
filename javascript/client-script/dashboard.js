@@ -29,6 +29,7 @@ const Routes = {
   PL_LIST_POST: "/api/pllist",
   FUNDS_GET: "/api/funds",
   ALL_ORDER_GET: "/api/allOrders",
+  KEYS_GET: "/api/keys"
 };
 
 
@@ -36,15 +37,33 @@ const PORT = 3000;
 let PL_LIST = Const.SoldJSon;
 let HODLING = Const.JSONDATA;
 
+const arr = [];
+
+const hodlingTable = document.getElementById( "table" );
+const hodlingBody = hodlingTable.getElementsByTagName( "tbody" );
+
+const plTable = hodlingTable.nextElementSibling;
+const plBody = plTable.getElementsByTagName( "tbody" );
+
+const notificationBTN = document.getElementById( "notif" );
+const hodlingCaption = hodlingTable.getElementsByTagName( "caption" )[ 0 ];
+const plCaption = plTable.getElementsByTagName( "caption" )[ 0 ];
+const coinDetailsPopup = document.getElementsByClassName( "signup-container" )[ 0 ];
+const LongPressPopup = document.getElementsByClassName( "divLongPressPopUp" )[ 0 ];
+
 window.addEventListener( "load", async () =>
 {
   const token = localStorage.getItem( "token" );
   if ( token ) {
+    let userID = "";
     const res_data = await Const.fetchUtils( Routes.AUTH_GET, Method.GET );
     if ( res_data && res_data.status === "success" && res_data.user )
-      localStorage.setItem( "uid", res_data.user._id );
+    {
+      userID = res_data.user._id;
+      localStorage.setItem( "uid", userID );
+    }
     else
-      window.location.href = "/";
+      return window.location.href = "/";
 
     if ( location.port && location.port == PORT ) {
       PL_LIST = await fetch( Routes.PL_LIST_POST,
@@ -52,7 +71,7 @@ window.addEventListener( "load", async () =>
           method: Method.GET,
           headers: {
             "Content-Type": "application/json",
-            "uid": localStorage.getItem( "uid" )
+            "uid": userID
           }
         } ).then( res => res.json() );
       PL_LIST = PL_LIST.message;
@@ -61,26 +80,40 @@ window.addEventListener( "load", async () =>
           method: Method.GET,
           headers: {
             "Content-Type": "application/json",
-            "uid": localStorage.getItem( "uid" )
+            "uid": userID
           }
         } ).then( res => res.json() );
       HODLING = HODLING.message;
+
+      const credentials = await ( await fetch( Routes.KEYS_GET, {
+        method: Method.GET,
+          headers: {
+            "Content-Type": "application/json",
+            "uid": userID
+          }
+      } ) ).json();
+
+      if ( credentials.status !== "success" )
+      {
+        // prompt for keys
+        const api = prompt( "Enter your API_KEY" );
+        const sec = prompt( "Enter your SECRET_KEY" );
+        const uid = userID;
+        if ( !api || !sec || !uid )
+          return ShowNotification("Please enter all fields after refresh");
+        const message = await( await fetch( Routes.KEYS_GET, {
+          method: Method.POST,
+          headers: {
+            "Content-Type": "application/json",
+            "uid": userID
+          }, body: JSON.stringify( { api, sec, uid } )
+        } ) ).json();
+        ShowNotification( message );
+      }
     }
   }
 
-  const arr = [];
 
-  const hodlingTable = document.getElementById( "table" );
-  const hodlingBody = hodlingTable.getElementsByTagName( "tbody" );
-
-  const plTable = hodlingTable.nextElementSibling;
-  const plBody = plTable.getElementsByTagName( "tbody" );
-
-  const notificationBTN = document.getElementById( "notif" );
-  const hodlingCaption = hodlingTable.getElementsByTagName( "caption" )[ 0 ];
-  const plCaption = plTable.getElementsByTagName( "caption" )[ 0 ];
-  const coinDetailsPopup = document.getElementsByClassName( "signup-container" )[ 0 ];
-  const LongPressPopup = document.getElementsByClassName( "divLongPressPopUp" )[ 0 ];
 
   LongPressPopup.addEventListener( "click", ( event ) =>
   {
