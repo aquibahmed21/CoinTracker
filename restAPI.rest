@@ -42,7 +42,7 @@ POST http://localhost:3000/api/hodling
 Content-Type: application/json
 
 {
-  "coin": "doge",
+  "coin": "shib",
   "pair": "inr",
   "qty": 10,
   "price": 4,

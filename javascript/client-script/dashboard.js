@@ -89,7 +89,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
       } ) ).json();
       ShowNotification( message );
     }
-    if ( location.port && location.port == PORT ) {
+    // if ( location.port && location.port == PORT ) {
       PL_LIST = await fetch( Routes.PL_LIST_POST,
         {
           method: Method.GET,
@@ -108,7 +108,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
           }
         } ).then( res => res.json() );
       HODLING = HODLING.message;
-    }
+    // }
   }
   else
     return window.location.href = "/";
@@ -127,13 +127,13 @@ window.addEventListener( "DOMContentLoaded", async () =>
         {
 
           //! remove row from hodling table
-          // table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
+          table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
 
           //! add row to pllist table
           await AddPLRows_FromJSON( [ { coin, pair, qty, buyPrice, soldPrice, term: comment } ] );
 
           //! close popup
-          // Close_LongPressPopup();
+          Close_LongPressPopup();
 
           //! put sell order
           const side = Side.SELL; //Enum
@@ -150,22 +150,22 @@ window.addEventListener( "DOMContentLoaded", async () =>
           } ) ).json().catch( err => console.log( err ) );;
 
           //! remove coin from hodling db
-          // await ( await fetch( Routes.DELETE_COIN_POST, {
-          //   method: Method.POST,
-          //   headers: {
-          //     "Content-Type": "application/json",
-          //     "uid": uid
-          //   }, body: JSON.stringify( { coin, pair, qty, uid } )
-          // } ) ).json().catch( err => console.log( err ) );
+          await ( await fetch( Routes.DELETE_COIN_POST, {
+            method: Method.POST,
+            headers: {
+              "Content-Type": "application/json",
+              "uid": uid
+            }, body: JSON.stringify( { coin, pair, qty, uid } )
+          } ) ).json().catch( err => console.log( err ) );
 
           //! add coin to pl db
-          // await ( await fetch( Routes.PL_LIST_POST, {
-          //   method: Method.POST,
-          //   headers: {
-          //     "Content-Type": "application/json",
-          //     "uid": uid
-          //   }, body: JSON.stringify( { coin, pair, qty, buyPrice, soldPrice, term: comment, uid } )
-          // } ) ).json().catch( err => console.log( err ) );
+          await ( await fetch( Routes.PL_LIST_POST, {
+            method: Method.POST,
+            headers: {
+              "Content-Type": "application/json",
+              "uid": uid
+            }, body: JSON.stringify( { coin, pair, qty, buyPrice, soldPrice, term: comment, uid } )
+          } ) ).json().catch( err => console.log( err ) );
 
         }
         break;
