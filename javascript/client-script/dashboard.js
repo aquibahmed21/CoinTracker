@@ -51,7 +51,7 @@ const plCaption = plTable.getElementsByTagName( "caption" )[ 0 ];
 const coinDetailsPopup = document.getElementsByClassName( "signup-container" )[ 0 ];
 const LongPressPopup = document.getElementsByClassName( "divLongPressPopUp" )[ 0 ];
 
-window.addEventListener( "load", async () =>
+window.addEventListener( "DOMContentLoaded", async () =>
 {
   const token = localStorage.getItem( "token" );
   let userID = "";
