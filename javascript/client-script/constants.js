@@ -230,8 +230,6 @@ const JSONDATA = {
     term: "dip"
   },
 
-  
-
   dusk1: {
     coin: "dusk",
     pair: "usdt",
@@ -264,7 +262,7 @@ const JSONDATA = {
     term: "dip"
   },
 
-// -----------
+  // -----------
   rune1: {
     coin: "rune",
     pair: "usdt",
@@ -287,7 +285,6 @@ const JSONDATA = {
     term: "dip"
   },
 
-  
   sol5: {
     coin: "sol",
     pair: "usdt",
@@ -297,7 +294,7 @@ const JSONDATA = {
   },
 
 
-// -----------
+  // -----------
 
   //? yash
 
@@ -333,7 +330,7 @@ const JSONDATA = {
     term: "yash"
   },
 
-  doge6:  {
+  doge6: {
     coin: "doge",
     pair: "inr",
     qty: 8,
@@ -346,14 +343,6 @@ const JSONDATA = {
     pair: "inr",
     qty: 2.3,
     price: 84.0,
-    term: "yash"
-  },
-
-  shib8: {
-    coin: "shib",
-    pair: "inr",
-    qty: 40096,
-    price: 0.002494,
     term: "yash"
   },
 
@@ -373,18 +362,19 @@ const JSONDATA = {
     term: "yash"
   },
 
-  hot2: {
-    coin: "hot",
-    pair: "inr",
-    qty: 159,
-    price: 0.389,
-    term: "yash"
-  },
   shib9: {
     coin: "shib",
     pair: "inr",
-    qty: 44072,
+    qty: 210,
     price: 0.002269,
+    term: "yash"
+  },
+
+  shib8: {
+    coin: "shib",
+    pair: "inr",
+    qty: 40096,
+    price: 0.002494,
     term: "yash"
   },
   celr6: {
@@ -720,7 +710,7 @@ const SoldJSon = {
   wrx1: {
     coin: "wrx",
     pair: "usdt",
-    qty:  2.01398069,
+    qty: 2.01398069,
     buyPrice: 0.80299,
     soldPrice: 1.06084,
     term: "commission"
@@ -767,7 +757,7 @@ const SoldJSon = {
     soldPrice: 1.725,
     term: "dip"
   },
-  lrc3 : {
+  lrc3: {
     coin: "lrc",
     pair: "usdt",
     qty: 6,
@@ -961,7 +951,7 @@ const SoldJSon = {
     term: "base-y"
   },
 
-  gala4:  {
+  gala4: {
     coin: "gala",
     pair: "inr",
     qty: 7,
@@ -979,7 +969,7 @@ const SoldJSon = {
     term: "dip"
   },
 
-  mana4:  {
+  mana4: {
     coin: "mana",
     pair: "inr",
     qty: 0.7,
@@ -1034,7 +1024,7 @@ const SoldJSon = {
     term: "dip"
   },
 
-  reef4:  {
+  reef4: {
     coin: "reef",
     pair: "inr",
     qty: 106,
@@ -1043,7 +1033,7 @@ const SoldJSon = {
     term: "yash"
   },
 
-  celr4:  {
+  celr4: {
     coin: "celr",
     pair: "inr",
     qty: 46,
@@ -1159,6 +1149,38 @@ const SoldJSon = {
     soldPrice: 0.05597,
     term: "dip"
   },
+  hot2: {
+    coin: "hot",
+    pair: "inr",
+    qty: 159,
+    buyPrice: 0.389,
+    soldPrice: 0.403,
+    term: "yash"
+  },
+  ckb1: {
+    coin: "ckb",
+    pair: "inr",
+    qty: 90,
+    buyPrice: 1.0936,
+    soldPrice: 1.1585,
+    term: "yash"
+  },
+  shib9: {
+    coin: "shib",
+    pair: "inr",
+    qty: 43863,
+    buyPrice: 0.002269,
+    soldPrice: 0.002488,
+    term: "yash"
+  },
+  hbar7: {
+    coin: "hbar",
+    pair: "inr",
+    qty: 5,
+    buyPrice: 19.68621,
+    soldPrice: 20.5,
+    term: "yash"
+  },
 
 };
 
@@ -1170,29 +1192,29 @@ const removeDuplicate = ( arr ) => arr.filter( ( item, pos ) => arr.indexOf( ite
 
 const fearGreed = async () => await baseFun( "https://api.alternative.me/fng/" );
 
-const baseFun = (url) =>
-  new Promise((res) => {
+const baseFun = ( url ) =>
+  new Promise( ( res ) =>
+  {
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", url);
+    xhr.open( "GET", url );
 
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) return res(JSON.parse(xhr.responseText));
+    xhr.onreadystatechange = function ()
+    {
+      if ( xhr.readyState === 4 ) return res( JSON.parse( xhr.responseText ) );
     };
     xhr.send();
   } );
 
 const getTicker = async () =>
 {
-  try
-  {
+  try {
     let symbolArr = [ "usdtinr" ];
     Object.entries( JSONDATA ).filter( ( [ k, v ] ) => symbolArr.push( v.coin + v.pair ) );
     symbolArr = removeDuplicate( symbolArr );
     const allTicker = await baseFun( ticker24URL );
     return allTicker.filter( e => symbolArr.includes( e.symbol ) );
   }
-  catch ( e )
-  {
+  catch ( e ) {
     return null;
   }
 };
@@ -1213,70 +1235,69 @@ async function fetchUtils ( url, method, body = null )
         body: body
       } );
     return await res_data.json();
-  } catch (err) {
+  } catch ( err ) {
     return { status: "invalid", msg: err };
   }
 }
 
-function GetDisplayTime (timeSent)
+function GetDisplayTime ( timeSent )
 {
-  const CALENDAR_DAYS = ["Sun","Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+  const CALENDAR_DAYS = [ "Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat" ];
   const CALENDAR_MONTHS =
-          ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
-  if(timeSent == 0)
+  if ( timeSent == 0 )
     return "--";
-  let dateTimeSent= new Date(timeSent);
-  let date= new Date();
+  let dateTimeSent = new Date( timeSent );
+  let date = new Date();
   let minutes = dateTimeSent.getMinutes();
   // REF: https://stackoverflow.com/questions/54741141/why-i-canot-get-the-same-result-using-the-getday-method-and-the-getutcday-me
   // let dayPart = CALENDAR_DAYS[dateTimeSent.getUTCDay()]; // dateTimeSent.getUTCDay() is giving 0(Sunday) instead of
   let dayPart = dateTimeSent.getHours() >= 0 && dateTimeSent.getHours() < 6 ? // minor work around to check if time +530GMT
-                        CALENDAR_DAYS[dateTimeSent.getUTCDay() + 1] ||  CALENDAR_DAYS[dateTimeSent.getDay()]:
-                        CALENDAR_DAYS[dateTimeSent.getUTCDay()];
+    CALENDAR_DAYS[ dateTimeSent.getUTCDay() + 1 ] || CALENDAR_DAYS[ dateTimeSent.getDay() ] :
+    CALENDAR_DAYS[ dateTimeSent.getUTCDay() ];
   //
-  let dayMonthPart = CALENDAR_MONTHS[dateTimeSent.getUTCMonth()] + " " + dateTimeSent.getDate();
+  let dayMonthPart = CALENDAR_MONTHS[ dateTimeSent.getUTCMonth() ] + " " + dateTimeSent.getDate();
   let day = dateTimeSent.getUTCDate();
   let month = dateTimeSent.getUTCMonth() + 1;
-  let year = dateTimeSent.getUTCFullYear().toLocaleString().substring(3);
+  let year = dateTimeSent.getUTCFullYear().toLocaleString().substring( 3 );
   let time;
-  let hours =  dateTimeSent.getHours() % 12;
+  let hours = dateTimeSent.getHours() % 12;
   // hours = !this.GetUserSettings().Is24Hour ? hours ? hours : 12 : dateTimeSent.getHours();
   // let am_pm = !this.GetUserSettings().Is24Hour ? dateTimeSent.getHours() >= 12 ? "pm" : "am" : "";
   let am_pm = dateTimeSent.getHours() >= 12 ? "pm" : "am";
-  let actualTime = ("00" + hours).slice(-2) + ":" + ("00" + minutes).slice(-2);
+  let actualTime = ( "00" + hours ).slice( -2 ) + ":" + ( "00" + minutes ).slice( -2 );
   // let timePart = !this.GetUserSettings().Is24Hour ? actualTime + " " + am_pm : actualTime;
   let timePart = actualTime + " " + am_pm;
-  if(dateTimeSent.getDate() > date.getDate())
+  if ( dateTimeSent.getDate() > date.getDate() )
     time = dateTimeSent.getDate() - date.getDate();
   else
     time = date.getDate() - dateTimeSent.getDate();
-  if(dateTimeSent.getUTCFullYear() == new Date().getUTCFullYear() &&
-      dateTimeSent.getUTCMonth() == new Date().getUTCMonth() &&
-        dateTimeSent.getUTCDate() == new Date().getUTCDate())
+  if ( dateTimeSent.getUTCFullYear() == new Date().getUTCFullYear() &&
+    dateTimeSent.getUTCMonth() == new Date().getUTCMonth() &&
+    dateTimeSent.getUTCDate() == new Date().getUTCDate() )
     return timePart;
-  else  if(dateTimeSent.getUTCFullYear() == new Date().getUTCFullYear() &&
-            dateTimeSent.getUTCMonth() == new Date().getUTCMonth() &&
-              date.getUTCDate() -  dateTimeSent.getDate() == 1)
-  return "Y'day" + ", " + timePart;
-  else if(dateTimeSent.getUTCFullYear() == new Date().getUTCFullYear() &&
-            dateTimeSent.getUTCMonth() == new Date().getUTCMonth() &&
-              dateTimeSent.getUTCDay() != new Date().getUTCDay() && time <= 7)
+  else if ( dateTimeSent.getUTCFullYear() == new Date().getUTCFullYear() &&
+    dateTimeSent.getUTCMonth() == new Date().getUTCMonth() &&
+    date.getUTCDate() - dateTimeSent.getDate() == 1 )
+    return "Y'day" + ", " + timePart;
+  else if ( dateTimeSent.getUTCFullYear() == new Date().getUTCFullYear() &&
+    dateTimeSent.getUTCMonth() == new Date().getUTCMonth() &&
+    dateTimeSent.getUTCDay() != new Date().getUTCDay() && time <= 7 )
     return dayPart + ", " + timePart;
   // To check if it's same day/date
-  else if (dateTimeSent.getUTCFullYear() == date.getUTCFullYear() &&
-           dateTimeSent.getMonth() == date.getMonth() &&
-           dateTimeSent.getDate() == date.getDate())
+  else if ( dateTimeSent.getUTCFullYear() == date.getUTCFullYear() &&
+    dateTimeSent.getMonth() == date.getMonth() &&
+    dateTimeSent.getDate() == date.getDate() )
     return timePart;
-  else if(dateTimeSent.getUTCFullYear() == new Date().getUTCFullYear())
+  else if ( dateTimeSent.getUTCFullYear() == new Date().getUTCFullYear() )
     return dayMonthPart + ", " + timePart;
-  else
-  {
-    if(month < 10 && day < 10)
+  else {
+    if ( month < 10 && day < 10 )
       return "0" + day + "/" + "0" + month + "/" + year + ", " + timePart;
-    else if(day < 10)
+    else if ( day < 10 )
       return "0" + day + "/" + month + "/" + year + ", " + timePart;
-    else if (month < 10)
+    else if ( month < 10 )
       return day + "/" + "0" + month + "/" + year + ", " + timePart;
     else
       return day + "/" + month + "/" + year + ", " + timePart;
