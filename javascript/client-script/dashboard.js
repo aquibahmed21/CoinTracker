@@ -449,7 +449,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
       if ( obj.hasOwnProperty( key ) ) {
         const { coin, pair, qty, price, term, _id } = obj[ key ];
-        const lastPrice = arrTicker.filter( e => e.symbol == ( coin + pair ) )[ 0 ].lastPrice;
+        const lastPrice = arrTicker.filter( e => e.symbol == ( coin + pair ) )[ 0 ]?.lastPrice || price;
 
         const row = isUpdate ? document.querySelector( "#" + ( _id || key ) ) :
           document.getElementById( "templatePLRow" ).content.cloneNode( true );
