@@ -9,31 +9,28 @@ let subsCallback = null;
 ws.onmessage = ( event =>
 {
 	const json = JSON.parse( event.data );
-	if (!isWSConnected && json.event == "connected" )
+	if ( !isWSConnected && json.event == "connected" )
 		isWSConnected = true;
-	else if( isWSConnected && subsCallback)
-	{
-		if ( !json.event || (json.event && json.event != "subscribed"));
-			subsCallback(json);
+	else if ( isWSConnected && subsCallback ) {
+		if ( !json.event || ( json.event && json.event != "subscribed" ) );
+		subsCallback( json );
 	}
-});
+} );
 
 function wsSubscribe ( callback = null )
 {
-	if ( ws && isWSConnected )
-	{
+	if ( ws && isWSConnected ) {
 		const subscribeTicker = { "event": "subscribe", "streams": [ "!ticker@arr" ] };
 		const unSubscribeTicker = { "event": "unsubscribe", "streams": [ "!ticker@arr" ] };
 
 		ws.send( JSON.stringify( subscribeTicker ) );
-		if ( !subsCallback )
-		{
+		if ( !subsCallback ) {
 			document.addEventListener( "visibilitychange", () =>
 			{
-				(document.visibilityState === "visible") ?
+				( document.visibilityState === "visible" ) ?
 					ws.send( JSON.stringify( subscribeTicker ) ) :
 					ws.send( JSON.stringify( unSubscribeTicker ) );
-			});
+			} );
 		}
 		subsCallback = callback;
 	}

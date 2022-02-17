@@ -21,7 +21,7 @@ router.get( "/", async ( req, res ) =>
 		record = await Keys.find( { uid } );
 	// else
 	// 	record = await Keys.find();
-	res.status( 200 ).json( { status: (record && record.length) ? "success" : "invalid" , message: record } );
+	res.status( 200 ).json( { status: ( record && record.length ) ? "success" : "invalid", message: record } );
 } );
 
 router.post( "/", [
@@ -36,7 +36,7 @@ router.post( "/", [
 	if ( !errors.isEmpty() )
 		return res.status( 200 ).json( { status: "invalid", message: errors.array() } );
 
-		let user = await Keys.findOne( { uid } );
+	let user = await Keys.findOne( { uid } );
 	if ( user )
 		return res
 			.status( 200 )

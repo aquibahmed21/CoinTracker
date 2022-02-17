@@ -32,6 +32,17 @@ router.get( "/", async ( req, res ) =>
 	const arrHistory = [];
 	const baseURL = process.env.BASE_URL;
 
+	const fullUrl = req.protocol + '://' + req.get( 'host' ); //+ req.originalUrl;
+	const { message: credentials } = await ( await fetch( `${ fullUrl }/api/keys`, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			"uid": uid
+		}
+	} ) ).json().catch( ( error ) => console.log( error ) );
+
+	const { api: API_KEY, sec: SECRET_KEY } = credentials[ 0 ];
+
 	let burl = baseURL + API.TICKER;
 
 	try {
@@ -43,7 +54,7 @@ router.get( "/", async ( req, res ) =>
 				headers: {
 					// "Accept": "application/json",
 					// "Content-Type": "application/json",
-					"X-Api-Key": process.env.API_KEY,
+					"X-Api-Key": API_KEY,
 				},
 			} );
 
@@ -56,7 +67,7 @@ router.get( "/", async ( req, res ) =>
 		for ( symbol of arr ) {
 			queryData = `symbol=${ symbol }&recvWindow=20000&timestamp=` + ( new Date().getTime() );
 			burl = baseURL + API.ALLORDERBOOK + "?" + queryData +
-				"&signature=" + signature( queryData, process.env.SECRET_KEY );
+				"&signature=" + signature( queryData, SECRET_KEY );
 
 			// !-----------------
 			// ! Get All Order Book from each symbol
@@ -66,7 +77,7 @@ router.get( "/", async ( req, res ) =>
 					headers: {
 						// "Accept": "application/json",
 						// "Content-Type": "application/json",
-						"X-Api-Key": process.env.API_KEY,
+						"X-Api-Key": API_KEY,
 					},
 				} );
 

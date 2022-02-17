@@ -61,7 +61,7 @@ class UI
 	static async NavigateToHome ()
 	{
 		const auth = await Auth.VerifyToken();
-		if ( auth && auth.status === "success" && auth.user) {
+		if ( auth && auth.status === "success" && auth.user ) {
 			window.location.href = "/dashboard";
 		}
 	}
@@ -117,7 +117,7 @@ signinform.addEventListener( "click", async ( event ) =>
 		case "btnsignin":
 			{
 				const email = signinform.querySelector( "#email" ).value,
-				password = signinform.querySelector( "#pass" ).value;
+					password = signinform.querySelector( "#pass" ).value;
 
 				if ( !email.length || !password.length )
 					return alert( "Please enter email and password" );
@@ -151,7 +151,7 @@ signinform.addEventListener( "click", async ( event ) =>
 async function UtilsFetch ( url, method, headers, body )
 {
 	try {
-		const	res = await fetch( url, {
+		const res = await fetch( url, {
 			method,
 			headers,
 			body

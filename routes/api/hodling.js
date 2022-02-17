@@ -20,7 +20,7 @@ router.get( "/", async ( req, res ) =>
     record = await Hodling.find( { uid } );
   // else
   //   record = await Hodling.find();
-  res.status( 200 ).json( { status: (record ? "success" : "invalid"), message: record } );
+  res.status( 200 ).json( { status: ( record ? "success" : "invalid" ), message: record } );
 } );
 
 // @route 		POST api/hodling
@@ -100,15 +100,15 @@ router.post( "/delete",
     const errors = validationResult( req );
     if ( !errors.isEmpty() )
       return res.status( 400 ).json( { errors: errors.array() } );
-  const { id, coin, pair, qty, price, term, uid } = req.body;
-  console.log({coin, pair, qty})
-  await Hodling.deleteOne( {
-    coin,
-    pair,
-    qty,
-    uid
+    const { id, coin, pair, qty, price, term, uid } = req.body;
+    console.log( { coin, pair, qty } );
+    await Hodling.deleteOne( {
+      coin,
+      pair,
+      qty,
+      uid
+    } );
+    res.status( 200 ).json( { status: "success", message: "Coin Deleted successfully" } );
   } );
-  res.status( 200 ).json( { status: "success", message: "Coin Deleted successfully"} );
-} );
 
 module.exports = router;

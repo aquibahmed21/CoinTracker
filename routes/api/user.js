@@ -71,7 +71,7 @@ router.post(
           if ( err )
             return console.log( err );
           else
-            res.status( 200).json( { status:"success", token} );
+            res.status( 200 ).json( { status: "success", token } );
         } );
 
     } catch ( error ) {

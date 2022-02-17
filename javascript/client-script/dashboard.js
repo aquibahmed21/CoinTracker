@@ -2,7 +2,6 @@
 
 import * as Const from "./constants.js";
 import * as webSocket from "./websocket.js";
-// import * as history from "./jsonformatter.js";
 
 // javascript enums
 const Side = {
@@ -128,13 +127,13 @@ window.addEventListener( "load", async () =>
         {
 
           //! remove row from hodling table
-          table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
+          // table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
 
           //! add row to pllist table
           await AddPLRows_FromJSON( [ { coin, pair, qty, buyPrice, soldPrice, term: comment } ] );
 
           //! close popup
-          Close_LongPressPopup();
+          // Close_LongPressPopup();
 
           //! put sell order
           const side = Side.SELL; //Enum
@@ -142,36 +141,31 @@ window.addEventListener( "load", async () =>
           const coinpair = coin + pair;
           // // const body = { coinpair, qty, currentPrice: soldPrice, type, side };
           // // const response = await Const.fetchUtils( Routes.ORDER_POST, Method.POST, body );
-          // await ( await fetch( Routes.ORDER_POST, {
+          const abc = await ( await fetch( Routes.ORDER_POST, {
+            method: Method.POST,
+            headers: {
+              "Content-Type": "application/json",
+              "uid": uid
+            }, body: JSON.stringify( { coinpair, qty, currentPrice: soldPrice, type, side, uid } )
+          } ) ).json().catch( err => console.log( err ) );;
+
+          //! remove coin from hodling db
+          // await ( await fetch( Routes.DELETE_COIN_POST, {
           //   method: Method.POST,
           //   headers: {
           //     "Content-Type": "application/json",
-          //     "uid": localStorage.getItem( "uid" ),
-          //     "x-auth-token": localStorage.getItem( "token" )
-          //   }, body: JSON.stringify( { coinpair, qty, currentPrice: soldPrice, type, side } )
-          // } ) ).json();
-
-
-          //! remove coin from hodling db
-          // await Const.fetchUtils( Routes.DELETE_COIN_POST, Method.POST, JSON.stringify( { coin, pair, qty } ) );
-
-          await ( await fetch( Routes.DELETE_COIN_POST, {
-            method: Method.POST,
-            headers: {
-              "Content-Type": "application/json",
-              "uid": uid
-            }, body: JSON.stringify( { coin, pair, qty, uid } )
-          } ) ).json().catch( err => console.log( err ) );
+          //     "uid": uid
+          //   }, body: JSON.stringify( { coin, pair, qty, uid } )
+          // } ) ).json().catch( err => console.log( err ) );
 
           //! add coin to pl db
-          // await Const.fetchUtils( Routes.PL_LIST_POST, Method.POST, JSON.stringify( { coin, pair, qty, buyPrice, soldPrice, term: comment } ) );
-          await ( await fetch( Routes.PL_LIST_POST, {
-            method: Method.POST,
-            headers: {
-              "Content-Type": "application/json",
-              "uid": uid
-            }, body: JSON.stringify( { coin, pair, qty, buyPrice, soldPrice, term: comment, uid } )
-          } ) ).json().catch( err => { debugger; console.log( err )} );
+          // await ( await fetch( Routes.PL_LIST_POST, {
+          //   method: Method.POST,
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //     "uid": uid
+          //   }, body: JSON.stringify( { coin, pair, qty, buyPrice, soldPrice, term: comment, uid } )
+          // } ) ).json().catch( err => console.log( err ) );
 
         }
         break;
@@ -184,7 +178,6 @@ window.addEventListener( "load", async () =>
           //     uid: localStorage.getItem("uid")
           //   }
           // } ) ).json();
-          // debugger;
         }
         break;
       case "btnSLValue":
