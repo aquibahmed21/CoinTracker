@@ -5,8 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../styles/signin.css" />
+    <link rel="stylesheet" href="../styles/util.css">
     <!-- <link rel="icon" type="image/x-icon" href="/res/images/favicon.ico" /> -->
-    <title>Signin/Register/Reset</title>
+    <title>Sign-In | CoinTracker</title>
   </head>
   <body>
     <!-- <form id="signinform" method="post" action="/api/auth"> -->
@@ -19,11 +20,11 @@
       <label for="reset">Reset</label> -->
       <div id="wrapper">
         <div id="arrow"></div>
-        <input id="email" name="email" placeholder="Email" type="text" />
-        <input id="pass" name="password" placeholder="Password" type="password" />
-        <input id="repass" name="repassword" placeholder="Repeat password" type="password" />
+        <input id="email" name="email" autocomplete="off" placeholder="Email" type="text" />
+        <input id="pass" name="password" autocomplete="off" placeholder="Password" type="password" />
+        <input id="repass" name="repassword" autocomplete="off" placeholder="Repeat password" type="password" />
       </div>
-      <button type="submit" id="btnsignin">
+      <button type="submit" id="btnsignin" class="Util_card">
         <span id="btnsignin">
           Reset password
           <br />

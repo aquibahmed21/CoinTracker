@@ -298,92 +298,92 @@ const JSONDATA = {
 
   //? yash
 
-  wrx2: {
-    coin: "wrx",
-    pair: "usdt",
-    qty: 2.07233829,
-    price: 0.98714,
-    term: "commission-y"
-  },
+  // wrx2: {
+  //   coin: "wrx",
+  //   pair: "usdt",
+  //   qty: 2.07233829,
+  //   price: 0.98714,
+  //   term: "commission-y"
+  // },
 
-  bttc3: {
-    coin: "bttc",
-    pair: "inr",
-    qty: 553097,
-    price: 0.0001808,
-    term: "yash"
-  },
+  // bttc3: {
+  //   coin: "bttc",
+  //   pair: "inr",
+  //   qty: 553097,
+  //   price: 0.0001808,
+  //   term: "yash"
+  // },
 
-  xec1: {
-    coin: "xec",
-    pair: "inr",
-    qty: 13443,
-    price: 0.0074383,
-    term: "yash"
-  },
+  // xec1: {
+  //   coin: "xec",
+  //   pair: "inr",
+  //   qty: 13443,
+  //   price: 0.0074383,
+  //   term: "yash"
+  // },
 
-  ooki1: {
-    coin: "ooki",
-    pair: "inr",
-    qty: 57,
-    price: 1.7302,
-    term: "yash"
-  },
+  // ooki1: {
+  //   coin: "ooki",
+  //   pair: "inr",
+  //   qty: 57,
+  //   price: 1.7302,
+  //   term: "yash"
+  // },
 
-  doge6: {
-    coin: "doge",
-    pair: "inr",
-    qty: 8,
-    price: 12.2054,
-    term: "yash"
-  },
+  // doge6: {
+  //   coin: "doge",
+  //   pair: "inr",
+  //   qty: 8,
+  //   price: 12.2054,
+  //   term: "yash"
+  // },
 
-  lrc4: {
-    coin: "lrc",
-    pair: "inr",
-    qty: 2.3,
-    price: 84.0,
-    term: "yash"
-  },
+  // lrc4: {
+  //   coin: "lrc",
+  //   pair: "inr",
+  //   qty: 2.3,
+  //   price: 84.0,
+  //   term: "yash"
+  // },
 
-  win4: {
-    coin: "win",
-    pair: "inr",
-    qty: 3597,
-    price: 0.0278,
-    term: "yash"
-  },
+  // win4: {
+  //   coin: "win",
+  //   pair: "inr",
+  //   qty: 3597,
+  //   price: 0.0278,
+  //   term: "yash"
+  // },
 
-  reef5: {
-    coin: "reef",
-    pair: "inr",
-    qty: 196,
-    price: 1.0153,
-    term: "yash"
-  },
+  // reef5: {
+  //   coin: "reef",
+  //   pair: "inr",
+  //   qty: 196,
+  //   price: 1.0153,
+  //   term: "yash"
+  // },
 
-  shib9: {
-    coin: "shib",
-    pair: "inr",
-    qty: 210,
-    price: 0.002269,
-    term: "yash"
-  },
+  // shib9: {
+  //   coin: "shib",
+  //   pair: "inr",
+  //   qty: 210,
+  //   price: 0.002269,
+  //   term: "yash"
+  // },
 
-  shib8: {
-    coin: "shib",
-    pair: "inr",
-    qty: 40096,
-    price: 0.002494,
-    term: "yash"
-  },
-  celr6: {
-    coin: "celr",
-    pair: "inr",
-    qty: 25,
-    price: 3.9827,
-    term: "yash"
-  },
+  // shib8: {
+  //   coin: "shib",
+  //   pair: "inr",
+  //   qty: 40096,
+  //   price: 0.002494,
+  //   term: "yash"
+  // },
+  // celr6: {
+  //   coin: "celr",
+  //   pair: "inr",
+  //   qty: 25,
+  //   price: 3.9827,
+  //   term: "yash"
+  // },
 
   //? yash
 
@@ -439,14 +439,14 @@ const SoldJSon = {
     soldPrice: 0.0000223,
     term: "dip"
   },
-  shib5: {
-    coin: "shib",
-    pair: "inr",
-    qty: 71428,
-    buyPrice: 0.0014,
-    soldPrice: 0.001835,
-    term: "yash"
-  },
+  // shib5: {
+  //   coin: "shib",
+  //   pair: "inr",
+  //   qty: 71428,
+  //   buyPrice: 0.0014,
+  //   soldPrice: 0.001835,
+  //   term: "yash"
+  // },
   doge3: {
     coin: "doge",
     pair: "usdt",
@@ -455,14 +455,14 @@ const SoldJSon = {
     soldPrice: 0.1386620,
     term: "dip"
   },
-  doge4: {
-    coin: "doge",
-    pair: "inr",
-    qty: 10,
-    buyPrice: 10.31,
-    soldPrice: 11.31,
-    term: "yash"
-  },
+  // doge4: {
+  //   coin: "doge",
+  //   pair: "inr",
+  //   qty: 10,
+  //   buyPrice: 10.31,
+  //   soldPrice: 11.31,
+  //   term: "yash"
+  // },
   chr1: {
     coin: "chr",
     pair: "usdt",
@@ -511,30 +511,30 @@ const SoldJSon = {
     soldPrice: 0.81992,
     term: "dip"
   },
-  gala1: {
-    coin: "gala",
-    pair: "inr",
-    qty: 6,
-    buyPrice: 14.3,
-    soldPrice: 16.7649,
-    term: "yash"
-  },
-  mana1: {
-    coin: "mana",
-    pair: "inr",
-    qty: 0.6,
-    buyPrice: 158,
-    soldPrice: 179.5599,
-    term: "yash"
-  },
-  enj1: {
-    coin: "enj",
-    pair: "inr",
-    qty: 1,
-    buyPrice: 122.65,
-    soldPrice: 128.6081,
-    term: "yash"
-  },
+  // gala1: {
+  //   coin: "gala",
+  //   pair: "inr",
+  //   qty: 6,
+  //   buyPrice: 14.3,
+  //   soldPrice: 16.7649,
+  //   term: "yash"
+  // },
+  // mana1: {
+  //   coin: "mana",
+  //   pair: "inr",
+  //   qty: 0.6,
+  //   buyPrice: 158,
+  //   soldPrice: 179.5599,
+  //   term: "yash"
+  // },
+  // enj1: {
+  //   coin: "enj",
+  //   pair: "inr",
+  //   qty: 1,
+  //   buyPrice: 122.65,
+  //   soldPrice: 128.6081,
+  //   term: "yash"
+  // },
 
   dent3: {
     coin: "dent",
@@ -552,14 +552,14 @@ const SoldJSon = {
     soldPrice: 2647.75,
     term: "dip"
   },
-  shib7: {
-    coin: "shib",
-    pair: "inr",
-    qty: 121527,
-    buyPrice: 0.001616,
-    soldPrice: 0.001716,
-    term: "yash"
-  },
+  // shib7: {
+  //   coin: "shib",
+  //   pair: "inr",
+  //   qty: 121527,
+  //   buyPrice: 0.001616,
+  //   soldPrice: 0.001716,
+  //   term: "yash"
+  // },
   ada4: {
     coin: "ada",
     pair: "usdt",
@@ -576,70 +576,70 @@ const SoldJSon = {
     soldPrice: 0.27999,
     term: "dip"
   },
-  win1: {
-    coin: "win",
-    pair: "inr",
-    qty: 4219,
-    buyPrice: 0.0237,
-    soldPrice: 0.0248,
-    term: "yash"
-  },
-  wrx2: {
-    coin: "wrx",
-    pair: "inr",
-    qty: 1.5,
-    buyPrice: 60.17,
-    soldPrice: 67.17,
-    term: "yash"
-  },
-  pha1: {
-    coin: "pha",
-    pair: "inr",
-    qty: 5.03,
-    buyPrice: 19.875,
-    soldPrice: 19.694,
-    term: "yash"
-  },
-  hbar2: {
-    coin: "hbar",
-    pair: "inr",
-    qty: 11.5,
-    buyPrice: 16.99464,
-    soldPrice: 17.51669,
-    term: "yash"
-  },
-  xec: {
-    coin: "xec",
-    pair: "inr",
-    qty: 30247,
-    buyPrice: 0.0057943,
-    soldPrice: 0.0061544,
-    term: "yash"
-  },
-  reef1: {
-    coin: "reef",
-    pair: "inr",
-    qty: 288,
-    buyPrice: 0.8022,
-    soldPrice: 0.8261,
-    term: "yash"
-  },
-  gala2: {
-    coin: "gala",
-    pair: "inr",
-    qty: 7,
-    buyPrice: 15.85,
-    soldPrice: 16.2071,
-    term: "yash"
-  },
-  fil1: {
-    coin: "fil",
-    pair: "inr",
-    qty: 0.063,
-    buyPrice: 1576.42,
-    soldPrice: 1658.15,
-    term: "yash"
-  },
+  // win1: {
+  //   coin: "win",
+  //   pair: "inr",
+  //   qty: 4219,
+  //   buyPrice: 0.0237,
+  //   soldPrice: 0.0248,
+  //   term: "yash"
+  // },
+  // wrx2: {
+  //   coin: "wrx",
+  //   pair: "inr",
+  //   qty: 1.5,
+  //   buyPrice: 60.17,
+  //   soldPrice: 67.17,
+  //   term: "yash"
+  // },
+  // pha1: {
+  //   coin: "pha",
+  //   pair: "inr",
+  //   qty: 5.03,
+  //   buyPrice: 19.875,
+  //   soldPrice: 19.694,
+  //   term: "yash"
+  // },
+  // hbar2: {
+  //   coin: "hbar",
+  //   pair: "inr",
+  //   qty: 11.5,
+  //   buyPrice: 16.99464,
+  //   soldPrice: 17.51669,
+  //   term: "yash"
+  // },
+  // xec: {
+  //   coin: "xec",
+  //   pair: "inr",
+  //   qty: 30247,
+  //   buyPrice: 0.0057943,
+  //   soldPrice: 0.0061544,
+  //   term: "yash"
+  // },
+  // reef1: {
+  //   coin: "reef",
+  //   pair: "inr",
+  //   qty: 288,
+  //   buyPrice: 0.8022,
+  //   soldPrice: 0.8261,
+  //   term: "yash"
+  // },
+  // gala2: {
+  //   coin: "gala",
+  //   pair: "inr",
+  //   qty: 7,
+  //   buyPrice: 15.85,
+  //   soldPrice: 16.2071,
+  //   term: "yash"
+  // },
+  // fil1: {
+  //   coin: "fil",
+  //   pair: "inr",
+  //   qty: 0.063,
+  //   buyPrice: 1576.42,
+  //   soldPrice: 1658.15,
+  //   term: "yash"
+  // },
   bttc1: {
     coin: "bttc",
     pair: "usdt",
@@ -648,14 +648,14 @@ const SoldJSon = {
     soldPrice: 0.00000211,
     term: "dip"
   },
-  coti3: {
-    coin: "coti",
-    pair: "inr",
-    qty: 8,
-    buyPrice: 25.088,
-    soldPrice: 26.311,
-    term: "yash"
-  },
+  // coti3: {
+  //   coin: "coti",
+  //   pair: "inr",
+  //   qty: 8,
+  //   buyPrice: 25.088,
+  //   soldPrice: 26.311,
+  //   term: "yash"
+  // },
   ftm2: {
     coin: "ftm",
     pair: "usdt",
@@ -689,23 +689,23 @@ const SoldJSon = {
     soldPrice: 0.2309,
     term: "dip"
   },
-  sol4: {
-    coin: "sol",
-    pair: "inr",
-    qty: 0.012,
-    buyPrice: 8049.98,
-    soldPrice: 8462.98,
-    term: "yash"
-  },
+  // sol4: {
+  //   coin: "sol",
+  //   pair: "inr",
+  //   qty: 0.012,
+  //   buyPrice: 8049.98,
+  //   soldPrice: 8462.98,
+  //   term: "yash"
+  // },
 
-  luna2: {
-    coin: "luna",
-    pair: "inr",
-    qty: 0.04,
-    buyPrice: 4075.99,
-    soldPrice: 4245.32,
-    term: "yash"
-  },
+  // luna2: {
+  //   coin: "luna",
+  //   pair: "inr",
+  //   qty: 0.04,
+  //   buyPrice: 4075.99,
+  //   soldPrice: 4245.32,
+  //   term: "yash"
+  // },
 
   wrx1: {
     coin: "wrx",
@@ -716,22 +716,22 @@ const SoldJSon = {
     term: "commission"
   },
 
-  wrx4: {
-    coin: "wrx",
-    pair: "inr",
-    qty: 2.2,
-    buyPrice: 87.45,
-    soldPrice: 83.01,
-    term: "yash"
-  },
-  bttc2: {
-    coin: "bttc",
-    pair: "inr",
-    qty: 602410,
-    buyPrice: 0.000166,
-    soldPrice: 0.0001727,
-    term: "yash"
-  },
+  // wrx4: {
+  //   coin: "wrx",
+  //   pair: "inr",
+  //   qty: 2.2,
+  //   buyPrice: 87.45,
+  //   soldPrice: 83.01,
+  //   term: "yash"
+  // },
+  // bttc2: {
+  //   coin: "bttc",
+  //   pair: "inr",
+  //   qty: 602410,
+  //   buyPrice: 0.000166,
+  //   soldPrice: 0.0001727,
+  //   term: "yash"
+  // },
   win2: {
     coin: "win",
     pair: "usdt",
@@ -740,14 +740,14 @@ const SoldJSon = {
     soldPrice: 0.0003088,
     term: "dip"
   },
-  coti4: {
-    coin: "coti",
-    pair: "inr",
-    qty: 11.2,
-    buyPrice: 24.997,
-    soldPrice: 25.0001,
-    term: "yash"
-  },
+  // coti4: {
+  //   coin: "coti",
+  //   pair: "inr",
+  //   qty: 11.2,
+  //   buyPrice: 24.997,
+  //   soldPrice: 25.0001,
+  //   term: "yash"
+  // },
 
   enj3: {
     coin: "enj",
@@ -846,119 +846,119 @@ const SoldJSon = {
     soldPrice: 0.05997,
     term: "dip"
   },
-  atom2: {
-    coin: "atom",
-    pair: "inr",
-    qty: 0.08,
-    buyPrice: 2331.98,
-    soldPrice: 2390.00,
-    term: "yash"
-  },
-  gala3: {
-    coin: "gala",
-    pair: "inr",
-    qty: 5,
-    buyPrice: 14.8,
-    soldPrice: 15.4148,
-    term: "yash"
-  },
-  hot1: {
-    coin: "hot",
-    pair: "inr",
-    qty: 271,
-    buyPrice: 0.368,
-    soldPrice: 0.383,
-    term: "yash"
-  },
-  shib7: {
-    coin: "shib",
-    pair: "inr",
-    qty: 2235,
-    buyPrice: 0.001616,
-    soldPrice: 0.001793,
-    term: "yash"
-  },
-  sushi1: {
-    coin: "sushi",
-    pair: "inr",
-    qty: 0.282,
-    buyPrice: 355.8,
-    soldPrice: 365.27,
-    term: "yash"
-  },
-  front1: {
-    coin: "front",
-    pair: "inr",
-    qty: 4.91,
-    buyPrice: 40.619,
-    soldPrice: 40.34,
-    term: "yash"
-  },
-  wrx6: {
-    coin: "wrx",
-    pair: "inr",
-    qty: 1.2,
-    buyPrice: 76.6,
-    soldPrice: 76.6,
-    term: "yash"
-  },
-  shib6: {
-    coin: "shib",
-    pair: "inr",
-    qty: 119293,
-    buyPrice: 0.001789,
-    soldPrice: 0.001793,
-    term: "yash"
-  },
-  ftm3: {
-    coin: "ftm",
-    pair: "inr",
-    qty: 0.6,
-    buyPrice: 172.156,
-    soldPrice: 164.2,
-    term: "yash"
-  },
-  push1: {
-    coin: "push",
-    pair: "inr",
-    qty: 2.45,
-    buyPrice: 101.875,
-    soldPrice: 101.311,
-    term: "yash"
-  },
-  lrc2: {
-    coin: "lrc",
-    pair: "inr",
-    qty: 2.6,
-    buyPrice: 74.99915,
-    soldPrice: 76.49998,
-    term: "yash"
-  },
-  busd1: {
-    coin: "busd",
-    pair: "inr",
-    qty: 2.56,
-    buyPrice: 77.75,
-    soldPrice: 77.75,
-    term: "yash"
-  },
-  usdt2: {
-    coin: "usdt",
-    pair: "inr",
-    qty: 16.487048,
-    buyPrice: 77.85,
-    soldPrice: 78.59,
-    term: "base-y"
-  },
+  // atom2: {
+  //   coin: "atom",
+  //   pair: "inr",
+  //   qty: 0.08,
+  //   buyPrice: 2331.98,
+  //   soldPrice: 2390.00,
+  //   term: "yash"
+  // },
+  // gala3: {
+  //   coin: "gala",
+  //   pair: "inr",
+  //   qty: 5,
+  //   buyPrice: 14.8,
+  //   soldPrice: 15.4148,
+  //   term: "yash"
+  // },
+  // hot1: {
+  //   coin: "hot",
+  //   pair: "inr",
+  //   qty: 271,
+  //   buyPrice: 0.368,
+  //   soldPrice: 0.383,
+  //   term: "yash"
+  // },
+  // shib7: {
+  //   coin: "shib",
+  //   pair: "inr",
+  //   qty: 2235,
+  //   buyPrice: 0.001616,
+  //   soldPrice: 0.001793,
+  //   term: "yash"
+  // },
+  // sushi1: {
+  //   coin: "sushi",
+  //   pair: "inr",
+  //   qty: 0.282,
+  //   buyPrice: 355.8,
+  //   soldPrice: 365.27,
+  //   term: "yash"
+  // },
+  // front1: {
+  //   coin: "front",
+  //   pair: "inr",
+  //   qty: 4.91,
+  //   buyPrice: 40.619,
+  //   soldPrice: 40.34,
+  //   term: "yash"
+  // },
+  // wrx6: {
+  //   coin: "wrx",
+  //   pair: "inr",
+  //   qty: 1.2,
+  //   buyPrice: 76.6,
+  //   soldPrice: 76.6,
+  //   term: "yash"
+  // },
+  // shib6: {
+  //   coin: "shib",
+  //   pair: "inr",
+  //   qty: 119293,
+  //   buyPrice: 0.001789,
+  //   soldPrice: 0.001793,
+  //   term: "yash"
+  // },
+  // ftm3: {
+  //   coin: "ftm",
+  //   pair: "inr",
+  //   qty: 0.6,
+  //   buyPrice: 172.156,
+  //   soldPrice: 164.2,
+  //   term: "yash"
+  // },
+  // push1: {
+  //   coin: "push",
+  //   pair: "inr",
+  //   qty: 2.45,
+  //   buyPrice: 101.875,
+  //   soldPrice: 101.311,
+  //   term: "yash"
+  // },
+  // lrc2: {
+  //   coin: "lrc",
+  //   pair: "inr",
+  //   qty: 2.6,
+  //   buyPrice: 74.99915,
+  //   soldPrice: 76.49998,
+  //   term: "yash"
+  // },
+  // busd1: {
+  //   coin: "busd",
+  //   pair: "inr",
+  //   qty: 2.56,
+  //   buyPrice: 77.75,
+  //   soldPrice: 77.75,
+  //   term: "yash"
+  // },
+  // usdt2: {
+  //   coin: "usdt",
+  //   pair: "inr",
+  //   qty: 16.487048,
+  //   buyPrice: 77.85,
+  //   soldPrice: 78.59,
+  //   term: "base-y"
+  // },
 
-  gala4: {
-    coin: "gala",
-    pair: "inr",
-    qty: 7,
-    buyPrice: 25.8,
-    soldPrice: 28.7007,
-    term: "yash"
-  },
+  // gala4: {
+  //   coin: "gala",
+  //   pair: "inr",
+  //   qty: 7,
+  //   buyPrice: 25.8,
+  //   soldPrice: 28.7007,
+  //   term: "yash"
+  // },
 
   mana2: {
     coin: "mana",
@@ -969,23 +969,23 @@ const SoldJSon = {
     term: "dip"
   },
 
-  mana4: {
-    coin: "mana",
-    pair: "inr",
-    qty: 0.7,
-    buyPrice: 251.5999,
-    soldPrice: 259.8743,
-    term: "yash"
-  },
+  // mana4: {
+  //   coin: "mana",
+  //   pair: "inr",
+  //   qty: 0.7,
+  //   buyPrice: 251.5999,
+  //   soldPrice: 259.8743,
+  //   term: "yash"
+  // },
 
-  hbar5: {
-    coin: "hbar",
-    pair: "inr",
-    qty: 10.4,
-    buyPrice: 19.22976,
-    soldPrice: 20.05205,
-    term: "yash"
-  },
+  // hbar5: {
+  //   coin: "hbar",
+  //   pair: "inr",
+  //   qty: 10.4,
+  //   buyPrice: 19.22976,
+  //   soldPrice: 20.05205,
+  //   term: "yash"
+  // },
 
 
   hbar4: {
@@ -1024,41 +1024,41 @@ const SoldJSon = {
     term: "dip"
   },
 
-  reef4: {
-    coin: "reef",
-    pair: "inr",
-    qty: 106,
-    buyPrice: 0.941,
-    soldPrice: 0.9856,
-    term: "yash"
-  },
+  // reef4: {
+  //   coin: "reef",
+  //   pair: "inr",
+  //   qty: 106,
+  //   buyPrice: 0.941,
+  //   soldPrice: 0.9856,
+  //   term: "yash"
+  // },
 
-  celr4: {
-    coin: "celr",
-    pair: "inr",
-    qty: 46,
-    buyPrice: 4.2974,
-    soldPrice: 4.4569,
-    term: "yash"
-  },
+  // celr4: {
+  //   coin: "celr",
+  //   pair: "inr",
+  //   qty: 46,
+  //   buyPrice: 4.2974,
+  //   soldPrice: 4.4569,
+  //   term: "yash"
+  // },
 
-  win3: {
-    coin: "win",
-    pair: "inr",
-    qty: 3663,
-    buyPrice: 0.0273,
-    soldPrice: 0.028,
-    term: "yash"
-  },
+  // win3: {
+  //   coin: "win",
+  //   pair: "inr",
+  //   qty: 3663,
+  //   buyPrice: 0.0273,
+  //   soldPrice: 0.028,
+  //   term: "yash"
+  // },
 
-  coti7: {
-    coin: "coti",
-    pair: "inr",
-    qty: 6.2,
-    buyPrice: 23.998,
-    soldPrice: 25.15,
-    term: "yash"
-  },
+  // coti7: {
+  //   coin: "coti",
+  //   pair: "inr",
+  //   qty: 6.2,
+  //   buyPrice: 23.998,
+  //   soldPrice: 25.15,
+  //   term: "yash"
+  // },
 
 
   atom3: {
@@ -1149,38 +1149,38 @@ const SoldJSon = {
     soldPrice: 0.05597,
     term: "dip"
   },
-  hot2: {
-    coin: "hot",
-    pair: "inr",
-    qty: 159,
-    buyPrice: 0.389,
-    soldPrice: 0.403,
-    term: "yash"
-  },
-  ckb1: {
-    coin: "ckb",
-    pair: "inr",
-    qty: 90,
-    buyPrice: 1.0936,
-    soldPrice: 1.1585,
-    term: "yash"
-  },
-  shib9: {
-    coin: "shib",
-    pair: "inr",
-    qty: 43863,
-    buyPrice: 0.002269,
-    soldPrice: 0.002488,
-    term: "yash"
-  },
-  hbar7: {
-    coin: "hbar",
-    pair: "inr",
-    qty: 5,
-    buyPrice: 19.68621,
-    soldPrice: 20.5,
-    term: "yash"
-  },
+  // hot2: {
+  //   coin: "hot",
+  //   pair: "inr",
+  //   qty: 159,
+  //   buyPrice: 0.389,
+  //   soldPrice: 0.403,
+  //   term: "yash"
+  // },
+  // ckb1: {
+  //   coin: "ckb",
+  //   pair: "inr",
+  //   qty: 90,
+  //   buyPrice: 1.0936,
+  //   soldPrice: 1.1585,
+  //   term: "yash"
+  // },
+  // shib9: {
+  //   coin: "shib",
+  //   pair: "inr",
+  //   qty: 43863,
+  //   buyPrice: 0.002269,
+  //   soldPrice: 0.002488,
+  //   term: "yash"
+  // },
+  // hbar7: {
+  //   coin: "hbar",
+  //   pair: "inr",
+  //   qty: 5,
+  //   buyPrice: 19.68621,
+  //   soldPrice: 20.5,
+  //   term: "yash"
+  // },
 
 };
 

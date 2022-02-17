@@ -22,7 +22,7 @@ body {
 }
 
 body {
-  background: #6ed0f6;
+  background: -webkit-gradient(linear, left top, left bottom, from(#25c481), to(#25b7c4)) fixed;
   color: #fff;
   font-family: "Raleway", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -152,4 +152,19 @@ button:hover {
   border-right: 10px solid transparent;
   position: relative;
   left: 32px;
+}
+
+
+@media screen and (max-width: 480px){
+
+  div#signinform {
+    width: 95%;
+    margin: 0 auto;
+    transform: translate(-50%, -50%);
+  }
+
+  input[type="text"], input[type="password"]{
+    font-size: 20px;
+  }
+  
 }

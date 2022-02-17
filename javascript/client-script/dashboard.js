@@ -89,7 +89,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
       } ) ).json();
       ShowNotification( message );
     }
-    // if ( location.port && location.port == PORT ) {
+    
       PL_LIST = await fetch( Routes.PL_LIST_POST,
         {
           method: Method.GET,
@@ -108,7 +108,6 @@ window.addEventListener( "DOMContentLoaded", async () =>
           }
         } ).then( res => res.json() );
       HODLING = HODLING.message;
-    // }
   }
   else
     return window.location.href = "/";
@@ -308,14 +307,34 @@ window.addEventListener( "DOMContentLoaded", async () =>
       coinDetailsPopup.querySelector( "#pets-birthday2" ).value = "";
       coinDetailsPopup.querySelector( "#divCommentTerm" ).textContent = "";
       coinDetailsPopup.querySelector( "[checked]" )?.removeAttribute( "checked" );
-      coinDetailsPopup.querySelector( "#pet-gender-female" ).checked = true;
+      coinDetailsPopup.querySelector( "#pet-gender-female" ).checked = "checked";
 
       coinDetailsPopup.querySelector( "#divSoldPrice" ).classList.add( "Util_hide" );
     }
   },
 
-    hodlingCaption.addEventListener( "click", () =>
+    hodlingCaption.addEventListener( "click", async () =>
     {
+      // const uid = localStorage.getItem( "uid" );
+      // for ( const key in Const.SoldJSon ) { // eslint-disable-line
+      //   // const value = Const.JSONDATA[ key ];
+      //   const { coin, pair, buyPrice, soldPrice, qty, term } = Const.SoldJSon [ key ];
+        
+      //   const body = { coin, pair, buyPrice, soldPrice, qty, term, uid };
+
+      //   const response = await (await fetch( Routes.PL_LIST_POST, {
+      //     method: Method.POST,
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       "uid": uid
+      //     },
+      //     body: JSON.stringify( body )
+      //   })).json();
+
+      //   console.log( response.msg || response.message );
+
+      // }
+
       coinDetailsPopup.classList.remove( "Util_hide" );
       coinDetailsPopup.querySelector( "#pets-name" ).focus();
       coinDetailsPopup.querySelector( "#divSoldPrice" ).classList.add( "Util_hide" );
