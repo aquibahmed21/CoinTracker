@@ -21,7 +21,7 @@ router.get( "/", async ( req, res ) =>
 		record = await Keys.find( { uid } );
 	// else
 	// 	record = await Keys.find();
-	res.status( 200 ).json( { status: "success", message: record } );
+	res.status( 200 ).json( { status: (record && record.length) ? "success" : "invalid" , message: record } );
 } );
 
 router.post( "/", [
@@ -41,7 +41,7 @@ router.post( "/", [
 		return res
 			.status( 200 )
 			.json( { status: "success", message: "User already exists" } );
-	
+
 	try {
 		const API_Keys = new Keys( {
 			api,

@@ -18,9 +18,9 @@ router.get( "/", async ( req, res ) =>
   let record = null;
   if ( uid )
     record = await Hodling.find( { uid } );
-  else
-    record = await Hodling.find();
-  res.status( 200 ).json( { status: "success", message: record } );
+  // else
+  //   record = await Hodling.find();
+  res.status( 200 ).json( { status: (record ? "success" : "invalid"), message: record } );
 } );
 
 // @route 		POST api/hodling
@@ -34,7 +34,7 @@ router.post(
     check( "qty", "Coin quantity required" ).not().isEmpty(),
     check( "price", "Price required" ).not().isEmpty(),
     check( "term", "Add Term/Comment" ).not().isEmpty(),
-    check ( "uid", "User ID required" ).not().isEmpty()
+    check( "uid", "User ID required" ).not().isEmpty()
   ],
   async ( req, res ) =>
   {
@@ -88,14 +88,24 @@ router.post( "/update", async ( req, res ) =>
 // @route 		POST api/hodling/delete
 // @desc 			Delete Hodling amout details
 // @access 		Public
-router.post( "/delete", async ( req, res ) =>
+router.post( "/delete",
+  [
+    check( "coin", "Coin name required" ).not().isEmpty(),
+    check( "pair", "Pair name required" ).not().isEmpty(),
+    check( "qty", "Coin quantity required" ).not().isEmpty(),
+    check( "uid", "User ID required" ).not().isEmpty()
+  ],
+  async ( req, res ) =>
 {
-  const { id, coin, coinOld, pair, qty, price, term } = req.body;
+  const { id, coin, pair, qty, price, term } = req.body;
+  console.log({coin, pair, qty})
   await Hodling.deleteOne( {
-    "coin": coinOld,
-    "pair": pair,
+    coin,
+    pair,
+    qty,
+    uid
   } );
-  res.status( 200 ).json( { status: "ok" } );
+  res.status( 200 ).json( { status: "success", message: "Coin Deleted successfully"} );
 } );
 
 module.exports = router;

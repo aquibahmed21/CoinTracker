@@ -29,7 +29,8 @@ const Routes = {
   PL_LIST_POST: "/api/pllist",
   FUNDS_GET: "/api/funds",
   ALL_ORDER_GET: "/api/allOrders",
-  KEYS_GET: "/api/keys"
+  KEYS_GET: "/api/keys",
+  DELETE_COIN_POST: "/api/hodling/delete"
 };
 
 
@@ -54,17 +55,41 @@ const LongPressPopup = document.getElementsByClassName( "divLongPressPopUp" )[ 0
 window.addEventListener( "load", async () =>
 {
   const token = localStorage.getItem( "token" );
+  let userID = "";
   if ( token ) {
-    let userID = "";
     const res_data = await Const.fetchUtils( Routes.AUTH_GET, Method.GET );
-    if ( res_data && res_data.status === "success" && res_data.user )
-    {
+    if ( res_data && res_data.status === "success" && res_data.user ) {
       userID = res_data.user._id;
       localStorage.setItem( "uid", userID );
     }
     else
       return window.location.href = "/";
 
+    const credentials = await ( await fetch( Routes.KEYS_GET, {
+      method: Method.GET,
+      headers: {
+        "Content-Type": "application/json",
+        "uid": userID
+      }
+    } ) ).json();
+
+    if ( credentials.status !== "success" ) {
+      // prompt for keys
+      const api = prompt( "Enter your API_KEY" );
+      const sec = prompt( "Enter your SECRET_KEY" );
+      const uid = userID;
+      if ( !api || !sec || !uid )
+        return ShowNotification( "Please enter all fields after refresh" );
+
+      const { message } = await ( await fetch( Routes.KEYS_GET, {
+        method: Method.POST,
+        headers: {
+          "Content-Type": "application/json",
+          "uid": userID
+        }, body: JSON.stringify( { api, sec, uid } )
+      } ) ).json();
+      ShowNotification( message );
+    }
     if ( location.port && location.port == PORT ) {
       PL_LIST = await fetch( Routes.PL_LIST_POST,
         {
@@ -84,60 +109,94 @@ window.addEventListener( "load", async () =>
           }
         } ).then( res => res.json() );
       HODLING = HODLING.message;
-
-      const credentials = await ( await fetch( Routes.KEYS_GET, {
-        method: Method.GET,
-          headers: {
-            "Content-Type": "application/json",
-            "uid": userID
-          }
-      } ) ).json();
-
-      if ( credentials.status !== "success" )
-      {
-        // prompt for keys
-        const api = prompt( "Enter your API_KEY" );
-        const sec = prompt( "Enter your SECRET_KEY" );
-        const uid = userID;
-        if ( !api || !sec || !uid )
-          return ShowNotification("Please enter all fields after refresh");
-        const message = await( await fetch( Routes.KEYS_GET, {
-          method: Method.POST,
-          headers: {
-            "Content-Type": "application/json",
-            "uid": userID
-          }, body: JSON.stringify( { api, sec, uid } )
-        } ) ).json();
-        ShowNotification( message );
-      }
     }
   }
+  else
+    return window.location.href = "/";
 
 
-
-  LongPressPopup.addEventListener( "click", ( event ) =>
+  LongPressPopup.addEventListener( "click", async ( event ) =>
   {
-    const data = JSON.parse( LongPressPopup.getAttribute( "data" ) );
+    const {coin, pair, qty, buyPrice, soldPrice, targetID, comment} = JSON.parse( LongPressPopup.getAttribute( "data" ) );
+    const uid = localStorage.getItem( "uid" );
     const target = event.target.id;
     switch ( target ) {
 
       case "btnEdit":
         break;
       case "btnSell":
+        {
+
+          //! remove row from hodling table
+          table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
+
+          //! add row to pllist table
+          await AddPLRows_FromJSON( [ { coin, pair, qty, buyPrice, soldPrice, term: comment } ] );
+
+          //! close popup
+          Close_LongPressPopup();
+
+          //! put sell order
+          const side = Side.SELL; //Enum
+          const type = Type.LIMIT; //Enum
+          const coinpair = coin + pair;
+          // // const body = { coinpair, qty, currentPrice: soldPrice, type, side };
+          // // const response = await Const.fetchUtils( Routes.ORDER_POST, Method.POST, body );
+          // await ( await fetch( Routes.ORDER_POST, {
+          //   method: Method.POST,
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //     "uid": localStorage.getItem( "uid" ),
+          //     "x-auth-token": localStorage.getItem( "token" )
+          //   }, body: JSON.stringify( { coinpair, qty, currentPrice: soldPrice, type, side } )
+          // } ) ).json();
+
+
+          //! remove coin from hodling db
+          // await Const.fetchUtils( Routes.DELETE_COIN_POST, Method.POST, JSON.stringify( { coin, pair, qty } ) );
+
+          await ( await fetch( Routes.DELETE_COIN_POST, {
+            method: Method.POST,
+            headers: {
+              "Content-Type": "application/json",
+              "uid": localStorage.getItem( "uid")
+            }, body: JSON.stringify( { coin, pair, qty, uid } )
+          } ) ).json();
+
+          //! add coin to pl db
+          // await Const.fetchUtils( Routes.PL_LIST_POST, Method.POST, JSON.stringify( { coin, pair, qty, buyPrice, soldPrice, term: comment } ) );
+          await ( await fetch( Routes.PL_LIST_POST, {
+            method: Method.POST,
+            headers: {
+              "Content-Type": "application/json",
+              "uid": localStorage.getItem( "uid")
+            }, body: JSON.stringify( { coin, pair, qty, buyPrice, soldPrice, term: comment , uid} )
+          } ) ).json();
+
+        }
         break;
       case "btnSL":
+        {
+          // const something = await ( await fetch( Routes.FUNDS_GET, {
+          //   Method: Method.GET, headers:
+          //   {
+          //     'Content-Type': 'application/json',
+          //     uid: localStorage.getItem("uid")
+          //   }
+          // } ) ).json();
+          // debugger;
+        }
         break;
       case "btnSLValue":
         LongPressPopup.classList.add( "Util_hide" );
-        ShowSLFunction( document.getElementById(data.targetID), ShowNotification );
+        ShowSLFunction( document.getElementById( data.targetID ), ShowNotification );
         break;
       case "btnDelete":
         LongPressPopup.classList.add( "Util_hide" );
-        document.getElementById(data.targetID).remove();
+        document.getElementById( data.targetID ).remove();
         break;
       case "btnCls":
-        LongPressPopup.removeAttribute( "data" );
-        LongPressPopup.classList.add( "Util_hide" );
+        Close_LongPressPopup();
         break;
 
       default: break;
@@ -196,8 +255,7 @@ window.addEventListener( "load", async () =>
     const buyPrice = +targetRow.children[ 1 ].textContent;
     const soldPrice = targetRow.children[ 5 ].textContent.split( " " )[ 0 ];
     const comment = targetRow.querySelector( "#tdTerm" ).textContent;
-    const side = Side.SELL; //Enum
-    const type = Type.LIMIT; //Enum
+
     const targetID = targetRow.id;
     // const body = { coinpair, side, qty, currentPrice: soldPrice, type, side };
 
@@ -378,16 +436,16 @@ window.addEventListener( "load", async () =>
     for ( const key in obj ) {
 
       if ( obj.hasOwnProperty( key ) ) {
-        const { coin, pair, qty, price, term } = obj[ key ];
+        const { coin, pair, qty, price, term, _id } = obj[ key ];
         const lastPrice = arrTicker.filter( e => e.symbol == ( coin + pair ) )[ 0 ].lastPrice;
 
-        const row = isUpdate ? document.querySelector( "#" + key ) :
+        const row = isUpdate ? document.querySelector( "#" + (_id || key) ) :
           document.getElementById( "templatePLRow" ).content.cloneNode( true );
 
         const isINR = pair == "inr";
         if ( !isUpdate ) {
           const rowParent = row.getElementById( "tdPairName" ).parentElement;
-          rowParent.id = key;
+          rowParent.id = (_id || key);
           rowParent.setAttribute( "pairName", coin + pair );
           if ( !arr.includes( coin + pair ) )
             arr.push( coin + pair );
@@ -437,13 +495,13 @@ window.addEventListener( "load", async () =>
     for ( const key in obj ) {
 
       if ( obj.hasOwnProperty( key ) ) {
-        const { coin, pair, qty, buyPrice, soldPrice, term } = obj[ key ];
-        const row = isUpdate ? document.querySelector( "#" + key ) :
+        const { coin, pair, qty, buyPrice, soldPrice, term, _id } = obj[ key ];
+        const row = isUpdate ? document.querySelector( "#" + (_id || key) ) :
           document.getElementById( "templatePL1Row" ).content.cloneNode( true );
 
         const isINR = pair == "inr";
         if ( !isUpdate )
-          row.getElementById( "tdPairName" ).parentElement.id = key;
+          row.getElementById( "tdPairName" ).parentElement.id = (_id || key);
 
         const totalToDollar = isINR ? ( ( buyPrice / usdtinr ) * qty ) : ( buyPrice * qty );
         const totalToInr = totalToDollar * usdtinr;
@@ -560,6 +618,12 @@ window.addEventListener( "load", async () =>
 
 
 }, false );
+
+function Close_LongPressPopup ()
+{
+  LongPressPopup.removeAttribute( "data" );
+  LongPressPopup.classList.add( "Util_hide" );
+}
 
 function ShowSLFunction ( targetRow, ShowNotification )
 {

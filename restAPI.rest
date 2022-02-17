@@ -42,10 +42,10 @@ POST http://localhost:3000/api/hodling
 Content-Type: application/json
 
 {
-  "coin": "usdt",
+  "coin": "doge",
   "pair": "inr",
-  "qty": 58935,
-  "price": 75.56,
+  "qty": 10,
+  "price": 15,
   "term": "short",
   "uid": "620a3530de00e6281d3c51da"
 }
@@ -105,8 +105,11 @@ GET http://localhost:3000/api/hodling
 ###
 POST http://localhost:3000/api/hodling/delete
 Content-Type: application/json
+
 {
-  "coinOld": "brc"
+  "coin": "usdt",
+  "pair": "inr",
+  "qty": "58935"
 }
 
 ###
@@ -118,11 +121,15 @@ GET http://localhost:3000/api/allOrders
 ###
 GET http://localhost:3000/api/funds
 
+{
+  "uid": "620a3530de00e6281d3c51da"
+}
+
 ###
 GET http://localhost:3000/api/keys
 
 {
-  "uid": "620a796f5829dab41f6ed7c11"
+  "uid": "620a3530de00e6281d3c51da"
 }
 
 ###
@@ -131,7 +138,7 @@ POST http://localhost:3000/api/keys
 Content-Type: application/json
 
 {
-  "uid": "620a796f5829dab41f6ed7c11",
+  "uid": "620a3530de00e6281d3c51da",
   "api": "somekey",
   "sec": "somesecret"
 }

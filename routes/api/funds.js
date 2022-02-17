@@ -12,6 +12,7 @@ const signature = ( queryData, secret ) => CryptoJS.HmacSHA256( queryData, secre
 // @access 		Public
 router.get( "/", async ( req, res ) =>
 {
+	const uid = req.headers[ "uid" ];
 	const queryData = "recvWindow=20000&timestamp=" + ( new Date().getTime() );
 	const api = "/sapi/v1/funds";
 	const burl = process.env.BASE_URL + api + "?" + queryData + "&signature=" + signature( queryData, process.env.SECRET_KEY );
