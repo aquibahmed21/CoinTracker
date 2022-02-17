@@ -45,7 +45,7 @@ Content-Type: application/json
   "coin": "doge",
   "pair": "inr",
   "qty": 10,
-  "price": 15,
+  "price": 4,
   "term": "short",
   "uid": "620a3530de00e6281d3c51da"
 }

@@ -117,7 +117,7 @@ window.addEventListener( "load", async () =>
 
   LongPressPopup.addEventListener( "click", async ( event ) =>
   {
-    const {coin, pair, qty, buyPrice, soldPrice, targetID, comment} = JSON.parse( LongPressPopup.getAttribute( "data" ) );
+    const { coin, pair, qty, buyPrice, soldPrice, targetID, comment } = JSON.parse( LongPressPopup.getAttribute( "data" ) );
     const uid = localStorage.getItem( "uid" );
     const target = event.target.id;
     switch ( target ) {
@@ -159,9 +159,9 @@ window.addEventListener( "load", async () =>
             method: Method.POST,
             headers: {
               "Content-Type": "application/json",
-              "uid": localStorage.getItem( "uid")
+              "uid": uid
             }, body: JSON.stringify( { coin, pair, qty, uid } )
-          } ) ).json();
+          } ) ).json().catch( err => console.log( err ) );
 
           //! add coin to pl db
           // await Const.fetchUtils( Routes.PL_LIST_POST, Method.POST, JSON.stringify( { coin, pair, qty, buyPrice, soldPrice, term: comment } ) );
@@ -169,9 +169,9 @@ window.addEventListener( "load", async () =>
             method: Method.POST,
             headers: {
               "Content-Type": "application/json",
-              "uid": localStorage.getItem( "uid")
-            }, body: JSON.stringify( { coin, pair, qty, buyPrice, soldPrice, term: comment , uid} )
-          } ) ).json();
+              "uid": uid
+            }, body: JSON.stringify( { coin, pair, qty, buyPrice, soldPrice, term: comment, uid } )
+          } ) ).json().catch( err => { debugger; console.log( err )} );
 
         }
         break;
@@ -439,13 +439,13 @@ window.addEventListener( "load", async () =>
         const { coin, pair, qty, price, term, _id } = obj[ key ];
         const lastPrice = arrTicker.filter( e => e.symbol == ( coin + pair ) )[ 0 ].lastPrice;
 
-        const row = isUpdate ? document.querySelector( "#" + (_id || key) ) :
+        const row = isUpdate ? document.querySelector( "#" + ( _id || key ) ) :
           document.getElementById( "templatePLRow" ).content.cloneNode( true );
 
         const isINR = pair == "inr";
         if ( !isUpdate ) {
           const rowParent = row.getElementById( "tdPairName" ).parentElement;
-          rowParent.id = (_id || key);
+          rowParent.id = ( _id || key );
           rowParent.setAttribute( "pairName", coin + pair );
           if ( !arr.includes( coin + pair ) )
             arr.push( coin + pair );
@@ -496,12 +496,12 @@ window.addEventListener( "load", async () =>
 
       if ( obj.hasOwnProperty( key ) ) {
         const { coin, pair, qty, buyPrice, soldPrice, term, _id } = obj[ key ];
-        const row = isUpdate ? document.querySelector( "#" + (_id || key) ) :
+        const row = isUpdate ? document.querySelector( "#" + ( _id || key ) ) :
           document.getElementById( "templatePL1Row" ).content.cloneNode( true );
 
         const isINR = pair == "inr";
         if ( !isUpdate )
-          row.getElementById( "tdPairName" ).parentElement.id = (_id || key);
+          row.getElementById( "tdPairName" ).parentElement.id = ( _id || key );
 
         const totalToDollar = isINR ? ( ( buyPrice / usdtinr ) * qty ) : ( buyPrice * qty );
         const totalToInr = totalToDollar * usdtinr;

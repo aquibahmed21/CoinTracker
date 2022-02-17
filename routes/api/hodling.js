@@ -96,8 +96,11 @@ router.post( "/delete",
     check( "uid", "User ID required" ).not().isEmpty()
   ],
   async ( req, res ) =>
-{
-  const { id, coin, pair, qty, price, term } = req.body;
+  {
+    const errors = validationResult( req );
+    if ( !errors.isEmpty() )
+      return res.status( 400 ).json( { errors: errors.array() } );
+  const { id, coin, pair, qty, price, term, uid } = req.body;
   console.log({coin, pair, qty})
   await Hodling.deleteOne( {
     coin,
