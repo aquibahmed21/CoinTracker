@@ -52,6 +52,13 @@ const plCaption = plTable.getElementsByTagName( "caption" )[ 0 ];
 const coinDetailsPopup = document.getElementsByClassName( "signup-container" )[ 0 ];
 const LongPressPopup = document.getElementsByClassName( "divLongPressPopUp" )[ 0 ];
 
+document.getElementById( "spanSignOut" ).addEventListener( "click", () =>
+{
+  localStorage.removeItem( "token" );
+  localStorage.removeItem( "uid" );
+  window.location.href = "/";
+} );
+
 window.addEventListener( "DOMContentLoaded", async () =>
 {
   const token = localStorage.getItem( "token" );
@@ -149,6 +156,19 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
           //! close popup
           Close_LongPressPopup();
+
+          // TODO: Update USDT/INR balance
+          // get usdt/inr current balance
+          // update usdt/inr balance
+
+  
+          // TODO: Calculate 0.4% commission
+          // check if user eligible for commission
+          // if yes, and opted for reduction of commission
+          // if yes, has wrxusdt coin 
+          // if yes, calculate commission
+          // get current balance
+          // update balance
 
           //! put sell order
           const side = Side.SELL; //Enum
