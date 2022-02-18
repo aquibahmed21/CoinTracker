@@ -180,12 +180,12 @@ window.addEventListener( "DOMContentLoaded", async () =>
         }
         break;
       case "btnSLValue":
-        LongPressPopup.classList.add( "Util_hide" );
+        Close_LongPressPopup();
         ShowSLFunction( document.getElementById( data.targetID ), ShowNotification );
         break;
       case "btnDelete":
-        LongPressPopup.classList.add( "Util_hide" );
-        document.getElementById( data.targetID ).remove();
+        table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
+        Close_LongPressPopup();
         break;
       case "btnCls":
         Close_LongPressPopup();
@@ -204,7 +204,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
   }
 
   if ( !arrTicker )
-    window.alert( "Error: No ticker found, Please refresh.." );
+    return window.alert( "Error: No ticker found, Please refresh.." );
 
   let usdtinr = arrTicker.filter( e => e.symbol == ( "usdtinr" ) )[ 0 ].lastPrice;
 
