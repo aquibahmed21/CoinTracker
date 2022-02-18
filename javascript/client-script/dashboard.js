@@ -195,7 +195,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
     }
   } );
 
-  const arrTicker = await Const.getTicker() || await Const.getTicker();
+  const arrTicker = await Const.getTicker(HODLING) || await Const.getTicker(HODLING);
 
   function ShowNotification ( content )
   {
@@ -449,7 +449,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
       if ( obj.hasOwnProperty( key ) ) {
         const { coin, pair, qty, price, term, _id } = obj[ key ];
-        const lastPrice = arrTicker.filter( e => e.symbol == ( coin + pair ) )[ 0 ]?.lastPrice || price;
+        const lastPrice = arrTicker.filter( e => e.symbol == ( coin + pair ) )[ 0 ].lastPrice;
 
         const row = isUpdate ? document.querySelector( "#" + ( _id || key ) ) :
           document.getElementById( "templatePLRow" ).content.cloneNode( true );

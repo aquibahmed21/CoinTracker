@@ -1205,7 +1205,7 @@ const baseFun = ( url ) =>
     xhr.send();
   } );
 
-const getTicker = async () =>
+const getTicker = async (JSONDATA) =>
 {
   try {
     let symbolArr = [ "usdtinr" ];
