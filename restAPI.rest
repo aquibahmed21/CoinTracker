@@ -42,11 +42,11 @@ POST http://localhost:3000/api/hodling
 Content-Type: application/json
 
 {
-  "coin": "shib",
+  "coin": "doge",
   "pair": "inr",
   "qty": 10,
   "price": 4,
-  "term": "short",
+  "term": "test",
   "uid": "620a3530de00e6281d3c51da"
 }
 
@@ -94,10 +94,13 @@ POST http://localhost:3000/api/hodling/update
 Content-Type: application/json
 
 {
-  "coinOld": "usdt",
-  "coin": "brc"
+  "id": "620fcacfdabea26ae9990ac7",
+  "coin": "doge",
+  "pair": "inr",
+  "qty": 100,
+  "price": 5,
+  "term": "test 1"
 }
-
 ###
 
 GET http://localhost:3000/api/hodling

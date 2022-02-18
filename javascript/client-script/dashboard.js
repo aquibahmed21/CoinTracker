@@ -29,7 +29,8 @@ const Routes = {
   FUNDS_GET: "/api/funds",
   ALL_ORDER_GET: "/api/allOrders",
   KEYS_GET: "/api/keys",
-  DELETE_COIN_POST: "/api/hodling/delete"
+  DELETE_COIN_POST: "/api/hodling/delete",
+  HODLING_UPDATE_POST: "/api/hodling/update"
 };
 
 
@@ -89,25 +90,25 @@ window.addEventListener( "DOMContentLoaded", async () =>
       } ) ).json();
       ShowNotification( message );
     }
-    
-      PL_LIST = await fetch( Routes.PL_LIST_POST,
-        {
-          method: Method.GET,
-          headers: {
-            "Content-Type": "application/json",
-            "uid": userID
-          }
-        } ).then( res => res.json() );
-      PL_LIST = PL_LIST.message;
-      HODLING = await fetch( Routes.HODLING_POST,
-        {
-          method: Method.GET,
-          headers: {
-            "Content-Type": "application/json",
-            "uid": userID
-          }
-        } ).then( res => res.json() );
-      HODLING = HODLING.message;
+
+    PL_LIST = await fetch( Routes.PL_LIST_POST,
+      {
+        method: Method.GET,
+        headers: {
+          "Content-Type": "application/json",
+          "uid": userID
+        }
+      } ).then( res => res.json() );
+    PL_LIST = PL_LIST.message;
+    HODLING = await fetch( Routes.HODLING_POST,
+      {
+        method: Method.GET,
+        headers: {
+          "Content-Type": "application/json",
+          "uid": userID
+        }
+      } ).then( res => res.json() );
+    HODLING = HODLING.message;
   }
   else
     return window.location.href = "/";
@@ -121,6 +122,21 @@ window.addEventListener( "DOMContentLoaded", async () =>
     switch ( target ) {
 
       case "btnEdit":
+        {
+          coinDetailsPopup.classList.remove( "Util_hide" );
+          coinDetailsPopup.querySelector( "#pets-name" ).focus();
+          coinDetailsPopup.querySelector( "#divSoldPrice" ).classList.add( "Util_hide" );
+          coinDetailsPopup.setAttribute( "isEdit", "true" );
+          coinDetailsPopup.setAttribute( "targetID", targetID );
+
+          Close_LongPressPopup();
+
+          coinDetailsPopup.querySelector( "#pets-name" ).value = coin;
+          coinDetailsPopup.querySelector( "input[value=" + pair + "]" ).checked = true;
+          coinDetailsPopup.querySelector( "#pets-breed" ).value = qty;
+          coinDetailsPopup.querySelector( "#pets-birthday" ).value = buyPrice;
+          coinDetailsPopup.querySelector( "#divCommentTerm" ).textContent = comment;
+        }
         break;
       case "btnSell":
         {
@@ -140,7 +156,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
           const coinpair = coin + pair;
           // // const body = { coinpair, qty, currentPrice: soldPrice, type, side };
           // // const response = await Const.fetchUtils( Routes.ORDER_POST, Method.POST, body );
-          const abc = await ( await fetch( Routes.ORDER_POST, {
+          await ( await fetch( Routes.ORDER_POST, {
             method: Method.POST,
             headers: {
               "Content-Type": "application/json",
@@ -185,6 +201,14 @@ window.addEventListener( "DOMContentLoaded", async () =>
         break;
       case "btnDelete":
         table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
+        //! remove coin from hodling db
+        await ( await fetch( Routes.DELETE_COIN_POST, {
+          method: Method.POST,
+          headers: {
+            "Content-Type": "application/json",
+            "uid": uid
+          }, body: JSON.stringify( { coin, pair, qty, uid } )
+        } ) ).json().catch( err => console.log( err ) );
         Close_LongPressPopup();
         break;
       case "btnCls":
@@ -195,7 +219,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
     }
   } );
 
-  const arrTicker = await Const.getTicker(HODLING) || await Const.getTicker(HODLING);
+  const arrTicker = await Const.getTicker( HODLING ) || await Const.getTicker( HODLING );
 
   function ShowNotification ( content )
   {
@@ -271,9 +295,11 @@ window.addEventListener( "DOMContentLoaded", async () =>
         break;
       case "next":
         {
+          const isEdit = coinDetailsPopup.hasAttribute( "isEdit" );
+          const targetID = coinDetailsPopup.getAttribute( "targetID" );
           const uid = localStorage.getItem( "uid" );
-          const coin = coinDetailsPopup.querySelector( "#pets-name" ).value;
-          const pair = coinDetailsPopup.querySelector( "[checked]" )?.value || "usdt";
+          const coin = coinDetailsPopup.querySelector( "#pets-name" ).value.trim();
+          const pair = coinDetailsPopup.querySelector( ".radio-container input[type=radio]:checked + label" ).textContent.toLowerCase();
           const qty = +coinDetailsPopup.querySelector( "#pets-breed" ).value;
           const price = +coinDetailsPopup.querySelector( "#pets-birthday" ).value;
           const buyPrice = +coinDetailsPopup.querySelector( "#pets-birthday" ).value;
@@ -290,12 +316,22 @@ window.addEventListener( "DOMContentLoaded", async () =>
             coinDetailsPopup.classList.add( "Util_hide" );
             ResetForm();
           }
-          const body = { coin, pair, qty, price, term, uid, soldPrice, buyPrice };
-          const response = await Const.fetchUtils( ( isPLList ? Routes.PL_LIST_POST : Routes.HODLING_POST ), Method.POST, body );
-          console.log( response.msg );
-          isPLList ?
-            await AddPLRows_FromJSON( [ body ] ) :
+          const body = { coin, pair, qty, price, term, uid, soldPrice, buyPrice, id: targetID };
+
+          if ( isEdit ) {
+            const response = await Const.fetchUtils( Routes.HODLING_UPDATE_POST, Method.POST, body );
+            console.log( response.message );
+            table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
             await AddHodlingRows_FromJSON( [ body ] );
+          } else {
+            const response = await Const.fetchUtils( ( isPLList ? Routes.PL_LIST_POST : Routes.HODLING_POST ), Method.POST, body );
+            console.log( response.msg );
+            isPLList ?
+              await AddPLRows_FromJSON( [ body ] ) :
+              await AddHodlingRows_FromJSON( [ body ] );
+          }
+
+
         }
     }
 
@@ -309,6 +345,9 @@ window.addEventListener( "DOMContentLoaded", async () =>
       coinDetailsPopup.querySelector( "[checked]" )?.removeAttribute( "checked" );
       coinDetailsPopup.querySelector( "#pet-gender-female" ).checked = "checked";
 
+      coinDetailsPopup.removeAttribute( "isEdit" );
+      coinDetailsPopup.removeAttribute( "targetID" );
+
       coinDetailsPopup.querySelector( "#divSoldPrice" ).classList.add( "Util_hide" );
     }
   },
@@ -319,7 +358,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
       // for ( const key in Const.SoldJSon ) { // eslint-disable-line
       //   // const value = Const.JSONDATA[ key ];
       //   const { coin, pair, buyPrice, soldPrice, qty, term } = Const.SoldJSon [ key ];
-        
+
       //   const body = { coin, pair, buyPrice, soldPrice, qty, term, uid };
 
       //   const response = await (await fetch( Routes.PL_LIST_POST, {
