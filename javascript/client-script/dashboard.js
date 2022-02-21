@@ -257,6 +257,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
   SummationPLTable( hodlingBody );
   SummationPLTable( plBody );
   webSocket.wsSubscribe( LiveUpdateHodlingTable );
+  document.getElementById("loader").classList.add("Util_hide");
   // AddAllHistory_FromDB( history.aquibHistory );
 
   hodlingBody[ 0 ].addEventListener( "click", OnClick_HodlingRows() );
