@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Home | Aquib's Crypto Bot</title>
+	<title>Dashboard | Aquib's Crypto Bot</title>
 	<link rel="stylesheet" type="text/css" href="styles/util.css">
 	<link rel="stylesheet" type="text/css" href="styles/basic.css">
 	<link rel="stylesheet" type="text/css" href="styles/PL.css">
@@ -13,12 +13,9 @@
 	<link rel="stylesheet" type="text/css" href="styles/nav.css">
 	<link rel="stylesheet" type="text/css" href="styles/notification.css">
 	<link rel="stylesheet" type="text/css" href="styles/form.css">
-
-	<!-- <link rel="icon" type="image/x-icon" href="/res/images/favicon.ico"> -->
 </head>
 
 <body>
-
 	<form class="signup-container Util_hide" method="POST" action="/api/hodling">
 		<div class="right-container">
 			<header>
@@ -26,7 +23,7 @@
 				<div class="set">
 					<div class="pets-name">
 						<label for="pets-name">Coin Name</label>
-						<input id="pets-name" placeholder="Coin Name" type="text" required>
+						<input id="pets-name" autocapitalize="none" placeholder="Coin Name" type="text" required>
 					</div>
 
 					<div class="pets-gender">
@@ -39,17 +36,11 @@
 						</div>
 					</div>
 
-					<!-- <div class="pets-photo">
-						<button id="pets-upload">
-							<i class="fas fa-camera-retro"></i>
-						</button>
-						<label for="pets-upload">Upload a photo</label>
-					</div> -->
 				</div>
 				<div class="set">
 					<div class="pets-breed">
 						<label for="pets-breed">Quantity</label>
-						<input id="pets-breed" placeholder="Coin"s Quantity"" type="number" required>
+						<input id="pets-breed" placeholder="Coin's Quantity" type="number" required>
 					</div>
 					<div class="pets-birthday">
 						<label for="pets-birthday">Buying Price</label>
@@ -60,37 +51,9 @@
 						<input id="pets-birthday2" placeholder="Sold Price" type="number" required>
 					</div>
 				</div>
-				<!-- <div class="set">
-					<div class="pets-gender">
-						<label for="pet-gender-female">Gender</label>
-						<div class="radio-container">
-							<input checked="" id="pet-gender-female" name="pet-gender" type="radio" value="female">
-							<label for="pet-gender-female">Female</label>
-							<input id="pet-gender-male" name="pet-gender" type="radio" value="male">
-							<label for="pet-gender-male">Male</label>
-						</div>
-					</div>
-					<div class="pets-spayed-neutered">
-						<label for="pet-spayed">Spayed or Neutered</label>
-						<div class="radio-container">
-							<input checked="" id="pet-spayed" name="spayed-neutered" type="radio" value="spayed">
-							<label for="pet-spayed">Spayed</label>
-							<input id="pet-neutered" name="spayed-neutered" type="radio" value="neutered">
-							<label for="pet-neutered">Neutered</label>
-						</div>
-					</div>
-				</div> -->
 				<div class="pets-weight">
 					<label for="pet-weight-0-25">Comment</label>
 					<div id="divCommentTerm" class="radio-container" placeholder="Add Comment/Term" contenteditable="true">
-						<!-- <input checked="" id="pet-weight-0-25" name="pet-weight" type="radio" value="0-25">
-						<label for="pet-weight-0-25">0-25 lbs</label>
-						<input id="pet-weight-25-50" name="pet-weight" type="radio" value="25-50">
-						<label for="pet-weight-25-50">25-50 lbs</label>
-						<input id="pet-weight-50-100" name="pet-weight" type="radio" value="50-100">
-						<label for="pet-weight-50-100">50-100 lbs</label>
-						<input id="pet-weight-100-plus" name="pet-weight" type="radio" value="100+">
-						<label for="pet-weight-100-plus">100+ lbs</label> -->
 					</div>
 				</div>
 			</header>

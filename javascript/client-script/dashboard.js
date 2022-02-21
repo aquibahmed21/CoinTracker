@@ -318,7 +318,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
           const isEdit = coinDetailsPopup.hasAttribute( "isEdit" );
           const targetID = coinDetailsPopup.getAttribute( "targetID" );
           const uid = localStorage.getItem( "uid" );
-          const coin = coinDetailsPopup.querySelector( "#pets-name" ).value.trim();
+          const coin = coinDetailsPopup.querySelector( "#pets-name" ).value.trim().split( " " )[ 0 ].toLowerCase();
           const pair = coinDetailsPopup.querySelector( ".radio-container input[type=radio]:checked + label" ).textContent.toLowerCase();
           const qty = +coinDetailsPopup.querySelector( "#pets-breed" ).value;
           const price = +coinDetailsPopup.querySelector( "#pets-birthday" ).value;
