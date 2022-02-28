@@ -27,6 +27,8 @@ caption {
   font-size: x-large;
 }
 thead, tfoot{
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
   background-color: rgba(255,255,255,0.3);
 }
 .tbl-content{
@@ -80,15 +82,27 @@ tfoot td {
 
 .table-Container
 {
-  overflow-x: scroll;
+  overflow: auto;
   width: 100%;
+  max-height: 300px;
+  margin: 8px 0;
 }
 
 /*low resolution tablets, mobiles (landscape)*/
 @media (min-width: 481px) and (max-width: 767px)
 {
+  thead {
+    position: sticky;
+    top: -1px;
+  }
+
+  tfoot {
+    position: sticky;
+    bottom: 0;
+  }
   .demo {
     width: max-content;
+    margin: 0 2%;
   }
 
   caption {
@@ -99,8 +113,18 @@ tfoot td {
 /*smartphones mobiles (portrait)*/
 @media (min-width: 320px) and (max-width: 480px)
 {
+  thead {
+    position: sticky;
+    top: -1px;
+  }
+
+  tfoot {
+    position: sticky;
+    bottom: 0;
+  }
   .demo {
     width: max-content;
+    margin: 0 2%;
   }
 
   caption {
