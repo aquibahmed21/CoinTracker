@@ -18,9 +18,9 @@
 
 <body>
 	<!-- Pre-loader -->
-		<div id="loader" class="loading center-body">
-			<div class="loading loader-circle-24"></div>
-		</div>
+	<div id="loader" class="loading center-body">
+		<div class="loading loader-circle-24"></div>
+	</div>
 	<!-- Pre-loader -->
 	<form class="signup-container Util_hide" method="POST" action="/api/hodling">
 		<div class="right-container">
@@ -88,38 +88,38 @@
 				</li>
 
 				<li>Programs
-				<ul>
-					<li>All Programs</li>
-					<li>School Programs</li>
-					<li>College Program</li>
-					<li>Corrections Program</li>
-				</ul>
+					<ul>
+						<li>All Programs</li>
+						<li>School Programs</li>
+						<li>College Program</li>
+						<li>Corrections Program</li>
+					</ul>
 				</li>
 
 				<li>Resources
-				<ul>
-					<li>All Resources</li>
-					<li>Videos</li>
-					<li>The Planner</li>
-					<li>The Podcast</li>
-				</ul>
+					<ul>
+						<li>All Resources</li>
+						<li>Videos</li>
+						<li>The Planner</li>
+						<li>The Podcast</li>
+					</ul>
 				</li>
 
 				<li>Contact
-				<ul>
-					<li>Contact Us</li>
-					<li>Voluneering</li>
-					<li>Careers</li>
-					<li>FAQs</li>
-				</ul>
+					<ul>
+						<li>Contact Us</li>
+						<li>Voluneering</li>
+						<li>Careers</li>
+						<li>FAQs</li>
+					</ul>
 				</li>
 
 				<li>Store
-				<ul>
-					<li>Apparel</li>
-					<li>The Book</li>
-					<li>Promise Cards</li>
-				</ul>
+					<ul>
+						<li>Apparel</li>
+						<li>The Book</li>
+						<li>Promise Cards</li>
+					</ul>
 				</li>
 
 				<li class="donate">Donate</li>
@@ -129,55 +129,55 @@
 				<input id="mobileMenu" name="mobileMenu" type="checkbox">
 				<label for="mobileMenu"></label>
 				<ul>
-				 <li>About
-					<ul>
-						<li>About us</li>
-						<li>History</li>
-						<li>Founder</li>
-						<li>Our code of honor</li>
-						<li>Our team</li>
-					</ul>
-				</li>
-					 <li>Programs
-				<ul>
-					<li>All Programs</li>
-					<li>School Programs</li>
-					<li>College Program</li>
-					<li>Corrections Program</li>
-				</ul>
-				</li>
-				 <li>Resources
-				<ul>
-					<li>All Resources</li>
-					<li>Videos</li>
-					<li>The Planner</li>
-					<li>The Podcast</li>
-				</ul>
-				</li>
+					<li>About
+						<ul>
+							<li>About us</li>
+							<li>History</li>
+							<li>Founder</li>
+							<li>Our code of honor</li>
+							<li>Our team</li>
+						</ul>
+					</li>
+					<li>Programs
+						<ul>
+							<li>All Programs</li>
+							<li>School Programs</li>
+							<li>College Program</li>
+							<li>Corrections Program</li>
+						</ul>
+					</li>
+					<li>Resources
+						<ul>
+							<li>All Resources</li>
+							<li>Videos</li>
+							<li>The Planner</li>
+							<li>The Podcast</li>
+						</ul>
+					</li>
 
-				<li>Contact
-				<ul>
-					<li>Contact Us</li>
-					<li>Voluneering</li>
-					<li>Careers</li>
-					<li>FAQs</li>
-				</ul>
-				</li>
+					<li>Contact
+						<ul>
+							<li>Contact Us</li>
+							<li>Voluneering</li>
+							<li>Careers</li>
+							<li>FAQs</li>
+						</ul>
+					</li>
 
-				<li>Store
-				<ul>
-					<li>Appaerl</li>
-					<li>The Book</li>
-					<li>Promise Cards</li>
-				</ul>
-				</li>
+					<li>Store
+						<ul>
+							<li>Appaerl</li>
+							<li>The Book</li>
+							<li>Promise Cards</li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 		</nav>
 	</header>
-<!-- navbar -->
+	<!-- navbar -->
 
-<div id="notif" ></div>
+	<div id="notif"></div>
 
 	<div class="divLongPressPopUp Util_card Util_hide">
 		<h3>What do you want to do ?</h3>
@@ -201,39 +201,42 @@
 			$ price: <span id="spanDollarPrice"></span>
 		</div>
 
-		<table class="demo" id="table">
-			<caption>HODL Table</caption>
-			<thead>
-				<tr>
-					<th>Coin Name</th>
-					<th>Buying Price</th>
-					<th>Quantity</th>
-					<th>Total $</th>
-					<th>Total inr</th>
-					<th>Current Price</th>
-					<th>Current Total $</th>
-					<th>Current Total inr</th>
-					<th>Profit/Loss</th>
-					<th>Margin $</th>
-					<th>Margin INR</th>
-					<th>Comment</th>
-					<!-- <th id="thRefresh">Refresh</th> -->
-				</tr>
-			</thead>
-			<tbody data-long-press-delay="1000">
-			</tbody>
-			<tfoot>
-				<tr>
-					<td colspan="2"></td>
-					<td colspan="2"></td>
-					<td colspan="2"></td>
-					<td colspan="2"></td>
-					<td colspan="2"></td>
-					<td colspan="2"></td>
-				</tr>
-			</tfoot>
-		</table>
+		<div class="table-Container">
+			<table class="demo" id="table">
+				<caption>HODL Table</caption>
+				<thead>
+					<tr>
+						<th>Coin Name</th>
+						<th>Buying Price</th>
+						<th>Quantity</th>
+						<th>Total $</th>
+						<th>Total inr</th>
+						<th>Current Price</th>
+						<th>Current Total $</th>
+						<th>Current Total inr</th>
+						<th>Profit/Loss</th>
+						<th>Margin $</th>
+						<th>Margin INR</th>
+						<th>Comment</th>
+						<!-- <th id="thRefresh">Refresh</th> -->
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="2"></td>
+						<td colspan="2"></td>
+						<td colspan="2"></td>
+						<td colspan="2"></td>
+						<td colspan="2"></td>
+						<td colspan="2"></td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
 
+	<div class="table-Container">
 		<table class="demo" id="table1">
 			<caption>Profit/Loss Table</caption>
 			<thead>
@@ -250,7 +253,7 @@
 					<th>Term</th>
 				</tr>
 			</thead>
-			<tbody data-long-press-delay="1000">
+			<tbody>
 			</tbody>
 			<tfoot>
 				<tr>
@@ -262,6 +265,7 @@
 				</tr>
 			</tfoot>
 		</table>
+	</div>
 
 		<table class="demo Util_hide" id="tableHistory">
 			<caption>History Table(Aquib)</caption>

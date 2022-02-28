@@ -43,7 +43,7 @@ const arr = [];
 const hodlingTable = document.getElementById( "table" );
 const hodlingBody = hodlingTable.getElementsByTagName( "tbody" );
 
-const plTable = hodlingTable.nextElementSibling;
+const plTable = hodlingTable.parentElement.nextElementSibling;
 const plBody = plTable.getElementsByTagName( "tbody" );
 
 const notificationBTN = document.getElementById( "notif" );

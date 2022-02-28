@@ -16,9 +16,10 @@
 }
 
 table{
-  width:100%;
+  width:max-content;
   table-layout: fixed;
 }
+
 caption {
   color: white;
   margin: 4px 0px;
@@ -75,6 +76,36 @@ tfoot td {
 #table tr>*:nth-child(3)
 {
   user-select: text;
+}
+
+.table-Container
+{
+  overflow-x: scroll;
+  width: 100%;
+}
+
+/*low resolution tablets, mobiles (landscape)*/
+@media (min-width: 481px) and (max-width: 767px)
+{
+  .demo {
+    width: max-content;
+  }
+
+  caption {
+    width: 100vw;
+  }
+}
+
+/*smartphones mobiles (portrait)*/
+@media (min-width: 320px) and (max-width: 480px)
+{
+  .demo {
+    width: max-content;
+  }
+
+  caption {
+    width: 100vw;
+  }
 }
 
 

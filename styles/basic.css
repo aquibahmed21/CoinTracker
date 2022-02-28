@@ -41,6 +41,7 @@ body {
   background: linear-gradient(to right, #25c481, #25b7c4);
   font-family: "Roboto", sans-serif;
   background: -webkit-gradient(linear, left top, left bottom, from(#25c481), to(#25b7c4)) fixed;
+  overflow-x: hidden;
 }
 
 /* for custom scrollbar for webkit browser*/
@@ -75,26 +76,26 @@ body {
 
 }
 
-/*tablets, ipads (landscape)*/
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape)
+/* tablets, ipads (landscape) */
+/* @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape)
 {
   body {
     width: 300%;
   }
-}
+} */
 
 /*low resolution tablets, mobiles (landscape)*/
-@media (min-width: 481px) and (max-width: 767px)
+/* @media (min-width: 481px) and (max-width: 767px)
 {
   body {
     width: 300%;
   }
-}
+} */
 
 /*smartphones mobiles (portrait)*/
-@media (min-width: 320px) and (max-width: 480px)
+/* @media (min-width: 320px) and (max-width: 480px)
 {
   body {
     width: 300%;
   }
-}
+} */
