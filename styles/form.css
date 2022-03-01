@@ -146,7 +146,7 @@
 .headerImg {
   padding: 5px;
   cursor: pointer;
-  float: right;
+  float: left;
   background: rgba(255,255,255,0.3);
   width: 38px;
 }
