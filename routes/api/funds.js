@@ -15,7 +15,6 @@ const signature = ( queryData, secret ) => CryptoJS.HmacSHA256( queryData, secre
 router.get( "/", async ( req, res ) =>
 {
 	const uid = req.headers[ "uid" ];
-
 	const fullUrl = req.protocol + '://' + req.get( 'host' ); //+ req.originalUrl;
 	const { message: credentials } = await ( await fetch( `${ fullUrl }/api/keys`, {
 		method: "GET",
@@ -28,8 +27,8 @@ router.get( "/", async ( req, res ) =>
 	const { api: API_KEY, sec: SECRET_KEY } = credentials[ 0 ];
 
 	const queryData = "recvWindow=20000&timestamp=" + ( new Date().getTime() );
-	const api = "/sapi/v1/funds";
-	const burl = process.env.BASE_URL + api + "?" + queryData + "&signature=" + signature( queryData, SECRET_KEY );
+	const apiURL = "/sapi/v1/funds";
+	const burl = process.env.BASE_URL + apiURL + "?" + queryData + "&signature=" + signature( queryData, SECRET_KEY );
 
 	try {
 		const rawResponse = await fetch( burl,

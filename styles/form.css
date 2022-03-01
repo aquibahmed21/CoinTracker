@@ -143,25 +143,25 @@
   color: #fff;
 }
 
-#spanSignOut {
-  font-family: arial;
-  font-size: 14px;
-  padding: 10px 25px;
-  border-radius: 10px;
+.headerImg {
+  padding: 5px;
   cursor: pointer;
-  position: fixed;
-  top: 0;
-  left: 0;
+  float: right;
   background: rgba(255,255,255,0.3);
-  color: #fff;
+  width: 38px;
 }
-#spanSignOut:hover {
+.headerImg:hover {
   opacity: 0.7;
 }
 
 /* add media query */
 @media screen and (max-width: 480px)
 {
+  .right-container footer,
+  .right-container header {
+    padding: 0px 40px;
+  }
+
   .right-container .set
   {
     flex-direction: column;
@@ -185,6 +185,8 @@
   .signup-container {
     /* width: 80%; */
     min-width: 400px;
+    height: 100vh;
+    padding: 4px 0;
   }
 
   .pets-weight,
@@ -192,7 +194,7 @@
   .pets-birthday,
   .pets-gender,
   .pets-name {
-    margin: 12px 0;
+    margin: 10px 0;
   }
 
   .set.mobile {

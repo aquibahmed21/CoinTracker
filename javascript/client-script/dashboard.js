@@ -52,6 +52,12 @@ const plCaption = plTable.getElementsByTagName( "caption" )[ 0 ];
 const coinDetailsPopup = document.getElementsByClassName( "signup-container" )[ 0 ];
 const LongPressPopup = document.getElementsByClassName( "divLongPressPopUp" )[ 0 ];
 
+history.pushState(null, document.title, location.href);
+window.addEventListener( 'popstate', function ( event )
+{
+  history.pushState( null, document.title, location.href );
+} );
+
 document.getElementById( "spanSignOut" ).addEventListener( "click", () =>
 {
   localStorage.removeItem( "token" );
@@ -205,15 +211,142 @@ window.addEventListener( "DOMContentLoaded", async () =>
         }
         break;
       case "btnSL":
-        {
-          // const something = await ( await fetch( Routes.FUNDS_GET, {
-          //   Method: Method.GET, headers:
-          //   {
-          //     'Content-Type': 'application/json',
-          //     uid: localStorage.getItem("uid")
-          //   }
-          // } ) ).json();
-        }
+        // {
+        //   // const something = await ( await fetch( Routes.FUNDS_GET, {
+        //   //   Method: Method.GET, headers:
+        //   //   {
+        //   //     'Content-Type': 'application/json',
+        //   //     uid: localStorage.getItem("uid")
+        //   //   }
+        //   // } ) ).json();
+
+        //   const fundsArr = [
+        //     // {
+        //     //   "asset": "inr",
+        //     //   "free": "-0.15782667099298",
+        //     // },
+        //     {
+        //       "asset": "btc",
+        //       "free": "0.0002",
+        //     },
+        //     {
+        //       "asset": "xrp",
+        //       "free": "18.7",
+        //     },
+        //     {
+        //       "asset": "ltc",
+        //       "free": "0.064",
+        //     },
+        //     {
+        //       "asset": "eth",
+        //       "free": "0.0021",
+        //     },
+        //     {
+        //       "asset": "wrx",
+        //       "free": "14.04190636127906",
+        //     },
+        //     {
+        //       "asset": "dent",
+        //       "free": "2816.0",
+        //     },
+        //     {
+        //       "asset": "usdt",
+        //       "free": "15.06504706",
+        //     },
+        //     {
+        //       "asset": "xlm",
+        //       "free": "24.5",
+        //     },
+        //     {
+        //       "asset": "matic",
+        //       "free": "5.3",
+        //     },
+        //     {
+        //       "asset": "ada",
+        //       "free": "6.8",
+        //     },
+        //     {
+        //       "asset": "atom",
+        //       "free": "0.15",
+        //     },
+        //     {
+        //       "asset": "ftm",
+        //       "free": "2.3",
+        //     },
+        //     {
+        //       "asset": "enj",
+        //       "free": "2.5",
+        //     },
+        //     {
+        //       "asset": "win",
+        //       "free": "23871.0",
+        //     },
+        //     {
+        //       "asset": "bnb",
+        //       "free": "0.016",
+        //     },
+        //     {
+        //       "asset": "lrc",
+        //       "free": "5.0",
+        //     },
+        //     {
+        //       "asset": "doge",
+        //       "free": "41.0",
+        //     },
+        //     {
+        //       "asset": "dot",
+        //       "free": "0.91",
+        //     },
+        //     {
+        //       "asset": "dusk",
+        //       "free": "4.0",
+        //     },
+        //     {
+        //       "asset": "sol",
+        //       "free": "0.096",
+        //     },
+        //     {
+        //       "asset": "shib",
+        //       "free": "268323.0", 
+        //     },
+        //     {
+        //       "asset": "nkn",
+        //       "free": "12.8",
+        //     },
+        //     {
+        //       "asset": "spell",
+        //       "free": "285.0",
+        //     }
+        //   ];
+
+        //   const obj = [];
+        //   for ( let child of hodlingBody[ 0 ].children )
+        //   {
+        //     const asset = child.querySelector( "#tdPairName" ).textContent.split( "inr" )[ 0 ].split( "usdt" )[ 0 ] || "usdt";
+        //     let free = +child.querySelector( "#tdQty" ).textContent;
+        //     const index = obj.findIndex( x => x.asset === asset );
+            
+        //     if ( index >= 0 )
+        //     {
+        //       free += +obj[ index ].free;
+        //       obj[ index ].free = free.toString();
+        //     }
+        //     else
+        //       obj.push( { asset, free: free.toString() } );
+        //   }
+
+        //   const resultFilter = ( firstArray, secondArray ) =>
+        //   {
+        //     return firstArray.filter( firstArrayItem =>
+        //       !secondArray.some(
+        //         secondArrayItem => ( firstArrayItem[ "asset" ] === secondArrayItem[ "asset" ] &&
+        //           (+firstArrayItem[ "free" ]).toFixed( 6 ) === (+secondArrayItem[ "free" ]).toFixed( 6 ) )
+        //       )
+        //     );
+        //   };
+
+        //   const result = resultFilter( fundsArr, obj );
+        // }
         break;
       case "btnSLValue":
         Close_LongPressPopup();
@@ -351,8 +484,6 @@ window.addEventListener( "DOMContentLoaded", async () =>
               await AddPLRows_FromJSON( [ body ] ) :
               await AddHodlingRows_FromJSON( [ body ] );
           }
-
-
         }
     }
 

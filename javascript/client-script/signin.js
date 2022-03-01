@@ -1,3 +1,9 @@
+history.pushState(null, document.title, location.href);
+window.addEventListener( 'popstate', function ( event )
+{
+  history.pushState( null, document.title, location.href );
+} );
+
 // Enums
 const Routes = {
 	Signin: "/api/auth",
