@@ -4,6 +4,7 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 	max-width: 900px;
+  z-index: 1;
 }
 
 .right-container {
