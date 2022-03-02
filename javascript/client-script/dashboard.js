@@ -41,9 +41,13 @@ let HODLING = Const.JSONDATA;
 const arr = [];
 
 const hodlingTable = document.getElementById( "table" );
+for ( let item of hodlingTable.getElementsByTagName( "thead" )[ 0 ].children[ 0 ].children )
+  item.addEventListener( "click", () => sortTable( item.cellIndex, hodlingTable ) );
 const hodlingBody = hodlingTable.getElementsByTagName( "tbody" );
 
 const plTable = hodlingTable.parentElement.nextElementSibling;
+for ( let item of plTable.getElementsByTagName( "thead" )[ 0 ].children[ 0 ].children )
+  item.addEventListener( "click", () => sortTable( item.cellIndex, plTable.children[ 0 ] ) );
 const plBody = plTable.getElementsByTagName( "tbody" );
 
 const notificationBTN = document.getElementById( "notif" );
@@ -51,12 +55,6 @@ const hodlingCaption = hodlingTable.getElementsByTagName( "caption" )[ 0 ];
 const plCaption = plTable.getElementsByTagName( "caption" )[ 0 ];
 const coinDetailsPopup = document.getElementsByClassName( "signup-container" )[ 0 ];
 const LongPressPopup = document.getElementsByClassName( "divLongPressPopUp" )[ 0 ];
-
-history.pushState(null, document.title, location.href);
-window.addEventListener( 'popstate', function ( event )
-{
-  history.pushState( null, document.title, location.href );
-} );
 
 document.getElementById( "spanSignOut" ).addEventListener( "click", () =>
 {
@@ -167,7 +165,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
           // get usdt/inr current balance
           // update usdt/inr balance
 
-  
+
           // TODO: Calculate 0.4% commission
           // check if user eligible for commission
           // if yes, and opted for reduction of commission
@@ -325,7 +323,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
         //     const asset = child.querySelector( "#tdPairName" ).textContent.split( "inr" )[ 0 ].split( "usdt" )[ 0 ] || "usdt";
         //     let free = +child.querySelector( "#tdQty" ).textContent;
         //     const index = obj.findIndex( x => x.asset === asset );
-            
+
         //     if ( index >= 0 )
         //     {
         //       free += +obj[ index ].free;
@@ -350,7 +348,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
         break;
       case "btnSLValue":
         Close_LongPressPopup();
-        ShowSLFunction( document.getElementById( data.targetID ), ShowNotification );
+        ShowSLFunction( document.getElementById( targetID ), ShowNotification );
         break;
       case "btnDelete":
         table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
@@ -390,7 +388,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
   SummationPLTable( hodlingBody );
   SummationPLTable( plBody );
   webSocket.wsSubscribe( LiveUpdateHodlingTable );
-  document.getElementById("loader").classList.add("Util_hide");
+  document.getElementById( "loader" ).classList.add( "Util_hide" );
   // AddAllHistory_FromDB( history.aquibHistory );
 
   hodlingBody[ 0 ].addEventListener( "click", OnClick_HodlingRows() );
@@ -847,11 +845,72 @@ function CalculateSLValue ( targetRow )
     return 0;
   };
 
-  const getStopLossValue = ( price, percentage, decimal = 1 ) => ( price - ( ( price * percentage ) / 100 ) ).toFixed( decimal );
+  const getStopLossValue = ( price, percentage, decimal = 1 ) =>
+    ( price - ( ( price * percentage ) / 100 ) ).toFixed( decimal );
 
   const buyPrice = +targetRow.children[ 1 ].textContent;
   const currentPrice = +targetRow.children[ 5 ].textContent.split( " " )[ 0 ];
   const countNumber = +countDecimals( buyPrice );
   const margin = +targetRow.children[ 10 ].textContent.split( " " )[ 0 ];
   return { getStopLossValue, currentPrice, countNumber, margin };
+}
+
+function sortTable ( n, table )
+{
+  let rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  // table = document.getElementById("myTable");
+  switching = true;
+  //Set the sorting direction to ascending:
+  dir = "asc";
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while ( switching ) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.querySelector( "tbody" ).children;
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for ( i = 0; i < ( rows.length - 1 ); i++ ) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[ i ].getElementsByTagName( "TD" )[ n ];
+      y = rows[ i + 1 ].getElementsByTagName( "TD" )[ n ];
+      /*check if the two rows should switch place,
+      based on the direction, asc or desc:*/
+
+      x = +x.innerHTML.split( " ₿" )[ 0 ].split( " ₹" )[ 0 ] ? +x.innerHTML.split( " ₿" )[ 0 ].split( " ₹" )[ 0 ] : x.innerHTML.split( " ₿" )[ 0 ].split( " ₹" )[ 0 ].toLowerCase();
+      y = +y.innerHTML.split( " ₿" )[ 0 ].split( " ₹" )[ 0 ] ? +y.innerHTML.split( " ₿" )[ 0 ].split( " ₹" )[ 0 ] : y.innerHTML.split( " ₿" )[ 0 ].split( " ₹" )[ 0 ].toLowerCase();
+
+      if ( dir == "asc" ) {
+        if ( x > y ) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      } else if ( dir == "desc" ) {
+        if ( x < y ) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if ( shouldSwitch ) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[ i ].parentNode.insertBefore( rows[ i + 1 ], rows[ i ] );
+      switching = true;
+      //Each time a switch is done, increase this count by 1:
+      switchcount++;
+    } else {
+      /*If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again.*/
+      if ( switchcount == 0 && dir == "asc" ) {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
 }
