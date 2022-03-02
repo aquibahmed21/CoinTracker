@@ -29,7 +29,6 @@ function PingPongWSConnection (ws)
 
 ws.onopen = ( event =>
 {
-	// console.log( { event } );
 	EnableDisableTicker();
 	PingPongWSConnection(ws);
 } );
