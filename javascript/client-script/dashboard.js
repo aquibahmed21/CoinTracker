@@ -472,15 +472,36 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
           if ( isEdit ) {
             const response = await Const.fetchUtils( Routes.HODLING_UPDATE_POST, Method.POST, body );
-            console.log( response.message );
+            // console.log( response.message );
             table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
             await AddHodlingRows_FromJSON( [ body ] );
           } else {
             const response = await Const.fetchUtils( ( isPLList ? Routes.PL_LIST_POST : Routes.HODLING_POST ), Method.POST, body );
-            console.log( response.msg );
+            // console.log( response.msg );
             isPLList ?
               await AddPLRows_FromJSON( [ body ] ) :
               await AddHodlingRows_FromJSON( [ body ] );
+            
+            return; // !return to avoid the below code
+            if ( pair == "usdt" )
+            {
+              const deductUSDT = +qty * +price;
+              let HODLING = await fetch( Routes.HODLING_POST,
+                {
+                  method: Method.GET,
+                  headers: {
+                    "Content-Type": "application/json",
+                    "uid": userID
+                  }
+                } ).then( res => res.json() );
+              HODLING = HODLING.message;
+              const usdtobj = HODLING.filter( e => ( e.coin + e.pair ) == "usdtinr" )[0];
+              const { coin, pair:Pair, qty:usdtqty, price:usdtPrice, term, uid, soldPrice, buyPrice, _id } = usdtobj;
+              const totalusdthodling = isPLList ? usdtqty + deductUSDT : usdtqty - deductUSDT;
+              const body = { coin, pair:Pair, qty: totalusdthodling, price: usdtPrice, term, id: _id };
+              const response = await Const.fetchUtils( Routes.HODLING_UPDATE_POST, Method.POST, body );
+              await AddHodlingRows_FromJSON( [ body ], true );
+            }
           }
         }
     }
@@ -631,16 +652,16 @@ window.addEventListener( "DOMContentLoaded", async () =>
   }
 
   async function AddHodlingRows_FromJSON ( obj,
-    isUpdate = false )
+                                           isUpdate = false )
   {
     await UpdateFearGreedIndex( usdtinr );
     for ( const key in obj ) {
 
       if ( obj.hasOwnProperty( key ) ) {
-        const { coin, pair, qty, price, term, _id } = obj[ key ];
+        const { coin, pair, qty, price, term, _id, id } = obj[ key ];
         const lastPrice = arrTicker.filter( e => e.symbol == ( coin + pair ) )[ 0 ].lastPrice;
 
-        const row = isUpdate ? document.querySelector( "#" + ( _id || key ) ) :
+        const row = isUpdate ? document.getElementById(_id || id) :
           document.getElementById( "templatePLRow" ).content.cloneNode( true );
 
         const isINR = pair == "inr";

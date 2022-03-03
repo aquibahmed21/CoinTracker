@@ -14,7 +14,7 @@ const Hodling = require( "../../models/Hodling" );
 // @access 		Public
 router.get( "/", async ( req, res ) =>
 {
-  const uid = req.headers[ "uid" ];
+  const uid = process.env.UID || req.headers[ "uid" ];
   let record = null;
   if ( uid )
     record = await Hodling.find( { uid } );
@@ -69,7 +69,7 @@ router.post(
 // @desc 			Get Hodling amout details
 // @access 		Public
 router.post( "/update", [
-  check( "id", "Coin ID required" ).not().isEmpty(),
+  check( "id", "User ID required" ).not().isEmpty(),
   check( "coin", "Coin name required" ).not().isEmpty(),
   check( "pair", "Pair name required" ).not().isEmpty(),
   check( "qty", "Coin quantity required" ).not().isEmpty(),
