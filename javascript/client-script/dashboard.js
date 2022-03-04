@@ -205,7 +205,39 @@ window.addEventListener( "DOMContentLoaded", async () =>
               "uid": uid
             }, body: JSON.stringify( { coin, pair, qty, buyPrice, soldPrice, term: comment, uid } )
           } ) ).json().catch( err => console.log( err ) );
+          
+          return; // !return to avoid the below code
+          // if pair usdt
+          // calculate usdt/inr add or subtract from purchased coin (qty * coinPrice)
+          // get usdt/inr current balance from db
+          // get filtered usdt/inr from db
+          // get { coin, pair, qty, price, term, uid, _id } from from filtered usdt/inr
+          // add/sub usdt
+          // prepare body { coin, pair:Pair, qty: totalusdthodling, price: usdtPrice, term, id: _id };
+          // update usdt/inr balance db
+          // update usdt/inr balance hodling table
 
+          
+          
+          if ( pair == "usdt" )
+          {
+            const deductUSDT = +qty * +price;
+            let HODLING = await fetch( Routes.HODLING_POST,
+              {
+                method: Method.GET,
+                headers: {
+                  "Content-Type": "application/json",
+                  "uid": userID
+                }
+              } ).then( res => res.json() );
+            HODLING = HODLING.message;
+            const usdtobj = HODLING.filter( e => ( e.coin + e.pair ) == "usdtinr" )[0];
+            const { coin, pair:Pair, qty:usdtqty, price:usdtPrice, term, uid, soldPrice, buyPrice, _id } = usdtobj;
+            const totalusdthodling = isPLList ? usdtqty + deductUSDT : usdtqty - deductUSDT;
+            const body = { coin, pair:Pair, qty: totalusdthodling, price: usdtPrice, term, id: _id };
+            const response = await Const.fetchUtils( Routes.HODLING_UPDATE_POST, Method.POST, body );
+            await AddHodlingRows_FromJSON( [ body ], true );
+          }
         }
         break;
       case "btnSL":
