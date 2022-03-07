@@ -1208,11 +1208,7 @@ const baseFun = ( url ) =>
 const getTicker = async (JSONDATA) =>
 {
   try {
-    let symbolArr = [ "usdtinr" ];
-    Object.entries( JSONDATA ).filter( ( [ k, v ] ) => symbolArr.push( v.coin + v.pair ) );
-    symbolArr = removeDuplicate( symbolArr );
-    const allTicker = await baseFun( ticker24URL );
-    return allTicker.filter( e => symbolArr.includes( e.symbol ) );
+    return await baseFun( ticker24URL );
   }
   catch ( e ) {
     return null;

@@ -231,7 +231,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
                 }
               } ).then( res => res.json() );
             HODLING = HODLING.message;
-            const usdtobj = HODLING.filter( e => ( e.coin + e.pair ) == "usdtinr" )[0];
+            const usdtobj = HODLING.filter( e => ( e.coin + e.pair ) == PAIR.USDT )[0];
             const { coin, pair:Pair, qty:usdtqty, price:usdtPrice, term, uid, soldPrice, buyPrice, _id } = usdtobj;
             const totalusdthodling = isPLList ? usdtqty + deductUSDT : usdtqty - deductUSDT;
             const body = { coin, pair:Pair, qty: totalusdthodling, price: usdtPrice, term, id: _id };
@@ -402,7 +402,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
     }
   } );
 
-  const arrTicker = await Const.getTicker( HODLING ) || await Const.getTicker( HODLING );
+  const arrTicker = await Const.getTicker() || await Const.getTicker();
 
   function ShowNotification ( content )
   {
@@ -416,7 +416,15 @@ window.addEventListener( "DOMContentLoaded", async () =>
     return window.location.refresh();
   }
 
-  let usdtinr = arrTicker.filter( e => e.symbol == ( "usdtinr" ) )[ 0 ].lastPrice;
+  const PAIR = {
+    BTC: "btcinr",
+    WRX: "wrxinr",
+    USDT: "usdtinr",
+  };
+
+  let usdtinr = arrTicker.filter( e => e.symbol == ( PAIR.USDT ) )[ 0 ].lastPrice;
+  let btcinr = arrTicker.filter( e => e.symbol == ( PAIR.BTC ) )[ 0 ]?.lastPrice || 0;
+  let wrxinr = arrTicker.filter( e => e.symbol == ( PAIR.WRX ) )[ 0 ]?.lastPrice || 0;
 
   await AddHodlingRows_FromJSON( HODLING );
   await AddPLRows_FromJSON( PL_LIST );
@@ -530,7 +538,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
                   }
                 } ).then( res => res.json() );
               HODLING = HODLING.message;
-              const usdtobj = HODLING.filter( e => ( e.coin + e.pair ) == "usdtinr" )[0];
+              const usdtobj = HODLING.filter( e => ( e.coin + e.pair ) == PAIR.USDT )[0];
               const { coin, pair:Pair, qty:usdtqty, price:usdtPrice, term, uid, soldPrice, buyPrice, _id } = usdtobj;
               const totalusdthodling = isPLList ? usdtqty + deductUSDT : usdtqty - deductUSDT;
               const body = { coin, pair:Pair, qty: totalusdthodling, price: usdtPrice, term, id: _id };
@@ -696,6 +704,8 @@ window.addEventListener( "DOMContentLoaded", async () =>
         const { coin, pair, qty, price, term, _id, id } = obj[ key ];
         const lastPrice = arrTicker.filter( e => e.symbol == ( coin + pair ) )[ 0 ].lastPrice;
 
+        const lastPairPrice = (( pair == "usdt" ) || ( pair == "inr" )) ? usdtinr : ( pair == "wrx" ) ? wrxinr : btcinr;
+
         const row = isUpdate ? document.getElementById(_id || id) :
           document.getElementById( "templatePLRow" ).content.cloneNode( true );
 
@@ -708,11 +718,11 @@ window.addEventListener( "DOMContentLoaded", async () =>
             arr.push( coin + pair );
         }
 
-        const totalToDollar = isINR ? ( ( price / usdtinr ) * qty ) : ( price * qty );
-        const totalToInr = totalToDollar * usdtinr;
+        const totalToDollar = isINR ? ( ( price / lastPairPrice ) * qty ) : ( price * qty );
+        const totalToInr = totalToDollar * lastPairPrice;
 
-        const currentTotalToDollar = isINR ? ( ( lastPrice / usdtinr ) * qty ) : ( lastPrice * qty );
-        const currentTotalToInr = currentTotalToDollar * usdtinr;
+        const currentTotalToDollar = isINR ? ( ( lastPrice / lastPairPrice ) * qty ) : ( lastPrice * qty );
+        const currentTotalToInr = currentTotalToDollar * lastPairPrice;
         const percentage = ( ( currentTotalToInr * 100 ) / totalToInr ) - 100;
 
         const marginDollar = currentTotalToDollar - totalToDollar;
@@ -754,17 +764,19 @@ window.addEventListener( "DOMContentLoaded", async () =>
       if ( obj.hasOwnProperty( key ) ) {
         const { coin, pair, qty, buyPrice, soldPrice, term, _id } = obj[ key ];
         const row = isUpdate ? document.querySelector( "#" + ( _id || key ) ) :
-          document.getElementById( "templatePL1Row" ).content.cloneNode( true );
+                               document.getElementById( "templatePL1Row" ).content.cloneNode( true );
 
+        const lastPairPrice = (( pair == "usdt" ) || ( pair == "inr" )) ? usdtinr : ( pair == "wrx" ) ? wrxinr : btcinr;
+        
         const isINR = pair == "inr";
         if ( !isUpdate )
           row.getElementById( "tdPairName" ).parentElement.id = ( _id || key );
 
-        const totalToDollar = isINR ? ( ( buyPrice / usdtinr ) * qty ) : ( buyPrice * qty );
-        const totalToInr = totalToDollar * usdtinr;
+        const totalToDollar = isINR ? ( ( buyPrice / lastPairPrice ) * qty ) : ( buyPrice * qty );
+        const totalToInr = totalToDollar * lastPairPrice;
 
-        const currentTotalToDollar = isINR ? ( ( soldPrice / usdtinr ) * qty ) : ( soldPrice * qty );
-        const currentTotalToInr = currentTotalToDollar * usdtinr;
+        const currentTotalToDollar = isINR ? ( ( soldPrice / lastPairPrice ) * qty ) : ( soldPrice * qty );
+        const currentTotalToInr = currentTotalToDollar * lastPairPrice;
         const percentage = ( ( currentTotalToInr * 100 ) / totalToInr ) - 100;
 
         const marginDollar = currentTotalToDollar - totalToDollar;
@@ -798,12 +810,21 @@ window.addEventListener( "DOMContentLoaded", async () =>
   {
     try {
       const array = event.data.filter( e => arr.includes( e.s ) );
-      const usdtINRArray = array.filter( e => e.s == "usdtinr" );
+      const usdtINRArray = array.filter( e => e.s == PAIR.USDT );
+      const wrxINRArray = array.filter( e => e.s == PAIR.WRX );
+      const btcINRArray = array.filter( e => e.s == PAIR.BTC );
 
       if ( usdtINRArray.length ) {
         usdtinr = usdtINRArray[ 0 ].c;
         await UpdateFearGreedIndex( usdtinr );
       }
+
+      if ( wrxINRArray.length )
+        wrxinr = wrxINRArray[ 0 ].c;
+      
+      if ( btcINRArray.length )
+        btcinr = btcINRArray[ 0 ].c;
+
       for ( let arrs of array ) {
         for ( let child of hodlingBody[ 0 ].querySelectorAll( "tr[pairName=" + arrs.s + "]" ) ) {
           const lastPrice = +child.querySelector( "#tdCurrentPrice" ).textContent.split( " " )[ 0 ];
@@ -811,14 +832,16 @@ window.addEventListener( "DOMContentLoaded", async () =>
           const currentPrice = +arrs.c;
           const color = lastPrice == currentPrice ? "" : lastPrice < currentPrice ? "green" : "red";
           const prevPercentage = +child.querySelector( "#tdPLPercentage" ).textContent.split( " " )[ 0 ];
-
+          const pair = arrs.U;
           const isINR = arrs.U == "inr";
+
+          const lastPairPrice = (( pair == "usdt" ) || ( pair == "inr" )) ? usdtinr : ( pair == "wrx" ) ? wrxinr : btcinr;
 
           const totalToDollar = +child.querySelector( "#tdTotalDollar" ).textContent.split( " " )[ 0 ];
           const totalToInr = +child.querySelector( "#tdTotalinr" ).textContent.split( " " )[ 0 ];
 
-          const currentTotalToDollar = isINR ? ( ( currentPrice / usdtinr ) * qty ) : ( currentPrice * qty );
-          const currentTotalToInr = currentTotalToDollar * usdtinr;
+          const currentTotalToDollar = isINR ? ( ( currentPrice / lastPairPrice ) * qty ) : ( currentPrice * qty );
+          const currentTotalToInr = currentTotalToDollar * lastPairPrice;
           const percentage = ( ( currentTotalToInr * 100 ) / totalToInr ) - 100;
 
           const marginDollar = currentTotalToDollar - totalToDollar;
