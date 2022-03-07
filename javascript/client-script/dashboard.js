@@ -411,7 +411,10 @@ window.addEventListener( "DOMContentLoaded", async () =>
   }
 
   if ( !arrTicker )
-    return window.alert( "Error: No ticker found, Please refresh.." );
+  {
+    window.alert( "Error: No ticker found, Please refresh.." );
+    return window.location.refresh();
+  }
 
   let usdtinr = arrTicker.filter( e => e.symbol == ( "usdtinr" ) )[ 0 ].lastPrice;
 
@@ -744,7 +747,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
   }
 
   async function AddPLRows_FromJSON ( obj,
-    isUpdate = false )
+                                      isUpdate = false )
   {
     for ( const key in obj ) {
 
