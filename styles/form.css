@@ -191,7 +191,7 @@
   .signup-container {
     /* width: 80%; */
     min-width: 400px;
-    height: 100vh;
+    height: 100%;
     padding: 4px 0;
   }
 
