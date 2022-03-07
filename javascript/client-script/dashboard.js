@@ -149,6 +149,16 @@ window.addEventListener( "DOMContentLoaded", async () =>
           coinDetailsPopup.querySelector( "#pets-breed" ).value = qty;
           coinDetailsPopup.querySelector( "#pets-birthday" ).value = buyPrice;
           coinDetailsPopup.querySelector( "#divCommentTerm" ).textContent = comment;
+          if ( soldPrice )
+          {
+            coinDetailsPopup.querySelector( "#pets-birthday2" ).value = soldPrice;
+            coinDetailsPopup.querySelector( "#pets-birthday2" ).parentElement.classList.remove( "Util_hide" );
+          }
+          else 
+          {
+            coinDetailsPopup.querySelector( "#pets-birthday2" ).value = 0;
+            coinDetailsPopup.querySelector( "#pets-birthday2" ).parentElement.classList.add( "Util_hide" );
+          }
         }
         break;
       case "btnSell":
@@ -502,6 +512,17 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
     if ( targetRow.tagName !== "TR" )
       return;
+    const isHOLDLingTable = targetRow.parentElement.parentElement.id == "table";
+    if ( isHOLDLingTable )
+    {
+      LongPressPopup.querySelector( "#btnSell" ).classList.remove( "Util_disable" );
+      LongPressPopup.querySelector( "#btnSL" ).classList.remove( "Util_disable" );
+    }
+    else
+    {
+      LongPressPopup.querySelector( "#btnSell" ).classList.add( "Util_disable" );
+      LongPressPopup.querySelector( "#btnSL" ).classList.add( "Util_disable" );
+    }
 
     const coinpair = targetRow.children[ 0 ].textContent.trim();
     const coinLength = coinpair.length;
@@ -510,9 +531,9 @@ window.addEventListener( "DOMContentLoaded", async () =>
     // const isINR = coinpair.includes( "inr" );
     const coin = coinpair.split( pair )[ 0 ];
     // const pair = isINR ? "inr" : "usdt";
-    const qty = targetRow.children[ 2 ].textContent;
+    const qty =  targetRow.children[ isHOLDLingTable ? 2 : 3 ].textContent;
     const buyPrice = +targetRow.children[ 1 ].textContent;
-    const soldPrice = targetRow.children[ 5 ].textContent.split( " " )[ 0 ];
+    const soldPrice = isHOLDLingTable ? 0 : +targetRow.children[ 2 ].textContent.split( " " )[ 0 ];
     const comment = targetRow.querySelector( "#tdTerm" ).textContent;
 
     const targetID = targetRow.id;
@@ -605,7 +626,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
       coinDetailsPopup.querySelector( "#pets-birthday2" ).value = "";
       coinDetailsPopup.querySelector( "#divCommentTerm" ).textContent = "";
       coinDetailsPopup.querySelector( "[checked]" )?.removeAttribute( "checked" );
-      coinDetailsPopup.querySelector( "#pet-gender-female" ).checked = "checked";
+      coinDetailsPopup.querySelector( "#pet-gender-female" ).checked = true;
 
       coinDetailsPopup.removeAttribute( "isEdit" );
       coinDetailsPopup.removeAttribute( "targetID" );
@@ -616,26 +637,6 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
     hodlingCaption.addEventListener( "click", async () =>
     {
-      // const uid = localStorage.getItem( "uid" );
-      // for ( const key in Const.SoldJSon ) { // eslint-disable-line
-      //   // const value = Const.JSONDATA[ key ];
-      //   const { coin, pair, buyPrice, soldPrice, qty, term } = Const.SoldJSon [ key ];
-
-      //   const body = { coin, pair, buyPrice, soldPrice, qty, term, uid };
-
-      //   const response = await (await fetch( Routes.PL_LIST_POST, {
-      //     method: Method.POST,
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       "uid": uid
-      //     },
-      //     body: JSON.stringify( body )
-      //   })).json();
-
-      //   console.log( response.msg || response.message );
-
-      // }
-
       coinDetailsPopup.classList.remove( "Util_hide" );
       coinDetailsPopup.querySelector( "#pets-name" ).focus();
       coinDetailsPopup.querySelector( "#divSoldPrice" ).classList.add( "Util_hide" );
