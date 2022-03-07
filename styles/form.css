@@ -179,6 +179,12 @@
 
   .radio-container {
     width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .pets-gender {
+    width: unset !important;
   }
 
   .right-container,

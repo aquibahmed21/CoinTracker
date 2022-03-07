@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.post( "/", async ( req, res ) =>
 {
-	const { coinpair, side, qty, currentPrice, type, uid } = req.body;
+	let { coinpair, side, qty, currentPrice, type, uid, stopPrice } = req.body;
 
 	const fullUrl = req.protocol + '://' + req.get( 'host' ); //+ req.originalUrl;
 	const { message: credentials } = await ( await fetch( `${ fullUrl }/api/keys`, {
@@ -26,10 +26,11 @@ router.post( "/", async ( req, res ) =>
 
 	const { api: API_KEY, sec: SECRET_KEY } = credentials[ 0 ];
 
+	stopPrice = stopPrice ? `&stopPrice=${ stopPrice }` : "";
 
 	const baseURL = process.env.BASE_URL;
 	const signature = ( queryData, secret ) => CryptoJS.HmacSHA256( queryData, secret ).toString( CryptoJS.enc.Hex );
-	const queryData = `symbol=${ coinpair }&side=${ side }&type=${ type }&price=${ currentPrice }&quantity=${ qty }&recvWindow=10000&timestamp=` + ( new Date().getTime() );
+	const queryData = `symbol=${ coinpair }&side=${ side }&type=${ type }&price=${ currentPrice }${stopPrice}&quantity=${ qty }&recvWindow=10000&timestamp=` + ( new Date().getTime() );
 
 	const Route_Order_API = "/sapi/v1/order/";
 	const burl = baseURL + Route_Order_API + "?" + queryData + "&signature=" + signature( queryData, SECRET_KEY );

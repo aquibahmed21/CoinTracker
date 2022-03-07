@@ -56,6 +56,8 @@ const plCaption = plTable.getElementsByTagName( "caption" )[ 0 ];
 const coinDetailsPopup = document.getElementsByClassName( "signup-container" )[ 0 ];
 const LongPressPopup = document.getElementsByClassName( "divLongPressPopUp" )[ 0 ];
 
+const getStopLossValue = ( price, percentage, decimal = 1 ) => ( price - ( ( price * percentage ) / 100 ) ).toFixed( decimal );
+
 document.getElementById( "spanSignOut" ).addEventListener( "click", () =>
 {
   localStorage.removeItem( "token" );
@@ -151,7 +153,6 @@ window.addEventListener( "DOMContentLoaded", async () =>
         break;
       case "btnSell":
         {
-
           //! remove row from hodling table
           table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
 
@@ -186,7 +187,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
               "Content-Type": "application/json",
               "uid": uid
             }, body: JSON.stringify( { coinpair, qty, currentPrice: soldPrice, type, side, uid } )
-          } ) ).json().catch( err => console.log( err ) );;
+          } ) ).json().catch( err => console.log( err ) );
 
           //! remove coin from hodling db
           await ( await fetch( Routes.DELETE_COIN_POST, {
@@ -241,6 +242,50 @@ window.addEventListener( "DOMContentLoaded", async () =>
         }
         break;
       case "btnSL":
+      {
+        //! remove row from hodling table
+        // table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
+
+        //! add row to pllist table
+        // await AddPLRows_FromJSON( [ { coin, pair, qty, buyPrice, soldPrice, term: comment } ] );
+
+        //! close popup
+        Close_LongPressPopup();
+
+        // TODO: Update USDT/INR balance
+        // get usdt/inr current balance
+        // update usdt/inr balance
+
+
+        // TODO: Calculate 0.4% commission
+        // check if user eligible for commission
+        // if yes, and opted for reduction of commission
+        // if yes, has wrxusdt coin 
+        // if yes, calculate commission
+        // get current balance
+        // update balance
+
+        //! put sell order
+        const side = Side.SELL; //Enum
+        const type = Type.STOP_LIMIT; //Enum
+        const coinpair = coin + pair;
+        const price = getStopLossValue( soldPrice, 2, 4 );
+        const stopPrice = getStopLossValue( soldPrice, 4, 4 );
+        const body = { coinpair, qty, currentPrice: price, type, side, stopPrice, uid };
+          
+        await ( await fetch( Routes.ORDER_POST, {
+          method: Method.POST,
+          headers: {
+            "Content-Type": "application/json",
+            "uid": uid
+          }, body: JSON.stringify( body )
+        } ) ).json().catch( err => console.log( err ) );
+
+
+        
+        return;    
+      }
+        
         // {
         //   // const something = await ( await fetch( Routes.FUNDS_GET, {
         //   //   Method: Method.GET, headers:
@@ -459,9 +504,12 @@ window.addEventListener( "DOMContentLoaded", async () =>
       return;
 
     const coinpair = targetRow.children[ 0 ].textContent.trim();
-    const isINR = coinpair.includes( "inr" );
-    const coin = coinpair.split( isINR ? "inr" : "usdt" )[ 0 ];
-    const pair = isINR ? "inr" : "usdt";
+    const coinLength = coinpair.length;
+    const pairStr = coinpair.substring( coinLength - 4, coinLength );
+    const pair = pairStr.includes("usdt") ? "usdt" : pairStr.includes("btc") ? "btc" : pairStr.includes("wrx") ? "wrx" : "inr";
+    // const isINR = coinpair.includes( "inr" );
+    const coin = coinpair.split( pair )[ 0 ];
+    // const pair = isINR ? "inr" : "usdt";
     const qty = targetRow.children[ 2 ].textContent;
     const buyPrice = +targetRow.children[ 1 ].textContent;
     const soldPrice = targetRow.children[ 5 ].textContent.split( " " )[ 0 ];
@@ -920,9 +968,6 @@ function CalculateSLValue ( targetRow )
       return value.toString().split( "." )[ 1 ].length;
     return 0;
   };
-
-  const getStopLossValue = ( price, percentage, decimal = 1 ) =>
-    ( price - ( ( price * percentage ) / 100 ) ).toFixed( decimal );
 
   const buyPrice = +targetRow.children[ 1 ].textContent;
   const currentPrice = +targetRow.children[ 5 ].textContent.split( " " )[ 0 ];
