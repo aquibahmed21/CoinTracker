@@ -162,6 +162,63 @@
   width: 100vw;
 }
 
+.divSideNav {
+  height: calc(100vh - 38px);
+  overflow: hidden;
+  overflow-y: auto;
+  position: fixed;
+  background: -webkit-gradient(linear, left top, left bottom, from(#25c481), to(#25b7c4)) fixed;
+  max-width: 300px;
+  width: 80%;
+  z-index: 1;
+  transform: translateX(-300px);
+  transition: 1s;
+  color: white;
+  padding: 12px 4px;
+  display: flex;
+    flex-direction: column;
+}
+
+.divSideNav.active {
+  transform: translateX(0px);
+}
+
+.divProfile
+{
+  display: flex;
+  padding: 12px;
+  align-items: center;
+  border-bottom: 2px solid;
+  margin-bottom: 18px;
+}
+
+#imgProfile {
+  width: 42px;
+  height: 42px;
+  margin-right: 8px;
+}
+
+.divProfileName {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#spanName {
+  font-weight: 500;
+}
+
+.spanMenuBtn {
+  text-align: center;
+  padding: 12px 0;
+  border-bottom: 0.1px solid #a7a7a76e;
+  cursor: pointer;
+}
+
+.spanMenuBtn:hover {
+  opacity: 0.7;
+}
+
 /* add media query */
 @media screen and (max-width: 480px)
 {

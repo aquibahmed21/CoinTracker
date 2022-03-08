@@ -55,14 +55,44 @@ const hodlingCaption = hodlingTable.getElementsByTagName( "caption" )[ 0 ];
 const plCaption = plTable.getElementsByTagName( "caption" )[ 0 ];
 const coinDetailsPopup = document.getElementsByClassName( "signup-container" )[ 0 ];
 const LongPressPopup = document.getElementsByClassName( "divLongPressPopUp" )[ 0 ];
+const sideNav = document.getElementsByClassName( "divSideNav" )[ 0 ];
 
 const getStopLossValue = ( price, percentage, decimal = 1 ) => ( price - ( ( price * percentage ) / 100 ) ).toFixed( decimal );
+
+sideNav.addEventListener( "click", ( event ) =>
+{
+  const targetID = event.target.id;
+  const allContainers = document.querySelectorAll( ".RootContainer" );
+  switch ( targetID ) {
+    case "spanDashboard":
+      allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
+      document.getElementById( "IndexContainer" ).classList.remove( "Util_hide" );
+      sideNav.classList.toggle( "active" );
+      break;
+    case "spanProfile":
+      allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
+      document.getElementById( "ProfileContainer" ).classList.remove( "Util_hide" );
+      sideNav.classList.toggle( "active" );
+      break;
+    default:
+      {
+        if ( event.target.tagName == "SPAN" )
+          return sideNav.classList.toggle( "active" );
+      }
+      break;
+  }
+} );
 
 document.getElementById( "spanSignOut" ).addEventListener( "click", () =>
 {
   localStorage.removeItem( "token" );
   localStorage.removeItem( "uid" );
   window.location.href = "/";
+} );
+
+document.getElementById( "imgAccount" ).addEventListener( "click", () =>
+{
+  sideNav.classList.toggle( "active" );
 } );
 
 window.addEventListener( "DOMContentLoaded", async () =>
@@ -150,13 +180,11 @@ window.addEventListener( "DOMContentLoaded", async () =>
           coinDetailsPopup.querySelector( "#pets-breed" ).value = qty;
           coinDetailsPopup.querySelector( "#pets-birthday" ).value = buyPrice;
           coinDetailsPopup.querySelector( "#divCommentTerm" ).textContent = comment;
-          if ( !isHOLDLingTable )
-          {
+          if ( !isHOLDLingTable ) {
             coinDetailsPopup.querySelector( "#pets-birthday2" ).value = soldPrice;
             coinDetailsPopup.querySelector( "#pets-birthday2" ).parentElement.classList.remove( "Util_hide" );
           }
-          else 
-          {
+          else {
             coinDetailsPopup.querySelector( "#pets-birthday2" ).value = 0;
             coinDetailsPopup.querySelector( "#pets-birthday2" ).parentElement.classList.add( "Util_hide" );
           }
@@ -217,7 +245,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
               "uid": uid
             }, body: JSON.stringify( { coin, pair, qty, buyPrice, soldPrice, term: comment, uid } )
           } ) ).json().catch( err => console.log( err ) );
-          
+
           return; // !return to avoid the below code
           // if pair usdt
           // calculate usdt/inr add or subtract from purchased coin (qty * coinPrice)
@@ -229,10 +257,9 @@ window.addEventListener( "DOMContentLoaded", async () =>
           // update usdt/inr balance db
           // update usdt/inr balance hodling table
 
-          
-          
-          if ( pair == "usdt" )
-          {
+
+
+          if ( pair == "usdt" ) {
             const deductUSDT = +qty * +price;
             let HODLING = await fetch( Routes.HODLING_POST,
               {
@@ -243,60 +270,60 @@ window.addEventListener( "DOMContentLoaded", async () =>
                 }
               } ).then( res => res.json() );
             HODLING = HODLING.message;
-            const usdtobj = HODLING.filter( e => ( e.coin + e.pair ) == PAIR.USDT )[0];
-            const { coin, pair:Pair, qty:usdtqty, price:usdtPrice, term, uid, soldPrice, buyPrice, _id } = usdtobj;
+            const usdtobj = HODLING.filter( e => ( e.coin + e.pair ) == PAIR.USDT )[ 0 ];
+            const { coin, pair: Pair, qty: usdtqty, price: usdtPrice, term, uid, soldPrice, buyPrice, _id } = usdtobj;
             const totalusdthodling = isPLList ? usdtqty + deductUSDT : usdtqty - deductUSDT;
-            const body = { coin, pair:Pair, qty: totalusdthodling, price: usdtPrice, term, id: _id };
+            const body = { coin, pair: Pair, qty: totalusdthodling, price: usdtPrice, term, id: _id };
             const response = await Const.fetchUtils( Routes.HODLING_UPDATE_POST, Method.POST, body );
             await AddHodlingRows_FromJSON( [ body ], true );
           }
         }
         break;
       case "btnSL":
-      {
-        //! remove row from hodling table
-        // table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
+        {
+          //! remove row from hodling table
+          // table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
 
-        //! add row to pllist table
-        // await AddPLRows_FromJSON( [ { coin, pair, qty, buyPrice, soldPrice, term: comment } ] );
+          //! add row to pllist table
+          // await AddPLRows_FromJSON( [ { coin, pair, qty, buyPrice, soldPrice, term: comment } ] );
 
-        //! close popup
-        Close_LongPressPopup();
+          //! close popup
+          Close_LongPressPopup();
 
-        // TODO: Update USDT/INR balance
-        // get usdt/inr current balance
-        // update usdt/inr balance
-
-
-        // TODO: Calculate 0.4% commission
-        // check if user eligible for commission
-        // if yes, and opted for reduction of commission
-        // if yes, has wrxusdt coin 
-        // if yes, calculate commission
-        // get current balance
-        // update balance
-
-        //! put sell order
-        const side = Side.SELL; //Enum
-        const type = Type.STOP_LIMIT; //Enum
-        const coinpair = coin + pair;
-        const price = getStopLossValue( soldPrice, 2, 4 );
-        const stopPrice = getStopLossValue( soldPrice, 4, 4 );
-        const body = { coinpair, qty, currentPrice: price, type, side, stopPrice, uid };
-          
-        await ( await fetch( Routes.ORDER_POST, {
-          method: Method.POST,
-          headers: {
-            "Content-Type": "application/json",
-            "uid": uid
-          }, body: JSON.stringify( body )
-        } ) ).json().catch( err => console.log( err ) );
+          // TODO: Update USDT/INR balance
+          // get usdt/inr current balance
+          // update usdt/inr balance
 
 
-        
-        return;    
-      }
-        
+          // TODO: Calculate 0.4% commission
+          // check if user eligible for commission
+          // if yes, and opted for reduction of commission
+          // if yes, has wrxusdt coin 
+          // if yes, calculate commission
+          // get current balance
+          // update balance
+
+          //! put sell order
+          const side = Side.SELL; //Enum
+          const type = Type.STOP_LIMIT; //Enum
+          const coinpair = coin + pair;
+          const price = getStopLossValue( soldPrice, 2, 4 );
+          const stopPrice = getStopLossValue( soldPrice, 4, 4 );
+          const body = { coinpair, qty, currentPrice: price, type, side, stopPrice, uid };
+
+          await ( await fetch( Routes.ORDER_POST, {
+            method: Method.POST,
+            headers: {
+              "Content-Type": "application/json",
+              "uid": uid
+            }, body: JSON.stringify( body )
+          } ) ).json().catch( err => console.log( err ) );
+
+
+
+          return;
+        }
+
         // {
         //   // const something = await ( await fetch( Routes.FUNDS_GET, {
         //   //   Method: Method.GET, headers:
@@ -441,9 +468,9 @@ window.addEventListener( "DOMContentLoaded", async () =>
       case "btnBaseCoin":
         {
           Close_LongPressPopup();
-          ShowNotification("Not implemented yet");
+          ShowNotification( "Not implemented yet" );
         }
-        break
+        break;
       case "btnDelete":
         table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
         //! remove coin from hodling db
@@ -472,8 +499,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
     notificationBTN.classList.add( "visible" );
   }
 
-  if ( !arrTicker )
-  {
+  if ( !arrTicker ) {
     window.alert( "Error: No ticker found, Please refresh.." );
     return window.location.refresh();
   }
@@ -520,14 +546,12 @@ window.addEventListener( "DOMContentLoaded", async () =>
     if ( targetRow.tagName !== "TR" )
       return;
     const isHOLDLingTable = targetRow.parentElement.parentElement.id == "table";
-    if ( isHOLDLingTable )
-    {
+    if ( isHOLDLingTable ) {
       LongPressPopup.querySelector( "#btnSell" ).classList.remove( "Util_disable" );
       LongPressPopup.querySelector( "#btnSL" ).classList.remove( "Util_disable" );
       LongPressPopup.querySelector( "#btnSLValue" ).classList.remove( "Util_disable" );
     }
-    else
-    {
+    else {
       LongPressPopup.querySelector( "#btnSell" ).classList.add( "Util_disable" );
       LongPressPopup.querySelector( "#btnSL" ).classList.add( "Util_disable" );
       LongPressPopup.querySelector( "#btnSLValue" ).classList.add( "Util_disable" );
@@ -536,13 +560,13 @@ window.addEventListener( "DOMContentLoaded", async () =>
     const coinpair = targetRow.children[ 0 ].textContent.trim();
     const coinLength = coinpair.length;
     const pairStr = coinpair.substring( coinLength - 4, coinLength );
-    const pair = pairStr.includes("usdt") ? "usdt" : pairStr.includes("btc") ? "btc" : pairStr.includes("wrx") ? "wrx" : "inr";
+    const pair = pairStr.includes( "usdt" ) ? "usdt" : pairStr.includes( "btc" ) ? "btc" : pairStr.includes( "wrx" ) ? "wrx" : "inr";
     // const isINR = coinpair.includes( "inr" );
     const coin = coinpair.split( pair )[ 0 ];
     // const pair = isINR ? "inr" : "usdt";
-    const qty =  targetRow.children[ isHOLDLingTable ? 2 : 3 ].textContent;
+    const qty = targetRow.children[ isHOLDLingTable ? 2 : 3 ].textContent;
     const buyPrice = +targetRow.children[ 1 ].textContent;
-    const soldPrice =  +targetRow.children[ isHOLDLingTable ? 5 : 2 ].textContent.split( " " )[ 0 ];
+    const soldPrice = +targetRow.children[ isHOLDLingTable ? 5 : 2 ].textContent.split( " " )[ 0 ];
     const comment = targetRow.querySelector( "#tdTerm" ).textContent;
 
     const targetID = targetRow.id;
@@ -550,7 +574,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
     // ! check mark as base coin
     const already_marked_as_base = false;
-    if ( [ "btc", "wrx", "usdt" ].includes( coin ) && !already_marked_as_base)
+    if ( [ "btc", "wrx", "usdt" ].includes( coin ) && !already_marked_as_base )
       LongPressPopup.querySelector( "#btnBaseCoin" ).classList.remove( "Util_hide" );
     else
       LongPressPopup.querySelector( "#btnBaseCoin" ).classList.add( "Util_hide" );
@@ -609,10 +633,9 @@ window.addEventListener( "DOMContentLoaded", async () =>
             isPLList ?
               await AddPLRows_FromJSON( [ body ] ) :
               await AddHodlingRows_FromJSON( [ body ] );
-            
+
             return; // !return to avoid the below code
-            if ( pair == "usdt" )
-            {
+            if ( pair == "usdt" ) {
               const deductUSDT = +qty * +price;
               let HODLING = await fetch( Routes.HODLING_POST,
                 {
@@ -623,10 +646,10 @@ window.addEventListener( "DOMContentLoaded", async () =>
                   }
                 } ).then( res => res.json() );
               HODLING = HODLING.message;
-              const usdtobj = HODLING.filter( e => ( e.coin + e.pair ) == PAIR.USDT )[0];
-              const { coin, pair:Pair, qty:usdtqty, price:usdtPrice, term, uid, soldPrice, buyPrice, _id } = usdtobj;
+              const usdtobj = HODLING.filter( e => ( e.coin + e.pair ) == PAIR.USDT )[ 0 ];
+              const { coin, pair: Pair, qty: usdtqty, price: usdtPrice, term, uid, soldPrice, buyPrice, _id } = usdtobj;
               const totalusdthodling = isPLList ? usdtqty + deductUSDT : usdtqty - deductUSDT;
-              const body = { coin, pair:Pair, qty: totalusdthodling, price: usdtPrice, term, id: _id };
+              const body = { coin, pair: Pair, qty: totalusdthodling, price: usdtPrice, term, id: _id };
               const response = await Const.fetchUtils( Routes.HODLING_UPDATE_POST, Method.POST, body );
               await AddHodlingRows_FromJSON( [ body ], true );
             }
@@ -760,7 +783,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
   }
 
   async function AddHodlingRows_FromJSON ( obj,
-                                           isUpdate = false )
+    isUpdate = false )
   {
     await UpdateFearGreedIndex( usdtinr );
     for ( const key in obj ) {
@@ -769,9 +792,9 @@ window.addEventListener( "DOMContentLoaded", async () =>
         const { coin, pair, qty, price, term, _id, id } = obj[ key ];
         const lastPrice = arrTicker.filter( e => e.symbol == ( coin + pair ) )[ 0 ].lastPrice;
 
-        const lastPairPrice = (( pair == "usdt" ) || ( pair == "inr" )) ? usdtinr : ( pair == "wrx" ) ? wrxinr : btcinr;
+        const lastPairPrice = ( ( pair == "usdt" ) || ( pair == "inr" ) ) ? usdtinr : ( pair == "wrx" ) ? wrxinr : btcinr;
 
-        const row = isUpdate ? document.getElementById(_id || id) :
+        const row = isUpdate ? document.getElementById( _id || id ) :
           document.getElementById( "templatePLRow" ).content.cloneNode( true );
 
         const isINR = pair == "inr";
@@ -822,17 +845,17 @@ window.addEventListener( "DOMContentLoaded", async () =>
   }
 
   async function AddPLRows_FromJSON ( obj,
-                                      isUpdate = false )
+    isUpdate = false )
   {
     for ( const key in obj ) {
 
       if ( obj.hasOwnProperty( key ) ) {
         const { coin, pair, qty, buyPrice, soldPrice, term, _id } = obj[ key ];
         const row = isUpdate ? document.querySelector( "#" + ( _id || key ) ) :
-                               document.getElementById( "templatePL1Row" ).content.cloneNode( true );
+          document.getElementById( "templatePL1Row" ).content.cloneNode( true );
 
-        const lastPairPrice = (( pair == "usdt" ) || ( pair == "inr" )) ? usdtinr : ( pair == "wrx" ) ? wrxinr : btcinr;
-        
+        const lastPairPrice = ( ( pair == "usdt" ) || ( pair == "inr" ) ) ? usdtinr : ( pair == "wrx" ) ? wrxinr : btcinr;
+
         const isINR = pair == "inr";
         if ( !isUpdate )
           row.getElementById( "tdPairName" ).parentElement.id = ( _id || key );
@@ -886,7 +909,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
       if ( wrxINRArray.length )
         wrxinr = wrxINRArray[ 0 ].c;
-      
+
       if ( btcINRArray.length )
         btcinr = btcINRArray[ 0 ].c;
 
@@ -900,7 +923,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
           const pair = arrs.U;
           const isINR = arrs.U == "inr";
 
-          const lastPairPrice = (( pair == "usdt" ) || ( pair == "inr" )) ? usdtinr : ( pair == "wrx" ) ? wrxinr : btcinr;
+          const lastPairPrice = ( ( pair == "usdt" ) || ( pair == "inr" ) ) ? usdtinr : ( pair == "wrx" ) ? wrxinr : btcinr;
 
           const totalToDollar = +child.querySelector( "#tdTotalDollar" ).textContent.split( " " )[ 0 ];
           const totalToInr = +child.querySelector( "#tdTotalinr" ).textContent.split( " " )[ 0 ];
