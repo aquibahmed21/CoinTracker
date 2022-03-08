@@ -193,6 +193,7 @@
 			<button id="btnSL" class="btnLongPressPopUp">Apply Stoploss</button>
 			<button id="btnSLValue" class="btnLongPressPopUp">Stoploss Values</button>
 			<button id="btnDelete" class="btnLongPressPopUp">Delete</button>
+			<button id="btnBaseCoin" class="btnLongPressPopUp Util_hide">Base Coin</button>
 			<button id="btnCls" class="btnLongPressPopUp">Close</button>
 		</div>
 
@@ -207,89 +208,94 @@
 		</marquee>
 		<img id="spanSignOut" class="headerImg" src="/res/images/logout.png" alt="logout" title="logout" />
 
-		<div class="table-Container">
-			<table class="demo" id="table">
-				<caption>HODL Table</caption>
+		<!-- start of index root -->
+		<div id="IndexContainer" class="RootContainer">
+			<div class="table-Container">
+				<table class="demo" id="table">
+					<caption>HODL Table</caption>
+					<thead>
+						<tr>
+							<th>Coin Name</th>
+							<th>Buying Price</th>
+							<th>Quantity</th>
+							<th>Total $</th>
+							<th>Total inr</th>
+							<th>Current Price</th>
+							<th>Current Total $</th>
+							<th>Current Total inr</th>
+							<th>Profit/Loss</th>
+							<th>Margin $</th>
+							<th>Margin INR</th>
+							<th>Comment</th>
+							<!-- <th id="thRefresh">Refresh</th> -->
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="2"></td>
+							<td colspan="2"></td>
+							<td colspan="2"></td>
+							<td colspan="2"></td>
+							<td colspan="2"></td>
+							<td colspan="2"></td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+			<div class="table-Container">
+				<table class="demo" id="table1">
+					<caption>Profit/Loss Table</caption>
+					<thead>
+						<tr>
+							<th>Coin Name</th>
+							<th>Buying Price</th>
+							<th>Sold Price</th>
+							<th>Quantity</th>
+							<th>Total $</th>
+							<th>Total inr</th>
+							<th>Profit/Loss</th>
+							<th>Margin $</th>
+							<th>Margin INR</th>
+							<th>Term</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="2"></td>
+							<td colspan="2"></td>
+							<td colspan="2"></td>
+							<td colspan="2"></td>
+							<td colspan="2"></td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+			<table class="demo Util_hide" id="tableHistory">
+				<caption>History Table(Aquib)</caption>
 				<thead>
 					<tr>
 						<th>Coin Name</th>
-						<th>Buying Price</th>
+						<th>Price</th>
 						<th>Quantity</th>
-						<th>Total $</th>
-						<th>Total inr</th>
-						<th>Current Price</th>
-						<th>Current Total $</th>
-						<th>Current Total inr</th>
-						<th>Profit/Loss</th>
-						<th>Margin $</th>
-						<th>Margin INR</th>
-						<th>Comment</th>
-						<!-- <th id="thRefresh">Refresh</th> -->
+						<th>Total Price</th>
+						<th>Type</th>
+						<th>Side</th>
+						<th>Status</th>
+						<th>Created Time</th>
 					</tr>
 				</thead>
 				<tbody>
 				</tbody>
-				<tfoot>
-					<tr>
-						<td colspan="2"></td>
-						<td colspan="2"></td>
-						<td colspan="2"></td>
-						<td colspan="2"></td>
-						<td colspan="2"></td>
-						<td colspan="2"></td>
-					</tr>
-				</tfoot>
 			</table>
 		</div>
-
-	<div class="table-Container">
-		<table class="demo" id="table1">
-			<caption>Profit/Loss Table</caption>
-			<thead>
-				<tr>
-					<th>Coin Name</th>
-					<th>Buying Price</th>
-					<th>Sold Price</th>
-					<th>Quantity</th>
-					<th>Total $</th>
-					<th>Total inr</th>
-					<th>Profit/Loss</th>
-					<th>Margin $</th>
-					<th>Margin INR</th>
-					<th>Term</th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-			<tfoot>
-				<tr>
-					<td colspan="2"></td>
-					<td colspan="2"></td>
-					<td colspan="2"></td>
-					<td colspan="2"></td>
-					<td colspan="2"></td>
-				</tr>
-			</tfoot>
-		</table>
-	</div>
-
-		<table class="demo Util_hide" id="tableHistory">
-			<caption>History Table(Aquib)</caption>
-			<thead>
-				<tr>
-					<th>Coin Name</th>
-					<th>Price</th>
-					<th>Quantity</th>
-					<th>Total Price</th>
-					<th>Type</th>
-					<th>Side</th>
-					<th>Status</th>
-					<th>Created Time</th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
+		<!-- end of index root -->
+		<!-- start of profile page -->
+		<div id="ProfileContainer" class="RootContainer Util_hide"></div>
+		<!-- end of profile page -->
 	</div>
 
 	<template id="templatePL1Row">

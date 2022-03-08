@@ -132,6 +132,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
     const { coin, pair, qty, buyPrice, soldPrice, targetID, comment } = JSON.parse( LongPressPopup.getAttribute( "data" ) );
     const uid = localStorage.getItem( "uid" );
     const target = event.target.id;
+    const isHOLDLingTable = document.getElementById( targetID ).parentElement.parentElement.id == "table";
     switch ( target ) {
 
       case "btnEdit":
@@ -149,7 +150,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
           coinDetailsPopup.querySelector( "#pets-breed" ).value = qty;
           coinDetailsPopup.querySelector( "#pets-birthday" ).value = buyPrice;
           coinDetailsPopup.querySelector( "#divCommentTerm" ).textContent = comment;
-          if ( soldPrice )
+          if ( !isHOLDLingTable )
           {
             coinDetailsPopup.querySelector( "#pets-birthday2" ).value = soldPrice;
             coinDetailsPopup.querySelector( "#pets-birthday2" ).parentElement.classList.remove( "Util_hide" );
@@ -437,6 +438,12 @@ window.addEventListener( "DOMContentLoaded", async () =>
         Close_LongPressPopup();
         ShowSLFunction( document.getElementById( targetID ), ShowNotification );
         break;
+      case "btnBaseCoin":
+        {
+          Close_LongPressPopup();
+          ShowNotification("Not implemented yet");
+        }
+        break
       case "btnDelete":
         table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
         //! remove coin from hodling db
@@ -517,11 +524,13 @@ window.addEventListener( "DOMContentLoaded", async () =>
     {
       LongPressPopup.querySelector( "#btnSell" ).classList.remove( "Util_disable" );
       LongPressPopup.querySelector( "#btnSL" ).classList.remove( "Util_disable" );
+      LongPressPopup.querySelector( "#btnSLValue" ).classList.remove( "Util_disable" );
     }
     else
     {
       LongPressPopup.querySelector( "#btnSell" ).classList.add( "Util_disable" );
       LongPressPopup.querySelector( "#btnSL" ).classList.add( "Util_disable" );
+      LongPressPopup.querySelector( "#btnSLValue" ).classList.add( "Util_disable" );
     }
 
     const coinpair = targetRow.children[ 0 ].textContent.trim();
@@ -533,11 +542,18 @@ window.addEventListener( "DOMContentLoaded", async () =>
     // const pair = isINR ? "inr" : "usdt";
     const qty =  targetRow.children[ isHOLDLingTable ? 2 : 3 ].textContent;
     const buyPrice = +targetRow.children[ 1 ].textContent;
-    const soldPrice = isHOLDLingTable ? 0 : +targetRow.children[ 2 ].textContent.split( " " )[ 0 ];
+    const soldPrice =  +targetRow.children[ isHOLDLingTable ? 5 : 2 ].textContent.split( " " )[ 0 ];
     const comment = targetRow.querySelector( "#tdTerm" ).textContent;
 
     const targetID = targetRow.id;
     // const body = { coinpair, side, qty, currentPrice: soldPrice, type, side };
+
+    // ! check mark as base coin
+    const already_marked_as_base = false;
+    if ( [ "btc", "wrx", "usdt" ].includes( coin ) && !already_marked_as_base)
+      LongPressPopup.querySelector( "#btnBaseCoin" ).classList.remove( "Util_hide" );
+    else
+      LongPressPopup.querySelector( "#btnBaseCoin" ).classList.add( "Util_hide" );
 
     LongPressPopup.setAttribute( "data", JSON.stringify( { coin, pair, buyPrice, soldPrice, qty, comment, targetID } ) );
     LongPressPopup.classList.remove( "Util_hide" );

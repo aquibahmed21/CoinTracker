@@ -154,6 +154,14 @@
   opacity: 0.7;
 }
 
+.RootContainer {
+  height: calc(100vh - 38px);
+  overflow: hidden;
+  overflow-y: auto;
+  display: inline-block;
+  width: 100vw;
+}
+
 /* add media query */
 @media screen and (max-width: 480px)
 {
