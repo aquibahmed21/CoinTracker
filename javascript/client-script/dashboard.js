@@ -800,7 +800,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
         const isINR = pair == "inr";
         if ( !isUpdate ) {
           const rowParent = row.getElementById( "tdPairName" ).parentElement;
-          rowParent.id = ( _id || key );
+          rowParent.id = ( _id || id || key );
           rowParent.setAttribute( "pairName", coin + pair );
           if ( !arr.includes( coin + pair ) )
             arr.push( coin + pair );
@@ -834,12 +834,15 @@ window.addEventListener( "DOMContentLoaded", async () =>
           row.querySelector( "#tdMarginINR" ).parentNode.classList = "Profit";
         }
 
-        if ( !isUpdate ) {
-          if ( percentage > 0 )
-            hodlingBody[ 0 ].prepend( row );
-          else
-            hodlingBody[ 0 ].appendChild( row );
+        // insert row in dscending order of the table body
+        const body = hodlingBody[ 0 ];
+        const rows = body.children;
+        let i = 0;
+        for ( ; i < rows.length; i++ ) {
+          if ( rows[ i ].querySelector( "#tdPLPercentage" ).textContent.split( " " )[ 0 ] <= percentage )
+            break;
         }
+        body.insertBefore( row.children[0], rows[ i ] );
       }
     }
   }
