@@ -170,7 +170,7 @@
 
 .divSideNav {
   position: fixed;
-  background: -webkit-gradient(linear, left top, left bottom, from(#25c481), to(#25b7c4)) fixed;
+  background: rgba(255,255,255,0.3);
   width: 100%;
   z-index: 1;
   transition: 1s;

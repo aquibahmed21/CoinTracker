@@ -869,6 +869,12 @@ window.addEventListener( "DOMContentLoaded", async () =>
         if ( !isUpdate )
           row.getElementById( "tdPairName" ).parentElement.id = ( _id || key );
 
+        if ( !arr.includes( coin + pair ) )
+          arr.push( coin + pair );
+
+        const rowParent = row.getElementById( "tdPairName" ).parentElement;
+        rowParent.setAttribute( "pairName", coin + pair );
+
         const totalToDollar = isINR ? ( ( buyPrice / lastPairPrice ) * qty ) : ( buyPrice * qty );
         const totalToInr = totalToDollar * lastPairPrice;
 
@@ -923,10 +929,11 @@ window.addEventListener( "DOMContentLoaded", async () =>
         btcinr = btcINRArray[ 0 ].c;
 
       for ( let arrs of array ) {
+        const currentPrice = +arrs.c;
         for ( let child of hodlingBody[ 0 ].querySelectorAll( "tr[pairName=" + arrs.s + "]" ) ) {
           const lastPrice = +child.querySelector( "#tdCurrentPrice" ).textContent.split( " " )[ 0 ];
           const qty = +child.querySelector( "#tdQty" ).textContent;
-          const currentPrice = +arrs.c;
+          
           const color = lastPrice == currentPrice ? "" : lastPrice < currentPrice ? "green" : "red";
           const prevPercentage = +child.querySelector( "#tdPLPercentage" ).textContent.split( " " )[ 0 ];
           const pair = arrs.U;
@@ -970,6 +977,16 @@ window.addEventListener( "DOMContentLoaded", async () =>
             child.classList = "";
             // move row to below top rows
           }
+        }
+
+        for ( let child of plBody[ 0 ].querySelectorAll( "tr[pairName=" + arrs.s + "]" ) ) {
+          const soldPrice = +child.querySelector( "#tdSoldPrice" ).textContent.split( " " )[ 0 ];
+          const currentPercentage = ( ( currentPrice * 100 ) / soldPrice ) - 100;
+          child.querySelector( "#tdCurrentPercentage").textContent = currentPercentage.toFixed( 2 ) + " %";
+          if (currentPercentage < 0) 
+            child.querySelector( "#tdBuyAgain").classList.remove("Util_disable");
+          else
+            child.querySelector( "#tdBuyAgain").classList.add("Util_disable");
         }
       }
       SummationPLTable( hodlingBody );
