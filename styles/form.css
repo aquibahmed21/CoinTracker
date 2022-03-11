@@ -169,23 +169,17 @@
 }
 
 .divSideNav {
-  max-height: calc(100vh - 38px);
-  height: auto;
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 10px;
-  overflow: hidden;
-  overflow-y: auto;
   position: fixed;
   background: -webkit-gradient(linear, left top, left bottom, from(#25c481), to(#25b7c4)) fixed;
-  max-width: 300px;
-  width: 80%;
+  width: 100%;
   z-index: 1;
-  transform: translateX(-300px);
   transition: 1s;
   color: white;
-  padding: 12px 4px;
+  padding: 0 4px;
   display: flex;
-  flex-direction: column;
+  bottom: 0;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .divSideNav.active {
@@ -221,7 +215,6 @@
 .spanMenuBtn {
   text-align: left;
   padding: 12px 8px 15px;
-  border-bottom: 0.1px solid #a7a7a76e;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -241,6 +234,15 @@
 /* add media query */
 @media screen and (max-width: 480px)
 {
+  .spanMenuBtn {
+    font-size: 0;
+    padding: 8px;
+  }
+
+  .spanMenuBtn > img {
+    margin-right: 0;
+  }
+
   .right-container footer,
   .right-container header {
     padding: 0px 40px;

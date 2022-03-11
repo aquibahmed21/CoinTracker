@@ -83,6 +83,12 @@ sideNav.addEventListener( "click", ( event ) =>
   }
 } );
 
+document.getElementById( "imgeditprofile" ).addEventListener( "click", () =>
+{
+  document.getElementById( "ProfileContainer" ).children[ 0 ].classList.add( "Util_hide" );
+  document.getElementById( "ProfileContainer" ).children[ 1 ].classList.remove( "Util_hide" );
+} );
+
 document.getElementById( "spanSignOut" ).addEventListener( "click", () =>
 {
   localStorage.removeItem( "token" );
