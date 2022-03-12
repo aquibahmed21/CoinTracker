@@ -145,3 +145,7 @@ Content-Type: application/json
   "api": "somekey",
   "sec": "somesecret"
 }
+
+###
+
+GET http://localhost:3000/openOrder

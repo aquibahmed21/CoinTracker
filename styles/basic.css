@@ -42,7 +42,7 @@ body {
   font-family: "Roboto", sans-serif;
   background: -webkit-gradient(linear, left top, left bottom, from(#25c481), to(#25b7c4)) fixed;
   overflow-x: hidden;
-  overscroll-behavior-y: contain;
+  overscroll-behavior: contain;
 }
 
 /* for custom scrollbar for webkit browser*/

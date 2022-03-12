@@ -4,6 +4,8 @@ if ( process.env.NODE_ENV !== "production" ) {
 }
 const express = require( "express" );
 const connectDB = require( "./config/db" );
+const fetch = require( "node-fetch" );
+const CryptoJS = require( "crypto-js" );
 
 const path = require( "path" );
 const cors = require( "cors" );
@@ -42,6 +44,49 @@ app.get( "/", ( req, res ) =>
 app.get( "/dashboard", ( req, res ) =>
 {
 	res.status( 200 ).sendFile( path.join( __dirname, "index.html" ) );
+} );
+
+app.get( "/openOrder", async ( req, res ) =>
+{ 
+	const uid = process.env.UID || req.headers[ "uid" ];
+
+	const fullUrl = req.protocol + '://' + req.get( 'host' ); //+ req.originalUrl;
+	const { message: credentials } = await ( await fetch( `${ fullUrl }/api/keys`, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			"uid": uid
+		}
+	} ) ).json().catch( ( error ) => console.log( error ) );
+
+	const { api: API_KEY, sec: SECRET_KEY } = credentials[ 0 ];
+
+	const baseURL = process.env.BASE_URL;
+	const signature = ( queryData, secret ) => CryptoJS.HmacSHA256( queryData, secret ).toString( CryptoJS.enc.Hex );
+	const queryData = `limit=1000&symbol=wrxusdt&recvWindow=20000&timestamp=` + ( new Date().getTime() );
+
+	const Route_Order_API = "/sapi/v1/trades";
+	const burl = baseURL + Route_Order_API + "?" + queryData + "&signature=" + signature( queryData, SECRET_KEY );
+
+	// return;
+	try {
+		const rawResponse = await fetch( burl,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"Content-Type": "application/x-www-form-urlencoded",
+					"X-Api-Key": API_KEY,
+				},
+			} );
+
+		const content = await rawResponse.json();
+		res.status( 200 ).json( content );
+
+	} catch ( error ) {
+		res.status( 500 ).json( error );
+	}
+
 } );
 
 app.listen( PORT, () => console.log( "listening to " + PORT ) );

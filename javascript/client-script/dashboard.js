@@ -1,5 +1,16 @@
 "use strict";
 
+// Make sure sw are supported
+if ( "serviceWorker" in navigator ) { 
+  window.addEventListener( "load", () =>
+  { 
+    navigator.serviceWorker.register( "../../serviceWorker.js" ).then( ( registration ) =>
+    { 
+      console.log( "ServiceWorker registration successful with scope: ", registration.scope );
+    }).catch( ( err ) => console.log( "ServiceWorker registration failed: ", err ) );
+  });
+}
+
 import * as Const from "./constants.js";
 import * as webSocket from "./websocket.js";
 
@@ -30,7 +41,7 @@ const Routes = {
   ALL_ORDER_GET: "/api/allOrders",
   KEYS_GET: "/api/keys",
   DELETE_COIN_POST: "/api/hodling/delete",
-  HODLING_UPDATE_POST: "/api/hodling/update"
+  HODLING_UPDATE_POST: "/api/hodling/update",
 };
 
 
@@ -59,30 +70,6 @@ const sideNav = document.getElementsByClassName( "divSideNav" )[ 0 ];
 
 const getStopLossValue = ( price, percentage, decimal = 1 ) => ( price - ( ( price * percentage ) / 100 ) ).toFixed( decimal );
 
-sideNav.addEventListener( "click", ( event ) =>
-{
-  const targetID = event.target.id;
-  const allContainers = document.querySelectorAll( ".RootContainer" );
-  switch ( targetID ) {
-    case "spanDashboard":
-      allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
-      document.getElementById( "IndexContainer" ).classList.remove( "Util_hide" );
-      sideNav.classList.toggle( "active" );
-      break;
-    case "spanProfile":
-      allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
-      document.getElementById( "ProfileContainer" ).classList.remove( "Util_hide" );
-      sideNav.classList.toggle( "active" );
-      break;
-    default:
-      {
-        if ( event.target.tagName == "SPAN" )
-          return sideNav.classList.toggle( "active" );
-      }
-      break;
-  }
-} );
-
 document.getElementById( "imgeditprofile" ).addEventListener( "click", () =>
 {
   document.getElementById( "ProfileContainer" ).children[ 0 ].classList.add( "Util_hide" );
@@ -94,11 +81,6 @@ document.getElementById( "spanSignOut" ).addEventListener( "click", () =>
   localStorage.removeItem( "token" );
   localStorage.removeItem( "uid" );
   window.location.href = "/";
-} );
-
-document.getElementById( "imgAccount" ).addEventListener( "click", () =>
-{
-  sideNav.classList.toggle( "active" );
 } );
 
 window.addEventListener( "DOMContentLoaded", async () =>
@@ -162,6 +144,66 @@ window.addEventListener( "DOMContentLoaded", async () =>
   else
     return window.location.href = "/";
 
+  sideNav.addEventListener( "click", async ( event ) =>
+  {
+    const targetID = event.target.id;
+    const allContainers = document.querySelectorAll( ".RootContainer" );
+    switch ( targetID ) {
+      case "spanDashboard":
+        allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
+        document.getElementById( "IndexContainer" ).classList.remove( "Util_hide" );
+        sideNav.classList.toggle( "active" );
+        break;
+      case "spanProfile":
+        allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
+        document.getElementById( "ProfileContainer" ).classList.remove( "Util_hide" );
+        sideNav.classList.toggle( "active" );
+        break;
+      case "spanOrders":
+        let orderContainer = document.getElementById( "OrdersContainer" );
+        allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
+        orderContainer.classList.remove( "Util_hide" );
+
+        const funds = await ( await fetch( Routes.FUNDS_GET, {
+          method: Method.GET,
+          headers: {
+            "Content-Type": "application/json",
+            "uid": userID
+          }
+        } ) ).json();
+
+        // debugger;
+        let divFundsHolder = orderContainer.querySelector( "#divFundsHolder" );
+        divFundsHolder.innerHTML = "";
+        // const funds = [ { asset: 'inr', free: '-0.15782667099298', locked: '0.0' },
+        // { asset: 'btc', free: '0.000204', locked: '0.0' } ];
+
+        funds.forEach( e =>
+        {
+          const div = document.createElement( "div" );
+          div.classList.add( "flex-item" );
+          let span = document.createElement( "span" );
+          span.innerHTML = e.asset;
+          div.append( span );
+          span = document.createElement( "span" );
+          span.innerHTML = e.free;
+          div.append( span );
+          if ( +e.locked !== 0 ) {
+            span = document.createElement( "span" );
+            span.innerHTML = e.locked;
+            div.append( span );
+          }
+          divFundsHolder.append( div );
+        } );
+        break;
+      default:
+        {
+          if ( event.target.tagName == "SPAN" )
+            return sideNav.classList.toggle( "active" );
+        }
+        break;
+    }
+  } );
 
   LongPressPopup.addEventListener( "click", async ( event ) =>
   {
@@ -848,7 +890,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
           if ( rows[ i ].querySelector( "#tdPLPercentage" ).textContent.split( " " )[ 0 ] <= percentage )
             break;
         }
-        body.insertBefore( row.children[0], rows[ i ] );
+        body.insertBefore( row.children[ 0 ], rows[ i ] );
       }
     }
   }
@@ -933,7 +975,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
         for ( let child of hodlingBody[ 0 ].querySelectorAll( "tr[pairName=" + arrs.s + "]" ) ) {
           const lastPrice = +child.querySelector( "#tdCurrentPrice" ).textContent.split( " " )[ 0 ];
           const qty = +child.querySelector( "#tdQty" ).textContent;
-          
+
           const color = lastPrice == currentPrice ? "" : lastPrice < currentPrice ? "green" : "red";
           const prevPercentage = +child.querySelector( "#tdPLPercentage" ).textContent.split( " " )[ 0 ];
           const pair = arrs.U;
@@ -982,11 +1024,11 @@ window.addEventListener( "DOMContentLoaded", async () =>
         for ( let child of plBody[ 0 ].querySelectorAll( "tr[pairName=" + arrs.s + "]" ) ) {
           const soldPrice = +child.querySelector( "#tdSoldPrice" ).textContent.split( " " )[ 0 ];
           const currentPercentage = ( ( currentPrice * 100 ) / soldPrice ) - 100;
-          child.querySelector( "#tdCurrentPercentage").textContent = currentPercentage.toFixed( 2 ) + " %";
-          if (currentPercentage < 0) 
-            child.querySelector( "#tdBuyAgain").classList.remove("Util_disable");
+          child.querySelector( "#tdCurrentPercentage" ).textContent = currentPercentage.toFixed( 2 ) + " %";
+          if ( currentPercentage < 0 )
+            child.querySelector( "#tdBuyAgain" ).classList.remove( "Util_disable" );
           else
-            child.querySelector( "#tdBuyAgain").classList.add("Util_disable");
+            child.querySelector( "#tdBuyAgain" ).classList.add( "Util_disable" );
         }
       }
       SummationPLTable( hodlingBody );

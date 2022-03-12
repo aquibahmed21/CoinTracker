@@ -78,111 +78,6 @@
 		</div>
 	</form>
 
-
-	<!-- navbar -->
-	<header class="navHeader Util_card Util_hide">
-		<nav>
-			<ul class="desktop-nav">
-				<li>About
-					<ul>
-						<li>About us</li>
-						<li>History</li>
-						<li>Founder</li>
-						<li>Our code of honor</li>
-						<li>Our team</li>
-					</ul>
-				</li>
-
-				<li>Programs
-					<ul>
-						<li>All Programs</li>
-						<li>School Programs</li>
-						<li>College Program</li>
-						<li>Corrections Program</li>
-					</ul>
-				</li>
-
-				<li>Resources
-					<ul>
-						<li>All Resources</li>
-						<li>Videos</li>
-						<li>The Planner</li>
-						<li>The Podcast</li>
-					</ul>
-				</li>
-
-				<li>Contact
-					<ul>
-						<li>Contact Us</li>
-						<li>Voluneering</li>
-						<li>Careers</li>
-						<li>FAQs</li>
-					</ul>
-				</li>
-
-				<li>Store
-					<ul>
-						<li>Apparel</li>
-						<li>The Book</li>
-						<li>Promise Cards</li>
-					</ul>
-				</li>
-
-				<li class="donate">Donate</li>
-			</ul>
-			<div class="mobile-nav">
-
-				<input id="mobileMenu" name="mobileMenu" type="checkbox">
-				<label for="mobileMenu"></label>
-				<ul>
-					<li>About
-						<ul>
-							<li>About us</li>
-							<li>History</li>
-							<li>Founder</li>
-							<li>Our code of honor</li>
-							<li>Our team</li>
-						</ul>
-					</li>
-					<li>Programs
-						<ul>
-							<li>All Programs</li>
-							<li>School Programs</li>
-							<li>College Program</li>
-							<li>Corrections Program</li>
-						</ul>
-					</li>
-					<li>Resources
-						<ul>
-							<li>All Resources</li>
-							<li>Videos</li>
-							<li>The Planner</li>
-							<li>The Podcast</li>
-						</ul>
-					</li>
-
-					<li>Contact
-						<ul>
-							<li>Contact Us</li>
-							<li>Voluneering</li>
-							<li>Careers</li>
-							<li>FAQs</li>
-						</ul>
-					</li>
-
-					<li>Store
-						<ul>
-							<li>Appaerl</li>
-							<li>The Book</li>
-							<li>Promise Cards</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-		</nav>
-	</header>
-	<!-- navbar -->
-
 	<div id="notif"></div>
 
 	<div class="divLongPressPopUp Util_card Util_hide">
@@ -207,23 +102,6 @@
 			$ price: <span id="spanDollarPrice"></span>
 		</marquee>
 		<img id="spanSignOut" class="headerImg" src="/res/images/logout.png" alt="logout" title="logout" />
-
-		<div class="divSideNav">
-			<!-- side navigation profile UI -->
-			<!-- <div class="divProfile">
-				<img id="imgProfile" src="/res/images/account_smiley.png" alt="profile" title="Profile" />
-				<div class="divProfileName">
-					<span id="spanName">Aquib</span>
-					<span id="spanEmail">aquibahmed21@gmail.com</span>
-				</div>
-			</div> -->
-			<!-- side navigation Menu -->
-			<span id="spanDashboard" class="spanMenuBtn"><img id="spanDashboard" src="/res/images/dashboard.png">Dashboard</span>
-			<span id="spanCharts" class="spanMenuBtn"><img id="spanCharts" src="/res/images/chart.png">Charts</span>
-			<span id="spanOrders" class="spanMenuBtn"><img id="spanOrders" src="/res/images/store.png">Orders</span>
-			<span id="spanProfile" class="spanMenuBtn"><img id="spanProfile" src="/res/images/profile.png">Profile</span>
-			<span id="spanAbout" class="spanMenuBtn"><img id="spanAbout" src="/res/images/about.png">About</span>
-		</div>
 
 		<!-- start of index root -->
 		<div id="IndexContainer" class="RootContainer">
@@ -359,6 +237,36 @@
 			</div>
 		</div>
 		<!-- end of profile page -->
+
+		<!-- start of edit order page -->
+		<div id="OrdersContainer" class="RootContainer Util_hide">
+			<div id="divFundsContainer" class="divFundsContainer">
+				<h2>Funds</h2>
+				<div id="divFundsHolder"></div>
+			</div>
+			<div id="divOpenOrdersContainer" class="divFundsContainer">
+				<h2>Open-Orders</h2>
+				<div id="divOpenOrdersHolder"></div>
+			</div>
+		</div>
+		<!-- end of edit order page -->
+
+		<div class="divSideNav">
+			<!-- side navigation profile UI -->
+			<!-- <div class="divProfile">
+				<img id="imgProfile" src="/res/images/account_smiley.png" alt="profile" title="Profile" />
+				<div class="divProfileName">
+					<span id="spanName">Aquib</span>
+					<span id="spanEmail">aquibahmed21@gmail.com</span>
+				</div>
+			</div> -->
+			<!-- side navigation Menu -->
+			<span id="spanDashboard" class="spanMenuBtn"><img id="spanDashboard" src="/res/images/dashboard.png">Dashboard</span>
+			<span id="spanCharts" class="spanMenuBtn"><img id="spanCharts" src="/res/images/chart.png">Charts</span>
+			<span id="spanOrders" class="spanMenuBtn"><img id="spanOrders" src="/res/images/store.png">Orders</span>
+			<span id="spanProfile" class="spanMenuBtn"><img id="spanProfile" src="/res/images/profile.png">Profile</span>
+			<span id="spanAbout" class="spanMenuBtn"><img id="spanAbout" src="/res/images/about.png">About</span>
+		</div>
 	</div>
 
 	<template id="templatePL1Row">
