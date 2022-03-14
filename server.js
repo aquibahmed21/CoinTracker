@@ -47,7 +47,7 @@ app.get( "/dashboard", ( req, res ) =>
 } );
 
 app.get( "/openOrder", async ( req, res ) =>
-{ 
+{
 	const uid = process.env.UID || req.headers[ "uid" ];
 
 	const fullUrl = req.protocol + '://' + req.get( 'host' ); //+ req.originalUrl;
@@ -63,16 +63,16 @@ app.get( "/openOrder", async ( req, res ) =>
 
 	const baseURL = process.env.BASE_URL;
 	const signature = ( queryData, secret ) => CryptoJS.HmacSHA256( queryData, secret ).toString( CryptoJS.enc.Hex );
-	const queryData = `limit=1000&symbol=wrxusdt&recvWindow=20000&timestamp=` + ( new Date().getTime() );
+	const queryData = `recvWindow=20000&timestamp=` + ( new Date().getTime() );
 
-	const Route_Order_API = "/sapi/v1/trades";
+	const Route_Order_API = "/sapi/v1/openOrders";
 	const burl = baseURL + Route_Order_API + "?" + queryData + "&signature=" + signature( queryData, SECRET_KEY );
 
 	// return;
 	try {
 		const rawResponse = await fetch( burl,
 			{
-				method: "POST",
+				method: "GET",
 				headers: {
 					"Content-Type": "application/json",
 					"Content-Type": "application/x-www-form-urlencoded",

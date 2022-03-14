@@ -294,9 +294,34 @@
   content: 'invested: ';
 }
 
+.flex-item1 {
+  -webkit-flex: 1 auto;
+  -moz-flex: 1 auto;
+  flex: 1 auto;
+  align-self: auto;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 4px 8px;
+  margin: 4px 8px;
+  border-radius: 50px;
+  text-align: center;
+}
+
+.flex-item1 span {
+  margin: 0 8px;
+}
+
 /* add media query */
 @media screen and (max-width: 480px)
 {
+  #divOpenOrdersHolder {
+    max-height: 50vh;
+    overflow-y: scroll;
+  }
+
+  .flex-item1 span {
+    display: block;
+  }
+
   .divFundsContainer
   {
     margin: 0 0px 20px;

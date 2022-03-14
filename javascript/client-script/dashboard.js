@@ -1,15 +1,15 @@
 "use strict";
 
 // Make sure sw are supported
-if ( "serviceWorker" in navigator ) { 
-  window.addEventListener( "load", () =>
-  { 
-    navigator.serviceWorker.register( "../../serviceWorker.js" ).then( ( registration ) =>
-    { 
-      console.log( "ServiceWorker registration successful with scope: ", registration.scope );
-    }).catch( ( err ) => console.log( "ServiceWorker registration failed: ", err ) );
-  });
-}
+// if ( "serviceWorker" in navigator ) { 
+//   window.addEventListener( "load", () =>
+//   { 
+//     navigator.serviceWorker.register( "../../serviceWorker.js" ).then( ( registration ) =>
+//     { 
+//       console.log( "ServiceWorker registration successful with scope: ", registration.scope );
+//     }).catch( ( err ) => console.log( "ServiceWorker registration failed: ", err ) );
+//   });
+// }
 
 import * as Const from "./constants.js";
 import * as webSocket from "./websocket.js";
@@ -42,6 +42,7 @@ const Routes = {
   KEYS_GET: "/api/keys",
   DELETE_COIN_POST: "/api/hodling/delete",
   HODLING_UPDATE_POST: "/api/hodling/update",
+  OPEN_ORDERS_GET: "openOrder",
 };
 
 
@@ -172,11 +173,8 @@ window.addEventListener( "DOMContentLoaded", async () =>
           }
         } ) ).json();
 
-        // debugger;
         let divFundsHolder = orderContainer.querySelector( "#divFundsHolder" );
         divFundsHolder.innerHTML = "";
-        // const funds = [ { asset: 'inr', free: '-0.15782667099298', locked: '0.0' },
-        // { asset: 'btc', free: '0.000204', locked: '0.0' } ];
 
         funds.forEach( e =>
         {
@@ -195,6 +193,45 @@ window.addEventListener( "DOMContentLoaded", async () =>
           }
           divFundsHolder.append( div );
         } );
+
+        // --- Get open orders --- //
+
+        const openOrders = await ( await fetch( Routes.OPEN_ORDERS_GET, {
+          method: Method.GET,
+          headers: {
+            "Content-Type": "application/json",
+            "uid": userID
+          }
+        } ) ).json();
+
+        let divOpenOrdersHolder = orderContainer.querySelector( "#divOpenOrdersHolder" );
+        divOpenOrdersHolder.innerHTML = "";
+        
+        openOrders.forEach( e =>
+        {
+          const div = document.createElement( "div" );
+          div.classList.add( "flex-item1" );
+          let span = document.createElement( "span" );
+          span.innerHTML = "coin: " + e.symbol;
+          div.append( span );
+          span = document.createElement( "span" );
+          span.innerHTML = "qty: " + e.origQty;
+          div.append( span );
+          span = document.createElement( "span" );
+          span.innerHTML = "price: " + e.price;
+          div.append( span );
+          span = document.createElement( "span" );
+          span.innerHTML = "exec qty: " + e.executedQty;
+          div.append( span );
+          span = document.createElement( "span" );
+          span.innerHTML = "time: " + Const.GetDisplayTime( e.createdTime );
+          div.append( span );
+          span = document.createElement( "span" );
+          span.innerHTML = "side: " + e.side;
+          div.append( span );
+          divOpenOrdersHolder.append( div );
+        } );
+
         break;
       default:
         {
