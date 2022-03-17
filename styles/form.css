@@ -155,12 +155,14 @@
 }
 
 .RootContainer {
-  height: calc(100vh - 90px);
+  height: calc(100vh - 80px);
   overflow: hidden;
-  overflow-y: auto;
   display: inline-block;
   width: 100vw;
   color: #fff;
+  position: fixed;
+  top: 40px;
+  left: 0;
 }
 
 #ProfileContainer {
@@ -236,6 +238,8 @@
   margin: 0 8px 20px;
   border-radius: 8px;
   padding: 8px;
+  height: calc(50% - 10px);
+  overflow: hidden;
 }
 
 .divFundsContainer h2 {
@@ -253,7 +257,7 @@
   -webkit-flex-flow: row wrap;
   -moz-flex-flow: row wrap;
   flex-flow: row wrap;
-  max-height: 350px;
+  max-height: calc(100% - 40px);
   overflow: hidden;
   overflow-y: scroll;
 }
@@ -314,8 +318,9 @@
 @media screen and (max-width: 480px)
 {
   #divOpenOrdersHolder {
-    max-height: 50vh;
-    overflow-y: scroll;
+    max-height: calc(100% - 40px);
+    overflow: hidden;
+    overflow-y: auto;
   }
 
   .flex-item1 span {
