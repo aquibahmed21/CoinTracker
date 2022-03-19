@@ -160,6 +160,11 @@ window.addEventListener( "DOMContentLoaded", async () =>
         document.getElementById( "ProfileContainer" ).classList.remove( "Util_hide" );
         sideNav.classList.toggle( "active" );
         break;
+      case "spanCharts":
+        allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
+        document.getElementById( "TradingView" ).classList.remove( "Util_hide" );
+        sideNav.classList.toggle( "active" );
+        break;
       case "spanOrders":
         let orderContainer = document.getElementById( "OrdersContainer" );
         allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
