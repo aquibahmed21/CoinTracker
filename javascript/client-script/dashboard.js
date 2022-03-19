@@ -1,11 +1,11 @@
 "use strict";
 
 // Make sure sw are supported
-// if ( "serviceWorker" in navigator ) { 
+// if ( "serviceWorker" in navigator ) {
 //   window.addEventListener( "load", () =>
-//   { 
+//   {
 //     navigator.serviceWorker.register( "../../serviceWorker.js" ).then( ( registration ) =>
-//     { 
+//     {
 //       console.log( "ServiceWorker registration successful with scope: ", registration.scope );
 //     }).catch( ( err ) => console.log( "ServiceWorker registration failed: ", err ) );
 //   });
@@ -206,7 +206,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
         let divOpenOrdersHolder = orderContainer.querySelector( "#divOpenOrdersHolder" );
         divOpenOrdersHolder.innerHTML = "";
-        
+
         openOrders.forEach( e =>
         {
           const div = document.createElement( "div" );
@@ -294,7 +294,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
           // TODO: Calculate 0.4% commission
           // check if user eligible for commission
           // if yes, and opted for reduction of commission
-          // if yes, has wrxusdt coin 
+          // if yes, has wrxusdt coin
           // if yes, calculate commission
           // get current balance
           // update balance
@@ -383,7 +383,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
           // TODO: Calculate 0.4% commission
           // check if user eligible for commission
           // if yes, and opted for reduction of commission
-          // if yes, has wrxusdt coin 
+          // if yes, has wrxusdt coin
           // if yes, calculate commission
           // get current balance
           // update balance
@@ -505,7 +505,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
         //     },
         //     {
         //       "asset": "shib",
-        //       "free": "268323.0", 
+        //       "free": "268323.0",
         //     },
         //     {
         //       "asset": "nkn",

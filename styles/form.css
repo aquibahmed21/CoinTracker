@@ -165,6 +165,10 @@
   left: 0;
 }
 
+div#IndexContainer.RootContainer {
+  overflow-y: scroll;
+}
+
 #ProfileContainer {
   display: flex;
   align-items: center;
