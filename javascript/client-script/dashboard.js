@@ -1,6 +1,6 @@
 "use strict";
 
-// Make sure sw are supported
+// ! Make sure sw are supported
 // if ( "serviceWorker" in navigator ) {
 //   window.addEventListener( "load", () =>
 //   {
@@ -562,14 +562,21 @@ window.addEventListener( "DOMContentLoaded", async () =>
         }
         break;
       case "btnDelete":
-        table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
+        if(isHOLDLingTable)
+          table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
+        else
+        {
+          // plTable.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
+          alert ("currently unable to delete");
+        }
         //! remove coin from hodling db
+        const id = targetID;
         await ( await fetch( Routes.DELETE_COIN_POST, {
           method: Method.POST,
           headers: {
             "Content-Type": "application/json",
             "uid": uid
-          }, body: JSON.stringify( { coin, pair, qty, uid } )
+          }, body: JSON.stringify( { id } )
         } ) ).json().catch( err => console.log( err ) );
         Close_LongPressPopup();
         break;

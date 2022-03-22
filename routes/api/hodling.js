@@ -107,10 +107,11 @@ router.post( "/update", [
 // @access 		Public
 router.post( "/delete",
   [
-    check( "coin", "Coin name required" ).not().isEmpty(),
-    check( "pair", "Pair name required" ).not().isEmpty(),
-    check( "qty", "Coin quantity required" ).not().isEmpty(),
-    check( "uid", "User ID required" ).not().isEmpty()
+    // check( "coin", "Coin name required" ).not().isEmpty(),
+    // check( "pair", "Pair name required" ).not().isEmpty(),
+    // check( "qty", "Coin quantity required" ).not().isEmpty(),
+    // check( "uid", "User ID required" ).not().isEmpty(),
+    check( "id", "ID required" ).not().isEmpty()
   ],
   async ( req, res ) =>
   {
@@ -121,12 +122,13 @@ router.post( "/delete",
 
     // TODO: Refactor this (remove with coin id)
     // TODO: Surround with try catch block
-    await Hodling.deleteOne( {
-      coin,
-      pair,
-      qty,
-      uid
-    } );
+    try {
+      await Hodling.deleteOne( {
+        "_id": id,
+      } );
+    } catch ( err ) {
+      console.log( { err } );
+    }
     res.status( 200 ).json( { status: "success", message: "Coin Deleted successfully" } );
   } );
 

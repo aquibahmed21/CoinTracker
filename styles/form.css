@@ -242,7 +242,7 @@ div#IndexContainer.RootContainer {
   margin: 0 8px 20px;
   border-radius: 8px;
   padding: 8px;
-  height: calc(50% - 10px);
+  max-height: calc(50% - 10px);
   overflow: hidden;
 }
 
