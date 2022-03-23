@@ -479,11 +479,17 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
   await AddHodlingRows_FromJSON( HODLING );
   await AddPLRows_FromJSON( PL_LIST );
+
+
+
   SummationPLTable( hodlingBody );
   SummationPLTable( plBody );
-  // await TestFunction(hodlingBody);
+
   webSocket.wsSubscribe( LiveUpdateHodlingTable );
   document.getElementById( "loader" ).classList.add( "Util_hide" );
+
+  // await TestFunction( hodlingBody[ 0 ] );
+
   // AddAllHistory_FromDB( history.aquibHistory );
 
   hodlingBody[ 0 ].addEventListener( "click", OnClick_HodlingRows() );
@@ -712,6 +718,9 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
   async function TestFunction ( body )
   {
+    const sort = ( arr ) => arr.sort( ( a, b ) =>
+      +a.querySelector( "#tdBuyPrice" ).textContent - +b.querySelector( "#tdBuyPrice" ).textContent
+    ).reverse();
     const pairs = [ "wrx", "btc", "usdt" ];
     const funds = await ( await fetch( Routes.FUNDS_GET, {
       method: Method.GET,
@@ -722,15 +731,62 @@ window.addEventListener( "DOMContentLoaded", async () =>
     } ) ).json();
     const coins = funds.filter( e => ( pairs.includes( e.asset ) ) );
 
-    const childrens = body[ 0 ].children;
-    const arr = [];
+    const childrens = body.children;
+    let wrx = [];
+    let usdt = [];
+    let btc = [];
 
     for ( let child of childrens ) {
       const pairName = child.getAttribute( "pairName" );
 
-      if ( pairName.startsWith( "wrx" ) || pairName.startsWith( "btc" ) || pairName.startsWith( "usdt" ) )
-        arr.push( child );
+      if ( pairName.startsWith( "wrx" ) )
+        wrx.push( child );
+      else if ( pairName.startsWith( "usdt" ) )
+        usdt.push( child );
+      else if ( pairName.startsWith( "btc" ) )
+        btc.push( child );
     }
+
+    wrx = sort( wrx );
+    btc = sort( btc );
+    usdt = sort( usdt );
+
+    // let wrxTotal = 0;
+    for ( let child of wrx ) {
+      const qty = +child.querySelector( "#tdQty" ).textContent;
+      // wrxTotal += qty;
+      child.querySelector( "#tdQty" ).setAttribute( "qty", qty );
+    }
+
+    for ( let child of usdt ) {
+      const qty = +child.querySelector( "#tdQty" ).textContent;
+      // wrxTotal += qty;
+      child.querySelector( "#tdQty" ).setAttribute( "qty", qty );
+    }
+
+    for ( let child of btc ) {
+      const qty = +child.querySelector( "#tdQty" ).textContent;
+      // wrxTotal += qty;
+      child.querySelector( "#tdQty" ).setAttribute( "qty", qty );
+    }
+
+    let { free } = coins.filter( e => e.asset == "wrx" )[ 0 ];
+    for ( let child of wrx ) {
+      // child.scrollIntoView();
+      const tdQty = child.querySelector( "#tdQty" );
+      const attrQty = +tdQty.getAttribute( "qty" );
+      if ( +free <= attrQty ) {
+        free -= attrQty;
+        continue;
+      }
+      else if ( +free >= attrQty ) {
+        tdQty.textContent = free.toString();
+        // child.querySelector( "#tdTotalDollar" ).textContent = 0 + " ₿";
+        // child.querySelector( "#tdTotalinr" ).textContent = 0 + " ₹";
+        free = 0;
+      }
+    }
+
   }
 
   function SummationPLTable ( body )
@@ -926,7 +982,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
           const currentTotalToDollar = isINR ? ( ( currentPrice / lastPairPrice ) * qty ) : ( currentPrice * qty );
           const currentTotalToInr = currentTotalToDollar * lastPairPrice;
-          const percentage = ( ( currentTotalToInr * 100 ) / totalToInr ) - 100;
+          const percentage = qty ? ( ( ( ( currentTotalToInr * 100 ) / totalToInr ) - 100 ) || 0 ) : 0;
 
           const marginDollar = currentTotalToDollar - totalToDollar;
           const marginINR = currentTotalToInr - totalToInr;
@@ -951,7 +1007,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
             parent.insertBefore( child, child.parentNode.querySelector( ".Profit" ) );
             child.classList = "Profit";
           }
-          else if ( prevPercentage > 0 && percentage.toFixed( 2 ) < 0 ) {
+          else if ( prevPercentage >= 0 && percentage.toFixed( 2 ) <= 0 ) {
             const parent = child.parentNode;
             parent.insertBefore( child, [ ...child.parentNode.querySelectorAll( ".Profit" ) ].pop().nextElementSibling );
             child.classList = "";
@@ -969,7 +1025,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
           // body.insertBefore( child, rows[ i ] );
         }
 
-        for ( let child of plBody[ 0 ].querySelectorAll( "tr[pairName=" + arrs.s + "]" ) ) {
+        for ( let child of plBody[ 0 ].querySelectorAll( "tr[pairName=" + arrs.s.replace( /[0-9]/g, '' ) + "]" ) ) {
           const soldPrice = +child.querySelector( "#tdSoldPrice" ).textContent.split( " " )[ 0 ];
           const currentPercentage = ( ( currentPrice * 100 ) / soldPrice ) - 100;
           child.querySelector( "#tdCurrentPercentage" ).textContent = currentPercentage.toFixed( 2 ) + " %";
