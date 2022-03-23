@@ -933,6 +933,16 @@ window.addEventListener( "DOMContentLoaded", async () =>
             child.classList = "";
             // move row to below top rows
           }
+
+        // insert row in dscending order of the table body
+        // const body = hodlingBody[ 0 ];
+        // const rows = body.children;
+        // let i = 0;
+        // for ( ; i < rows.length; i++ ) {
+        //   if ( rows[ i ].querySelector( "#tdPLPercentage" ).textContent.split( " " )[ 0 ] <= percentage )
+        //     break;
+        // }
+        // body.insertBefore( child, rows[ i ] );
         }
 
         for ( let child of plBody[ 0 ].querySelectorAll( "tr[pairName=" + arrs.s + "]" ) ) {
