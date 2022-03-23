@@ -481,6 +481,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
   await AddPLRows_FromJSON( PL_LIST );
   SummationPLTable( hodlingBody );
   SummationPLTable( plBody );
+  // await TestFunction(hodlingBody);
   webSocket.wsSubscribe( LiveUpdateHodlingTable );
   document.getElementById( "loader" ).classList.add( "Util_hide" );
   // AddAllHistory_FromDB( history.aquibHistory );
@@ -709,6 +710,29 @@ window.addEventListener( "DOMContentLoaded", async () =>
     };
   }
 
+  async function TestFunction ( body )
+  {
+    const pairs = [ "wrx", "btc", "usdt" ];
+    const funds = await ( await fetch( Routes.FUNDS_GET, {
+      method: Method.GET,
+      headers: {
+        "Content-Type": "application/json",
+        "uid": userID
+      }
+    } ) ).json();
+    const coins = funds.filter( e => ( pairs.includes( e.asset ) ) );
+
+    const childrens = body[ 0 ].children;
+    const arr = [];
+
+    for ( let child of childrens ) {
+      const pairName = child.getAttribute( "pairName" );
+
+      if ( pairName.startsWith( "wrx" ) || pairName.startsWith( "btc" ) || pairName.startsWith( "usdt" ) )
+        arr.push( child );
+    }
+  }
+
   function SummationPLTable ( body )
   {
     const children = body[ 0 ].children;
@@ -762,7 +786,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
         if ( !isUpdate ) {
           const rowParent = row.getElementById( "tdPairName" ).parentElement;
           rowParent.id = ( _id || id || key );
-          rowParent.setAttribute( "pairName", coin.replace(/[0-9]/g, '') + pair ); // regex to remove numbers to handle execptions
+          rowParent.setAttribute( "pairName", coin.replace( /[0-9]/g, '' ) + pair ); // regex to remove numbers to handle execptions
           if ( !arr.includes( coin + pair ) )
             arr.push( coin + pair );
         }
@@ -828,7 +852,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
           arr.push( coin + pair );
 
         const rowParent = row.getElementById( "tdPairName" ).parentElement;
-        rowParent.setAttribute( "pairName", coin.replace(/[0-9]/g, '') + pair ); // regex to remove numbers to handle execptions
+        rowParent.setAttribute( "pairName", coin.replace( /[0-9]/g, '' ) + pair ); // regex to remove numbers to handle execptions
 
         const totalToDollar = isINR ? ( ( buyPrice / lastPairPrice ) * qty ) : ( buyPrice * qty );
         const totalToInr = totalToDollar * lastPairPrice;
@@ -934,15 +958,15 @@ window.addEventListener( "DOMContentLoaded", async () =>
             // move row to below top rows
           }
 
-        // insert row in dscending order of the table body
-        // const body = hodlingBody[ 0 ];
-        // const rows = body.children;
-        // let i = 0;
-        // for ( ; i < rows.length; i++ ) {
-        //   if ( rows[ i ].querySelector( "#tdPLPercentage" ).textContent.split( " " )[ 0 ] <= percentage )
-        //     break;
-        // }
-        // body.insertBefore( child, rows[ i ] );
+          // insert row in dscending order of the table body
+          // const body = hodlingBody[ 0 ];
+          // const rows = body.children;
+          // let i = 0;
+          // for ( ; i < rows.length; i++ ) {
+          //   if ( rows[ i ].querySelector( "#tdPLPercentage" ).textContent.split( " " )[ 0 ] <= percentage )
+          //     break;
+          // }
+          // body.insertBefore( child, rows[ i ] );
         }
 
         for ( let child of plBody[ 0 ].querySelectorAll( "tr[pairName=" + arrs.s + "]" ) ) {
