@@ -36,7 +36,7 @@ router.post(
     if ( !errors.isEmpty() )
       return res.status( 400 ).json( { errors: errors.array() } );
 
-    const { coin, pair, qty, buyPrice, soldPrice, term, uid } = req.body;
+    const { coin, pair, qty, buyPrice, soldPrice, term, uid, id } = req.body;
     try {
 
       const coinPair = new Hodling( {
@@ -58,5 +58,25 @@ router.post(
     }
   }
 );
+
+router.post( "/delete", [
+  check( "id", "ID required" ).not().isEmpty()
+],
+  async ( req, res ) =>
+  {
+    const errors = validationResult( req );
+    if ( !errors.isEmpty() )
+      return res.status( 400 ).json( { errors: errors.array() } );
+
+    const { coin, pair, qty, buyPrice, soldPrice, term, uid, id } = req.body;
+
+    try {
+      await Hodling.deleteOne( { _id: id } );
+      return res.status( 200 ).json( { status: "success", msg: "Coin deleted" } );
+    } catch ( err ) {
+      return res.status( 200 ).json( { status: "invalid", msg: "Coin deleted failed" } );
+    }
+
+  } );
 
 module.exports = router;

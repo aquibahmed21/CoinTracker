@@ -40,13 +40,12 @@ const Routes = {
   FUNDS_GET: "/api/funds",
   ALL_ORDER_GET: "/api/allOrders",
   KEYS_GET: "/api/keys",
-  DELETE_COIN_POST: "/api/hodling/delete",
+  DELETE_HODL_COIN_POST: "/api/hodling/delete",
+  DELETE_PL_COIN_POST: "/api/pllist/delete",
   HODLING_UPDATE_POST: "/api/hodling/update",
   OPEN_ORDERS_GET: "openOrder",
 };
 
-
-const PORT = 3000;
 let PL_LIST = Const.SoldJSon;
 let HODLING = Const.JSONDATA;
 
@@ -319,22 +318,24 @@ window.addEventListener( "DOMContentLoaded", async () =>
           } ) ).json().catch( err => console.log( err ) );
 
           //! remove coin from hodling db
-          await ( await fetch( Routes.DELETE_COIN_POST, {
+          const id = targetID;
+          await ( await fetch( Routes.DELETE_HODL_COIN_POST, {
             method: Method.POST,
             headers: {
               "Content-Type": "application/json",
               "uid": uid
-            }, body: JSON.stringify( { coin, pair, qty, uid } )
-          } ) ).json().catch( err => console.log( err ) );
+            }, body: JSON.stringify( { id } )
+          } ) ).json().catch( err => console.log( err ) ); +
 
-          //! add coin to pl db
-          await ( await fetch( Routes.PL_LIST_POST, {
-            method: Method.POST,
-            headers: {
-              "Content-Type": "application/json",
-              "uid": uid
-            }, body: JSON.stringify( { coin, pair, qty, buyPrice, soldPrice, term: comment, uid } )
-          } ) ).json().catch( err => console.log( err ) );
+
+            //! add coin to pl db
+            await ( await fetch( Routes.PL_LIST_POST, {
+              method: Method.POST,
+              headers: {
+                "Content-Type": "application/json",
+                "uid": uid
+              }, body: JSON.stringify( { coin, pair, qty, buyPrice, soldPrice, term: comment, uid } )
+            } ) ).json().catch( err => console.log( err ) );
 
           return; // !return to avoid the below code
           // if pair usdt
@@ -408,149 +409,8 @@ window.addEventListener( "DOMContentLoaded", async () =>
               "uid": uid
             }, body: JSON.stringify( body )
           } ) ).json().catch( err => console.log( err ) );
-
-
-
           return;
         }
-
-        // {
-        //   // const something = await ( await fetch( Routes.FUNDS_GET, {
-        //   //   Method: Method.GET, headers:
-        //   //   {
-        //   //     'Content-Type': 'application/json',
-        //   //     uid: localStorage.getItem("uid")
-        //   //   }
-        //   // } ) ).json();
-
-        //   const fundsArr = [
-        //     // {
-        //     //   "asset": "inr",
-        //     //   "free": "-0.15782667099298",
-        //     // },
-        //     {
-        //       "asset": "btc",
-        //       "free": "0.0002",
-        //     },
-        //     {
-        //       "asset": "xrp",
-        //       "free": "18.7",
-        //     },
-        //     {
-        //       "asset": "ltc",
-        //       "free": "0.064",
-        //     },
-        //     {
-        //       "asset": "eth",
-        //       "free": "0.0021",
-        //     },
-        //     {
-        //       "asset": "wrx",
-        //       "free": "14.04190636127906",
-        //     },
-        //     {
-        //       "asset": "dent",
-        //       "free": "2816.0",
-        //     },
-        //     {
-        //       "asset": "usdt",
-        //       "free": "15.06504706",
-        //     },
-        //     {
-        //       "asset": "xlm",
-        //       "free": "24.5",
-        //     },
-        //     {
-        //       "asset": "matic",
-        //       "free": "5.3",
-        //     },
-        //     {
-        //       "asset": "ada",
-        //       "free": "6.8",
-        //     },
-        //     {
-        //       "asset": "atom",
-        //       "free": "0.15",
-        //     },
-        //     {
-        //       "asset": "ftm",
-        //       "free": "2.3",
-        //     },
-        //     {
-        //       "asset": "enj",
-        //       "free": "2.5",
-        //     },
-        //     {
-        //       "asset": "win",
-        //       "free": "23871.0",
-        //     },
-        //     {
-        //       "asset": "bnb",
-        //       "free": "0.016",
-        //     },
-        //     {
-        //       "asset": "lrc",
-        //       "free": "5.0",
-        //     },
-        //     {
-        //       "asset": "doge",
-        //       "free": "41.0",
-        //     },
-        //     {
-        //       "asset": "dot",
-        //       "free": "0.91",
-        //     },
-        //     {
-        //       "asset": "dusk",
-        //       "free": "4.0",
-        //     },
-        //     {
-        //       "asset": "sol",
-        //       "free": "0.096",
-        //     },
-        //     {
-        //       "asset": "shib",
-        //       "free": "268323.0",
-        //     },
-        //     {
-        //       "asset": "nkn",
-        //       "free": "12.8",
-        //     },
-        //     {
-        //       "asset": "spell",
-        //       "free": "285.0",
-        //     }
-        //   ];
-
-        //   const obj = [];
-        //   for ( let child of hodlingBody[ 0 ].children )
-        //   {
-        //     const asset = child.querySelector( "#tdPairName" ).textContent.split( "inr" )[ 0 ].split( "usdt" )[ 0 ] || "usdt";
-        //     let free = +child.querySelector( "#tdQty" ).textContent;
-        //     const index = obj.findIndex( x => x.asset === asset );
-
-        //     if ( index >= 0 )
-        //     {
-        //       free += +obj[ index ].free;
-        //       obj[ index ].free = free.toString();
-        //     }
-        //     else
-        //       obj.push( { asset, free: free.toString() } );
-        //   }
-
-        //   const resultFilter = ( firstArray, secondArray ) =>
-        //   {
-        //     return firstArray.filter( firstArrayItem =>
-        //       !secondArray.some(
-        //         secondArrayItem => ( firstArrayItem[ "asset" ] === secondArrayItem[ "asset" ] &&
-        //           (+firstArrayItem[ "free" ]).toFixed( 6 ) === (+secondArrayItem[ "free" ]).toFixed( 6 ) )
-        //       )
-        //     );
-        //   };
-
-        //   const result = resultFilter( fundsArr, obj );
-        // }
-        break;
       case "btnSLValue":
         Close_LongPressPopup();
         ShowSLFunction( document.getElementById( targetID ), ShowNotification );
@@ -562,23 +422,29 @@ window.addEventListener( "DOMContentLoaded", async () =>
         }
         break;
       case "btnDelete":
-        if(isHOLDLingTable)
-          table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
-        else
         {
-          // plTable.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
-          alert ("currently unable to delete");
+          let fetchRoute = "";
+          if ( isHOLDLingTable ) {
+            table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
+            fetchRoute = Routes.DELETE_HODL_COIN_POST;
+          }
+          else {
+            plTable.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
+            fetchRoute = Routes.DELETE_PL_COIN_POST;
+          }
+          //! remove coin from hodling db
+
+          const id = targetID;
+          await ( await fetch( fetchRoute, {
+            method: Method.POST,
+            headers: {
+              "Content-Type": "application/json",
+              "uid": uid
+            }, body: JSON.stringify( { id } )
+          } ) ).json().catch( err => console.log( err ) );
+
+          Close_LongPressPopup();
         }
-        //! remove coin from hodling db
-        const id = targetID;
-        await ( await fetch( Routes.DELETE_COIN_POST, {
-          method: Method.POST,
-          headers: {
-            "Content-Type": "application/json",
-            "uid": uid
-          }, body: JSON.stringify( { id } )
-        } ) ).json().catch( err => console.log( err ) );
-        Close_LongPressPopup();
         break;
       case "btnCls":
         Close_LongPressPopup();
@@ -681,8 +547,6 @@ window.addEventListener( "DOMContentLoaded", async () =>
     // const response = await Const.fetchUtils( Routes.ORDER_POST, Method.POST, body );
     // console.log( response.msg );
   } );
-
-
 
   coinDetailsPopup.addEventListener( "click", async ( event ) =>
   {
@@ -898,7 +762,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
         if ( !isUpdate ) {
           const rowParent = row.getElementById( "tdPairName" ).parentElement;
           rowParent.id = ( _id || id || key );
-          rowParent.setAttribute( "pairName", coin + pair );
+          rowParent.setAttribute( "pairName", coin.replace(/[0-9]/g, '') + pair ); // regex to remove numbers to handle execptions
           if ( !arr.includes( coin + pair ) )
             arr.push( coin + pair );
         }
@@ -964,7 +828,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
           arr.push( coin + pair );
 
         const rowParent = row.getElementById( "tdPairName" ).parentElement;
-        rowParent.setAttribute( "pairName", coin + pair );
+        rowParent.setAttribute( "pairName", coin.replace(/[0-9]/g, '') + pair ); // regex to remove numbers to handle execptions
 
         const totalToDollar = isINR ? ( ( buyPrice / lastPairPrice ) * qty ) : ( buyPrice * qty );
         const totalToInr = totalToDollar * lastPairPrice;
@@ -995,7 +859,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
         }
 
         if ( !isUpdate )
-          plBody[ 0 ].appendChild( row );
+          plBody[ 0 ].prepend( row );
       }
     }
   }
@@ -1021,7 +885,8 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
       for ( let arrs of array ) {
         const currentPrice = +arrs.c;
-        for ( let child of hodlingBody[ 0 ].querySelectorAll( "tr[pairName=" + arrs.s + "]" ) ) {
+        for ( let child of hodlingBody[ 0 ].querySelectorAll( "tr[pairName=" + arrs.s.replace( /[0-9]/g, '' ) + "]" ) ) // regex to remove numbers to handle execptions
+        {
           const lastPrice = +child.querySelector( "#tdCurrentPrice" ).textContent.split( " " )[ 0 ];
           const qty = +child.querySelector( "#tdQty" ).textContent;
 

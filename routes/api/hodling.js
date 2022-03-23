@@ -123,13 +123,11 @@ router.post( "/delete",
     // TODO: Refactor this (remove with coin id)
     // TODO: Surround with try catch block
     try {
-      await Hodling.deleteOne( {
-        "_id": id,
-      } );
+      await Hodling.deleteOne( { _id: id } );
+      return res.status( 200 ).json( { status: "success", msg: "Coin deleted" } );
     } catch ( err ) {
-      console.log( { err } );
+      return res.status( 200 ).json( { status: "invalid", msg: "Coin deleted failed" } );
     }
-    res.status( 200 ).json( { status: "success", message: "Coin Deleted successfully" } );
   } );
 
 module.exports = router;
