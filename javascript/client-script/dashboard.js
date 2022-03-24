@@ -154,12 +154,16 @@ window.addEventListener( "DOMContentLoaded", async () =>
         document.getElementById( "IndexContainer" ).classList.remove( "Util_hide" );
         sideNav.classList.toggle( "active" );
         break;
+      case "spanAbout":
+        ShowNotification( "Not yet implemented" );
+        break;
       case "spanProfile":
         allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
         document.getElementById( "ProfileContainer" ).classList.remove( "Util_hide" );
         sideNav.classList.toggle( "active" );
         break;
       case "spanCharts":
+        return ShowNotification("Implementation Disabled");
         allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
         document.getElementById( "TradingView" ).classList.remove( "Util_hide" );
         sideNav.classList.toggle( "active" );
@@ -480,13 +484,15 @@ window.addEventListener( "DOMContentLoaded", async () =>
   await AddHodlingRows_FromJSON( HODLING );
   await AddPLRows_FromJSON( PL_LIST );
 
+  document.getElementById( "loader" ).classList.add( "Util_hide" );
+
   await TestFunction( hodlingBody[ 0 ] );
 
   // SummationPLTable( hodlingBody );
   // SummationPLTable( plBody );
 
   webSocket.wsSubscribe( LiveUpdateHodlingTable );
-  document.getElementById( "loader" ).classList.add( "Util_hide" );
+
 
 
 
@@ -719,7 +725,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
     };
   }
 
-  async function TestFunction ( body )
+  async function TestFunction ( body = hodlingBody[ 0 ])
   {
     const sort = ( arr ) => arr.sort( ( a, b ) =>
       +a.querySelector( "#tdBuyPrice" ).textContent - +b.querySelector( "#tdBuyPrice" ).textContent
@@ -849,7 +855,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
       const pair = coin == "usdt" ? "inr" : "usdt";
       let qty = +free;
       qty = qty.toFixed( 8 );
-      const price = +( arr[ 0 ]?.querySelector( "#tdBuyPrice" ).textContent.split( " " )[ 0 ] || ( coin == "usdt" ) ? usdtinr : ( coin == "btc" ? btcinr : wrxinr ) );
+      const price = +( arr[ 0 ]?.querySelector( "#tdBuyPrice" ).textContent.split( " " )[ 0 ] || ( ( coin == "usdt" ) ? usdtinr : ( coin == "btc" ? btcinr : wrxinr ) ) );
       const term = "Take Profit";
       const _id = coin + pair + "_" + new Date().getTime();
       AddHodlingRows_FromJSON( [ { coin, pair, qty, price, term, _id } ] );
