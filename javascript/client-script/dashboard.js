@@ -775,6 +775,9 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
   function Daka ( coin, arr, coins )
   {
+    // ! Optimize if condition
+    if ( !coins.filter( e => e.asset == coin ).length )
+      return;
     let { free } = coins.filter( e => e.asset == coin )[ 0 ];
     for ( let child of arr ) {
       // child.scrollIntoView();
