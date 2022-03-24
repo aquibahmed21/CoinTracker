@@ -49,7 +49,7 @@ const Routes = {
 let PL_LIST = Const.SoldJSon;
 let HODLING = Const.JSONDATA;
 
-const arr = [];
+const coinPairArr = [];
 
 const hodlingTable = document.getElementById( "table" );
 for ( let item of hodlingTable.getElementsByTagName( "thead" )[ 0 ].children[ 0 ].children )
@@ -846,7 +846,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
       const pair = coin == "usdt" ? "inr" : "usdt";
       let qty = +free;
       qty = qty.toFixed( 8 );
-      const price = +arr[ 0 ].querySelector( "#tdBuyPrice" ).textContent.split( " " )[ 0 ];
+      const price = +( arr[ 0 ]?.querySelector( "#tdBuyPrice" ).textContent.split( " " )[ 0 ] || ( coin == "usdt" ) ? usdtinr : ( coin == "btc" ? btcinr : wrxinr ) );
       const term = "Take Profit";
       const _id = coin + pair + "_" + new Date().getTime();
       AddHodlingRows_FromJSON( [ { coin, pair, qty, price, term, _id } ] );
@@ -910,8 +910,8 @@ window.addEventListener( "DOMContentLoaded", async () =>
           if ( ID.split( "_" )[ 1 ] )
             rowParent.classList.add( "extra" );
           rowParent.setAttribute( "pairName", coin.replace( /[0-9]/g, '' ) + pair ); // regex to remove numbers to handle execptions
-          if ( !arr.includes( coin + pair ) )
-            arr.push( coin + pair );
+          if ( !coinPairArr.includes( coin + pair ) )
+            coinPairArr.push( coin + pair );
         }
 
         const totalToDollar = isINR ? ( ( price / lastPairPrice ) * qty ) : ( price * qty );
@@ -971,8 +971,8 @@ window.addEventListener( "DOMContentLoaded", async () =>
         if ( !isUpdate )
           row.getElementById( "tdPairName" ).parentElement.id = ( _id || key );
 
-        if ( !arr.includes( coin + pair ) )
-          arr.push( coin + pair );
+        if ( !coinPairArr.includes( coin + pair ) )
+          coinPairArr.push( coin + pair );
 
         const rowParent = row.getElementById( "tdPairName" ).parentElement;
         rowParent.setAttribute( "pairName", coin.replace( /[0-9]/g, '' ) + pair ); // regex to remove numbers to handle execptions
@@ -1014,7 +1014,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
   async function LiveUpdateHodlingTable ( event )
   {
     try {
-      const array = event.data.filter( e => arr.includes( e.s ) );
+      const array = event.data.filter( e => coinPairArr.includes( e.s ) );
       const usdtINRArray = array.filter( e => e.s == PAIR.USDT );
       const wrxINRArray = array.filter( e => e.s == PAIR.WRX );
       const btcINRArray = array.filter( e => e.s == PAIR.BTC );
