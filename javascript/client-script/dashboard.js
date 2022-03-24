@@ -480,7 +480,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
   await AddHodlingRows_FromJSON( HODLING );
   await AddPLRows_FromJSON( PL_LIST );
 
-  // await TestFunction( hodlingBody[ 0 ] );
+  await TestFunction( hodlingBody[ 0 ] );
 
   SummationPLTable( hodlingBody );
   SummationPLTable( plBody );
@@ -512,9 +512,12 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
     const targetRow = e.target.tagName == "TD" ? e.target.parentElement : e.target;
 
-
     if ( targetRow.tagName !== "TR" )
       return;
+
+    if ( targetRow.classList.contains( "extra" ) )
+      return ShowNotification( "Not implemented yet" );
+
     const isHOLDLingTable = targetRow.parentElement.parentElement.id == "table";
     if ( isHOLDLingTable ) {
       LongPressPopup.querySelector( "#btnSell" ).classList.remove( "Util_disable" );
@@ -770,7 +773,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
     Daka( "usdt", usdt, coins );
   }
 
-  function Daka (coin, arr, coins)
+  function Daka ( coin, arr, coins )
   {
     let { free } = coins.filter( e => e.asset == coin )[ 0 ];
     for ( let child of arr ) {
@@ -793,7 +796,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
       else if ( +free <= attrQty ) {
         const qty = +free;
 
-        tdQty.textContent = qty.toFixed( 4 );
+        tdQty.textContent = qty ? qty.toFixed( 4 ) : 0;
         const price = +tdBuyPrice.textContent.split( " " )[ 0 ];
 
         const totalToDollar = isINR ? ( ( price / lastPairPrice ) * qty ) : ( price * qty );
@@ -836,8 +839,15 @@ window.addEventListener( "DOMContentLoaded", async () =>
         free = 0;
       }
     }
-    // if ( free > 0 )
-    //   debugger;
+    if ( free > 0 ) {
+      const pair = coin == "usdt" ? "inr" : "usdt";
+      let qty = +free;
+      qty = qty.toFixed( 8 );
+      const price = +arr[ 0 ].querySelector( "#tdBuyPrice" ).textContent.split( " " )[ 0 ];
+      const term = "Take Profit";
+      const _id = coin + pair + "_" + new Date().getTime();
+      AddHodlingRows_FromJSON( [ { coin, pair, qty, price, term, _id } ] );
+    }
   }
 
   function SummationPLTable ( body )
@@ -891,8 +901,11 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
         const isINR = pair == "inr";
         if ( !isUpdate ) {
+          const ID = ( _id || id || key );
           const rowParent = row.getElementById( "tdPairName" ).parentElement;
-          rowParent.id = ( _id || id || key );
+          rowParent.id = ID;
+          if ( ID.split( "_" )[ 1 ] )
+            rowParent.classList.add( "extra" );
           rowParent.setAttribute( "pairName", coin.replace( /[0-9]/g, '' ) + pair ); // regex to remove numbers to handle execptions
           if ( !arr.includes( coin + pair ) )
             arr.push( coin + pair );
@@ -1056,12 +1069,12 @@ window.addEventListener( "DOMContentLoaded", async () =>
             // move row to top
             const parent = child.parentNode;
             parent.insertBefore( child, child.parentNode.querySelector( ".Profit" ) );
-            child.classList = "Profit";
+            child.classList.add( "Profit" );
           }
           else if ( prevPercentage >= 0 && percentage.toFixed( 2 ) <= 0 ) {
             const parent = child.parentNode;
             parent.insertBefore( child, [ ...child.parentNode.querySelectorAll( ".Profit" ) ].pop().nextElementSibling );
-            child.classList = "";
+            child.classList.remove( "Profit" );
             // move row to below top rows
           }
 
