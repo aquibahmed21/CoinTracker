@@ -482,8 +482,8 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
   await TestFunction( hodlingBody[ 0 ] );
 
-  SummationPLTable( hodlingBody );
-  SummationPLTable( plBody );
+  // SummationPLTable( hodlingBody );
+  // SummationPLTable( plBody );
 
   webSocket.wsSubscribe( LiveUpdateHodlingTable );
   document.getElementById( "loader" ).classList.add( "Util_hide" );
@@ -771,6 +771,9 @@ window.addEventListener( "DOMContentLoaded", async () =>
     Daka( "wrx", wrx, coins );
     Daka( "btc", btc, coins );
     Daka( "usdt", usdt, coins );
+
+    SummationPLTable( hodlingBody );
+    SummationPLTable( plBody );
   }
 
   function Daka ( coin, arr, coins )
@@ -826,7 +829,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
         child.querySelector( "#tdMarginINR" ).textContent = marginINR.toFixed( 2 ) + " ₹";
 
         if ( percentage > 0 ) {
-          child.querySelector( "#tdMarginINR" ).parentNode.classList = "Profit";
+          child.querySelector( "#tdMarginINR" ).parentNode.classList.add("Profit");
         }
 
         // insert row in dscending order of the table body
@@ -939,7 +942,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
         row.querySelector( "#tdMarginINR" ).textContent = marginINR.toFixed( 2 ) + " ₹";
 
         if ( percentage > 0 ) {
-          row.querySelector( "#tdMarginINR" ).parentNode.classList = "Profit";
+          row.querySelector( "#tdMarginINR" ).parentNode.classList.add("Profit");
         }
 
         // insert row in dscending order of the table body
