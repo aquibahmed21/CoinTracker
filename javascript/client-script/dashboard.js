@@ -480,7 +480,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
   await AddHodlingRows_FromJSON( HODLING );
   await AddPLRows_FromJSON( PL_LIST );
 
-
+  // await TestFunction( hodlingBody[ 0 ] );
 
   SummationPLTable( hodlingBody );
   SummationPLTable( plBody );
@@ -488,7 +488,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
   webSocket.wsSubscribe( LiveUpdateHodlingTable );
   document.getElementById( "loader" ).classList.add( "Util_hide" );
 
-  // await TestFunction( hodlingBody[ 0 ] );
+
 
   // AddAllHistory_FromDB( history.aquibHistory );
 
@@ -720,7 +720,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
   {
     const sort = ( arr ) => arr.sort( ( a, b ) =>
       +a.querySelector( "#tdBuyPrice" ).textContent - +b.querySelector( "#tdBuyPrice" ).textContent
-    ).reverse();
+    );
     const pairs = [ "wrx", "btc", "usdt" ];
     const funds = await ( await fetch( Routes.FUNDS_GET, {
       method: Method.GET,
@@ -751,42 +751,93 @@ window.addEventListener( "DOMContentLoaded", async () =>
     btc = sort( btc );
     usdt = sort( usdt );
 
-    // let wrxTotal = 0;
     for ( let child of wrx ) {
       const qty = +child.querySelector( "#tdQty" ).textContent;
-      // wrxTotal += qty;
       child.querySelector( "#tdQty" ).setAttribute( "qty", qty );
     }
 
     for ( let child of usdt ) {
       const qty = +child.querySelector( "#tdQty" ).textContent;
-      // wrxTotal += qty;
       child.querySelector( "#tdQty" ).setAttribute( "qty", qty );
     }
 
     for ( let child of btc ) {
       const qty = +child.querySelector( "#tdQty" ).textContent;
-      // wrxTotal += qty;
       child.querySelector( "#tdQty" ).setAttribute( "qty", qty );
     }
+    Daka( "wrx", wrx, coins );
+    Daka( "btc", btc, coins );
+    Daka( "usdt", usdt, coins );
+  }
 
-    let { free } = coins.filter( e => e.asset == "wrx" )[ 0 ];
-    for ( let child of wrx ) {
+  function Daka (coin, arr, coins)
+  {
+    let { free } = coins.filter( e => e.asset == coin )[ 0 ];
+    for ( let child of arr ) {
       // child.scrollIntoView();
+      // child.style.backgroundColor = "#9b6a6a";
       const tdQty = child.querySelector( "#tdQty" );
+      const tdBuyPrice = child.querySelector( "#tdBuyPrice" );
+      const pairName = child.querySelector( "#tdPairName" );
+      const pair = pairName.textContent.split( coin )[ 1 ];;
+      const isINR = pair == "inr";
+      const lastPairPrice = ( ( pair == "usdt" ) || ( pair == "inr" ) ) ? usdtinr : ( pair == "wrx" ) ? wrxinr : btcinr;
+      const lastPrice = +child.querySelector( "#tdCurrentPrice" ).textContent.split( " " )[ 0 ];
+
+
       const attrQty = +tdQty.getAttribute( "qty" );
-      if ( +free <= attrQty ) {
+      if ( +free >= attrQty ) {
         free -= attrQty;
         continue;
       }
-      else if ( +free >= attrQty ) {
-        tdQty.textContent = free.toString();
-        // child.querySelector( "#tdTotalDollar" ).textContent = 0 + " ₿";
-        // child.querySelector( "#tdTotalinr" ).textContent = 0 + " ₹";
+      else if ( +free <= attrQty ) {
+        const qty = +free;
+
+        tdQty.textContent = qty.toFixed( 4 );
+        const price = +tdBuyPrice.textContent.split( " " )[ 0 ];
+
+        const totalToDollar = isINR ? ( ( price / lastPairPrice ) * qty ) : ( price * qty );
+        const totalToInr = totalToDollar * lastPairPrice;
+
+        const currentTotalToDollar = isINR ? ( ( lastPrice / lastPairPrice ) * qty ) : ( lastPrice * qty );
+        const currentTotalToInr = currentTotalToDollar * lastPairPrice;
+        const percentage = ( ( ( currentTotalToInr * 100 ) / totalToInr ) - 100 ) || 0;
+
+        const marginDollar = currentTotalToDollar - totalToDollar;
+        const marginINR = currentTotalToInr - totalToInr;
+
+        // child.querySelector( "#tdBuyPrice" ).textContent = price;
+        // child.querySelector( "#tdQty" ).textContent = qty;
+        // child.querySelector( "#tdTerm" ).textContent = term;
+        child.querySelector( "#tdTotalDollar" ).textContent = totalToDollar.toFixed( 2 ) + " ₿";
+        child.querySelector( "#tdTotalinr" ).textContent = totalToInr.toFixed( 2 ) + " ₹";
+
+        child.querySelector( "#tdCurrentPrice" ).textContent = lastPrice + ( isINR ? " ₹" : " ₿" );
+        child.querySelector( "#tdCurTotalDollar" ).textContent = currentTotalToDollar.toFixed( 2 ) + " ₿";
+        child.querySelector( "#tdCurTotalinr" ).textContent = currentTotalToInr.toFixed( 2 ) + " ₹";
+        child.querySelector( "#tdPLPercentage" ).textContent = percentage.toFixed( 2 ) + " %";
+        child.querySelector( "#tdMarginDol" ).textContent = marginDollar.toFixed( 2 ) + " ₿";
+        child.querySelector( "#tdMarginINR" ).textContent = marginINR.toFixed( 2 ) + " ₹";
+
+        if ( percentage > 0 ) {
+          child.querySelector( "#tdMarginINR" ).parentNode.classList = "Profit";
+        }
+
+        // insert row in dscending order of the table body
+        const body = hodlingBody[ 0 ];
+        const rows = body.children;
+        let i = 0;
+        for ( ; i < rows.length; i++ ) {
+          if ( rows[ i ].querySelector( "#tdPLPercentage" ).textContent.split( " " )[ 0 ] <= percentage )
+            break;
+        }
+        body.insertBefore( child, rows[ i ] );
+        // child.style.backgroundColor = "";
         free = 0;
       }
     }
-
+    // if ( free > 0 )
+    //   debugger;
   }
 
   function SummationPLTable ( body )
