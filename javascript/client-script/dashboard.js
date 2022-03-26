@@ -811,15 +811,9 @@ window.addEventListener( "DOMContentLoaded", async () =>
         const qty = +free;
 
         if (+attrQty !== qty)
-        {
-          child.classList.add( "difference" );
           child.classList.add( "Util_disable" );
-        }
         else
-        {
-          child.classList.remove( "difference" )
           child.classList.remove( "Util_disable" );
-        }
 
         tdQty.textContent = qty ? qty.toFixed( 4 ) : 0;
         const price = +tdBuyPrice.textContent.split( " " )[ 0 ];

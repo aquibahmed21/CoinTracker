@@ -175,10 +175,6 @@ div#IndexContainer.RootContainer {
   justify-content: center;
 }
 
-.difference {
-  background: rgb(141 123 123 / 84%);
-}
-
 .divSideNav {
   position: fixed;
   background: rgba(255,255,255,0.3);
