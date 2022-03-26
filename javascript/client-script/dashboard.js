@@ -756,9 +756,10 @@ window.addEventListener( "DOMContentLoaded", async () =>
         btc.push( child );
     }
 
+    usdt = sort( usdt );
     wrx = sort( wrx );
     btc = sort( btc );
-    usdt = sort( usdt );
+
 
     for ( let child of wrx ) {
       const qty = +child.querySelector( "#tdQty" ).textContent;
@@ -774,15 +775,16 @@ window.addEventListener( "DOMContentLoaded", async () =>
       const qty = +child.querySelector( "#tdQty" ).textContent;
       child.querySelector( "#tdQty" ).setAttribute( "qty", qty );
     }
-    Daka( "wrx", wrx, coins );
-    Daka( "btc", btc, coins );
-    Daka( "usdt", usdt, coins );
+
+    await Daka( "usdt", usdt, coins );
+    await Daka( "wrx", wrx, coins );
+    await Daka( "btc", btc, coins );
 
     SummationPLTable( hodlingBody );
     SummationPLTable( plBody );
   }
 
-  function Daka ( coin, arr, coins )
+  async function Daka ( coin, arr, coins )
   {
     // ! Optimize if condition
     if ( !coins.filter( e => e.asset == coin ).length )
@@ -799,14 +801,25 @@ window.addEventListener( "DOMContentLoaded", async () =>
       const lastPairPrice = ( ( pair == "usdt" ) || ( pair == "inr" ) ) ? usdtinr : ( pair == "wrx" ) ? wrxinr : btcinr;
       const lastPrice = +child.querySelector( "#tdCurrentPrice" ).textContent.split( " " )[ 0 ];
 
-
       const attrQty = +tdQty.getAttribute( "qty" );
       if ( +free >= attrQty ) {
         free -= attrQty;
         continue;
       }
+
       else if ( +free <= attrQty ) {
         const qty = +free;
+
+        if (+attrQty !== qty)
+        {
+          child.classList.add( "difference" );
+          child.classList.add( "Util_disable" );
+        }
+        else
+        {
+          child.classList.remove( "difference" )
+          child.classList.remove( "Util_disable" );
+        }
 
         tdQty.textContent = qty ? qty.toFixed( 4 ) : 0;
         const price = +tdBuyPrice.textContent.split( " " )[ 0 ];
@@ -858,7 +871,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
       const price = +( arr[ 0 ]?.querySelector( "#tdBuyPrice" ).textContent.split( " " )[ 0 ] || ( ( coin == "usdt" ) ? usdtinr : ( coin == "btc" ? btcinr : wrxinr ) ) );
       const term = "Take Profit";
       const _id = coin + pair + "_" + new Date().getTime();
-      AddHodlingRows_FromJSON( [ { coin, pair, qty, price, term, _id } ] );
+      await AddHodlingRows_FromJSON( [ { coin, pair, qty, price, term, _id } ] );
     }
   }
 

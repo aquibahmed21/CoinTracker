@@ -1,7 +1,7 @@
 "use strict";
 
 const baseURL = "wss://stream.wazirx.com/stream";
-const ws = new WebSocket( baseURL );
+let ws = new WebSocket( baseURL );
 const pingTimeout = 60000 * 15;
 
 let subsCallback = null;
@@ -38,7 +38,17 @@ ws.onmessage = ( event =>
 	if (![ "connected", "subscribed", "unsubscribed", "ping", "pong" ].includes( JSON.parse(event.data).event ) && subsCallback )
 		subsCallback(JSON.parse(event.data));
 } );
-ws.onclose = ( event => { console.log(event) } );
+ws.onclose = ( event =>
+{
+	ws = null;
+	console.log( event );
+
+	if ( ws == null )
+		{
+			clearTimeout( pingTimeout );
+			ws = new WebSocket( baseURL );
+		}
+} );
 ws.onerror = ( event => { console.log(event) } );
 
 
