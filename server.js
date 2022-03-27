@@ -48,11 +48,11 @@ app.get( "/dashboard", ( req, res ) =>
 
 app.get( "/cancelAllOrders", async ( req, res ) =>
 {
-	const uid = process.env.UID || req.headers[ "uid" ];
+	const uid = req.headers[ "uid" ];
 
 	const fullUrl = req.protocol + '://' + req.get( 'host' ); //+ req.originalUrl;
 	console.log( "fullUrl: ", fullUrl );
-	// return;
+	return;
 	const { message: credentials } = await ( await fetch( `${ fullUrl }/api/keys`, {
 		method: "GET",
 		headers: {
@@ -65,19 +65,24 @@ app.get( "/cancelAllOrders", async ( req, res ) =>
 
 	const baseURL = process.env.BASE_URL;
 	const signature = ( queryData, secret ) => CryptoJS.HmacSHA256( queryData, secret ).toString( CryptoJS.enc.Hex );
-	const queryData = `recvWindow=20000&timestamp=` + ( new Date().getTime() );
+	const queryData = `&symbol=wrxinr&recvWindow=60000&timestamp=` + ( new Date().getTime() );
 
-	const Route_Order_API = "/sapi/v1/openOrders";
-	const burl = baseURL + Route_Order_API + "?" + queryData + "&signature=" + signature( queryData, SECRET_KEY );
+	// const Route_Order_API = "/sapi/v1/openOrders";
+	// const burl = baseURL + Route_Order_API + "?" + queryData + "&signature=" + signature( queryData, SECRET_KEY );
 
-	// return;
+	// const queryData = "symbol=wrxinr&recvWindow=20000&timestamp=" + ( new Date().getTime() );
+	const apiURL = "/sapi/v1/openOrders";
+	const burl = baseURL + apiURL + "?" + queryData + "&signature=" + signature( queryData, SECRET_KEY );
+
 	try {
+
 		const rawResponse = await fetch( burl,
 			{
 				method: "DELETE",
 				headers: {
-					"Content-Type": "application/json",
+					// "Content-Type": "application/json",
 					"Content-Type": "application/x-www-form-urlencoded",
+					"X-Api-Key": API_KEY,
 				},
 			} );
 

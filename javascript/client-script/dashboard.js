@@ -43,6 +43,7 @@ const Routes = {
   DELETE_HODL_COIN_POST: "/api/hodling/delete",
   DELETE_PL_COIN_POST: "/api/pllist/delete",
   HODLING_UPDATE_POST: "/api/hodling/update",
+  PL_UPDATE_POST: "/api/pllist/update",
   OPEN_ORDERS_GET: "openOrder",
 };
 
@@ -151,20 +152,25 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
     document.getElementById( "cancelOpenOrders" ).addEventListener( "click", async ( event ) =>
     {
-      if ( confirm( "Are you sure you want to cancel all open orders?" ) ) {
-        return;
-        await ( await fetch( "cancelAllOrders", {
-          method: Method.GET,
-          headers: {
-            "Content-Type": "application/json",
-            "uid": userID
-          }
-        } ) ).json();
-        // const res_data = await Const.fetchUtils( "cancelAllOrders", Method.GET );
-        debugger;
-        console.log( { res_data } );
-        event.target.parentElement.nextElementSibling.replaceChildren();
-      }
+      ShowNotification( "Cancel orders not happening yet..." );
+      return;
+      // !
+      // if ( confirm( "Are you sure you want to cancel all open orders?" ) ) {
+
+      //   const res_data = await ( await fetch( "cancelAllOrders", {
+      //     method: Method.GET,
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       "uid": userID
+      //     }
+      //   } ) ).json();
+
+      //   // const res_data = await Const.fetchUtils( "cancelAllOrders", Method.GET );
+
+      //   console.log( res_data.message );
+
+      //   event.target.parentElement.nextElementSibling.replaceChildren();
+      // }
     } );
 
   sideNav.addEventListener( "click", async ( event ) =>
@@ -444,8 +450,28 @@ window.addEventListener( "DOMContentLoaded", async () =>
         break;
       case "btnBaseCoin":
         {
+          if ( isHOLDLingTable )
+          {
+            let sellValue = soldPrice;
+            if ( !confirm( "Are you sure you want to move with current sell price?" ) )
+              sellValue = +prompt( "Enter your sell price" );
+
+            const body = { coin, pair, qty, buyPrice, soldPrice: sellValue, term: comment, uid };
+            await Const.fetchUtils( Routes.DELETE_HODL_COIN_POST, Method.POST, {id: targetID} );
+            await Const.fetchUtils( Routes.PL_LIST_POST, Method.POST, body );
+            hodlingBody[ 0 ].children[ targetID ].remove();
+            await AddPLRows_FromJSON( [ body ] );
+          }
+          else
+          {
+            const body = { coin, pair, qty, "price": buyPrice, term: comment, uid };
+            await Const.fetchUtils( Routes.DELETE_PL_COIN_POST, Method.POST, {id: targetID} );
+            await Const.fetchUtils( Routes.HODLING_POST, Method.POST, body );
+            plBody[ 0 ].children[ targetID ].remove();
+            await AddHodlingRows_FromJSON( [ body ] );
+          }
+
           Close_LongPressPopup();
-          ShowNotification( "Not implemented yet" );
         }
         break;
       case "btnDelete":
@@ -577,12 +603,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
     const targetID = targetRow.id;
     // const body = { coinpair, side, qty, currentPrice: soldPrice, type, side };
 
-    // ! check mark as base coin
-    const already_marked_as_base = false;
-    if ( [ "btc", "wrx", "usdt" ].includes( coin ) && !already_marked_as_base )
-      LongPressPopup.querySelector( "#btnBaseCoin" ).classList.remove( "Util_hide" );
-    else
-      LongPressPopup.querySelector( "#btnBaseCoin" ).classList.add( "Util_hide" );
+    LongPressPopup.querySelector( "#btnBaseCoin" ).textContent = isHOLDLingTable ? "Move to PL" : "Move to Hodl";
 
     LongPressPopup.setAttribute( "data", JSON.stringify( { coin, pair, buyPrice, soldPrice, qty, comment, targetID } ) );
     LongPressPopup.classList.remove( "Util_hide" );
@@ -626,10 +647,12 @@ window.addEventListener( "DOMContentLoaded", async () =>
           const body = { coin, pair, qty, price, term, uid, soldPrice, buyPrice, id: targetID };
 
           if ( isEdit ) {
-            const response = await Const.fetchUtils( Routes.HODLING_UPDATE_POST, Method.POST, body );
+            const response = await Const.fetchUtils( (isPLList ? Routes.PL_UPDATE_POST : Routes.HODLING_UPDATE_POST), Method.POST, body );
             // console.log( response.message );
-            table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
-            await AddHodlingRows_FromJSON( [ body ] );
+            isPLList ? plBody[0].children[targetID].remove() :
+                       hodlingBody[ 0 ].children[ targetID ].remove();
+            isPLList ? await AddPLRows_FromJSON([body]) :
+                       await AddHodlingRows_FromJSON( [ body ] );
           } else {
             const response = await Const.fetchUtils( ( isPLList ? Routes.PL_LIST_POST : Routes.HODLING_POST ), Method.POST, body );
             // console.log( response.msg );

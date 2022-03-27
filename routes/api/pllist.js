@@ -79,4 +79,44 @@ router.post( "/delete", [
 
   } );
 
+router.post(
+  "/update",
+  [
+    check( "uid", "User ID not provided" ).not().isEmpty(),
+    check( "coin", "Coin name required" ).not().isEmpty(),
+    check( "pair", "Pair name required" ).not().isEmpty(),
+    check( "qty", "Coin quantity required" ).not().isEmpty(),
+    check( "buyPrice", "Buy price required" ).not().isEmpty(),
+    check( "soldPrice", "Sold price required" ).not().isEmpty(),
+    check( "term", "Add Term/Comment" ).not().isEmpty(),
+  ],
+  async ( req, res ) =>
+  {
+    const errors = validationResult( req );
+    if ( !errors.isEmpty() )
+      return res.status( 400 ).json( { errors: errors.array() } );
+
+    const { coin, pair, qty, buyPrice, soldPrice, term, uid, id } = req.body;
+    try {
+
+      await Hodling.updateOne(
+        {
+          "_id": id,
+        },
+        {
+          $set: {
+            "coin": coin,
+            "pair": pair,
+            "qty": +qty,
+            "buyPrice": +buyPrice,
+            "soldPrice": +soldPrice,
+            "term": term,
+          }
+        }
+      );
+
+      res.status( 200 ).json( { status: "success", msg: "Coin updated" } );
+    } catch ( error ) { }
+  } );
+
 module.exports = router;
