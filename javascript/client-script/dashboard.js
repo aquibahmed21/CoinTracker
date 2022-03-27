@@ -139,28 +139,28 @@ window.addEventListener( "DOMContentLoaded", async () =>
   else
     return window.location.href = "/";
 
-    document.getElementById( "cancelOpenOrders" ).addEventListener( "click", async ( event ) =>
-    {
-      ShowNotification( "Cancel orders not happening yet..." );
-      return;
-      // !
-      // if ( confirm( "Are you sure you want to cancel all open orders?" ) ) {
+  document.getElementById( "cancelOpenOrders" ).addEventListener( "click", async ( event ) =>
+  {
+    ShowNotification( "Cancel orders not happening yet..." );
+    return;
+    // !
+    // if ( confirm( "Are you sure you want to cancel all open orders?" ) ) {
 
-      //   const res_data = await ( await fetch( "cancelAllOrders", {
-      //     method: Method.GET,
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       "uid": userID
-      //     }
-      //   } ) ).json();
+    //   const res_data = await ( await fetch( "cancelAllOrders", {
+    //     method: Method.GET,
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       "uid": userID
+    //     }
+    //   } ) ).json();
 
-      //   // const res_data = await Const.fetchUtils( "cancelAllOrders", Method.GET );
+    //   // const res_data = await Const.fetchUtils( "cancelAllOrders", Method.GET );
 
-      //   console.log( res_data.message );
+    //   console.log( res_data.message );
 
-      //   event.target.parentElement.nextElementSibling.replaceChildren();
-      // }
-    } );
+    //   event.target.parentElement.nextElementSibling.replaceChildren();
+    // }
+  } );
 
   sideNav.addEventListener( "click", async ( event ) =>
   {
@@ -181,7 +181,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
         sideNav.classList.toggle( "active" );
         break;
       case "spanCharts":
-        return ShowNotification("Implementation Disabled");
+        return ShowNotification( "Implementation Disabled" );
         allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
         document.getElementById( "TradingView" ).classList.remove( "Util_hide" );
         sideNav.classList.toggle( "active" );
@@ -439,22 +439,20 @@ window.addEventListener( "DOMContentLoaded", async () =>
         break;
       case "btnBaseCoin":
         {
-          if ( isHOLDLingTable )
-          {
+          if ( isHOLDLingTable ) {
             let sellValue = soldPrice;
             if ( !confirm( "Are you sure you want to move with current sell price?" ) )
               sellValue = +prompt( "Enter your sell price" );
 
             const body = { coin, pair, qty, buyPrice, soldPrice: sellValue, term: comment, uid };
-            await Const.fetchUtils( Routes.DELETE_HODL_COIN_POST, Method.POST, {id: targetID} );
+            await Const.fetchUtils( Routes.DELETE_HODL_COIN_POST, Method.POST, { id: targetID } );
             await Const.fetchUtils( Routes.PL_LIST_POST, Method.POST, body );
             hodlingBody[ 0 ].children[ targetID ].remove();
             await AddPLRows_FromJSON( [ body ] );
           }
-          else
-          {
+          else {
             const body = { coin, pair, qty, "price": buyPrice, term: comment, uid };
-            await Const.fetchUtils( Routes.DELETE_PL_COIN_POST, Method.POST, {id: targetID} );
+            await Const.fetchUtils( Routes.DELETE_PL_COIN_POST, Method.POST, { id: targetID } );
             await Const.fetchUtils( Routes.HODLING_POST, Method.POST, body );
             plBody[ 0 ].children[ targetID ].remove();
             await AddHodlingRows_FromJSON( [ body ] );
@@ -636,12 +634,12 @@ window.addEventListener( "DOMContentLoaded", async () =>
           const body = { coin, pair, qty, price, term, uid, soldPrice, buyPrice, id: targetID };
 
           if ( isEdit ) {
-            const response = await Const.fetchUtils( (isPLList ? Routes.PL_UPDATE_POST : Routes.HODLING_UPDATE_POST), Method.POST, body );
+            const response = await Const.fetchUtils( ( isPLList ? Routes.PL_UPDATE_POST : Routes.HODLING_UPDATE_POST ), Method.POST, body );
             // console.log( response.message );
-            isPLList ? plBody[0].children[targetID].remove() :
-                       hodlingBody[ 0 ].children[ targetID ].remove();
-            isPLList ? await AddPLRows_FromJSON([body]) :
-                       await AddHodlingRows_FromJSON( [ body ] );
+            isPLList ? plBody[ 0 ].children[ targetID ].remove() :
+              hodlingBody[ 0 ].children[ targetID ].remove();
+            isPLList ? await AddPLRows_FromJSON( [ body ] ) :
+              await AddHodlingRows_FromJSON( [ body ] );
           } else {
             const response = await Const.fetchUtils( ( isPLList ? Routes.PL_LIST_POST : Routes.HODLING_POST ), Method.POST, body );
             // console.log( response.msg );
@@ -763,7 +761,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
     };
   }
 
-  async function TestFunction ( body = hodlingBody[ 0 ])
+  async function TestFunction ( body = hodlingBody[ 0 ] )
   {
     const sort = ( arr ) => arr.sort( ( a, b ) =>
       +a.querySelector( "#tdBuyPrice" ).textContent - +b.querySelector( "#tdBuyPrice" ).textContent
@@ -848,7 +846,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
       else if ( +free <= attrQty ) {
         const qty = +free;
 
-        if (+attrQty !== qty)
+        if ( +attrQty !== qty )
           child.classList.add( "Util_disable" );
         else
           child.classList.remove( "Util_disable" );
@@ -880,7 +878,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
         child.querySelector( "#tdMarginINR" ).textContent = marginINR.toFixed( 2 ) + " ₹";
 
         if ( percentage > 0 ) {
-          child.querySelector( "#tdMarginINR" ).parentNode.classList.add("Profit");
+          child.querySelector( "#tdMarginINR" ).parentNode.classList.add( "Profit" );
         }
 
         // insert row in dscending order of the table body
@@ -993,7 +991,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
         row.querySelector( "#tdMarginINR" ).textContent = marginINR.toFixed( 2 ) + " ₹";
 
         if ( percentage > 0 ) {
-          row.querySelector( "#tdMarginINR" ).parentNode.classList.add("Profit");
+          row.querySelector( "#tdMarginINR" ).parentNode.classList.add( "Profit" );
         }
 
         // insert row in dscending order of the table body
