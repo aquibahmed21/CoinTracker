@@ -49,6 +49,8 @@ const Routes = {
 let PL_LIST = Const.SoldJSon;
 let HODLING = Const.JSONDATA;
 
+let email = "";
+
 const coinPairArr = [];
 
 const hodlingTable = document.getElementById( "table" );
@@ -83,6 +85,8 @@ document.getElementById( "spanSignOut" ).addEventListener( "click", () =>
   window.location.href = "/";
 } );
 
+
+
 window.addEventListener( "DOMContentLoaded", async () =>
 {
   const token = localStorage.getItem( "token" );
@@ -91,6 +95,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
     const res_data = await Const.fetchUtils( Routes.AUTH_GET, Method.GET );
     if ( res_data && res_data.status === "success" && res_data.user ) {
       userID = res_data.user._id;
+      email = res_data.user.email;
       localStorage.setItem( "uid", userID );
     }
     else
@@ -143,6 +148,24 @@ window.addEventListener( "DOMContentLoaded", async () =>
   }
   else
     return window.location.href = "/";
+
+    document.getElementById( "cancelOpenOrders" ).addEventListener( "click", async ( event ) =>
+    {
+      if ( confirm( "Are you sure you want to cancel all open orders?" ) ) {
+        return;
+        await ( await fetch( "cancelAllOrders", {
+          method: Method.GET,
+          headers: {
+            "Content-Type": "application/json",
+            "uid": userID
+          }
+        } ) ).json();
+        // const res_data = await Const.fetchUtils( "cancelAllOrders", Method.GET );
+        debugger;
+        console.log( { res_data } );
+        event.target.parentElement.nextElementSibling.replaceChildren();
+      }
+    } );
 
   sideNav.addEventListener( "click", async ( event ) =>
   {
@@ -484,9 +507,12 @@ window.addEventListener( "DOMContentLoaded", async () =>
   await AddHodlingRows_FromJSON( HODLING );
   await AddPLRows_FromJSON( PL_LIST );
 
+  await TestFunction( hodlingBody[ 0 ] );
+
   document.getElementById( "loader" ).classList.add( "Util_hide" );
 
-  await TestFunction( hodlingBody[ 0 ] );
+  if ( email )
+    ShowNotification( `Welcome ${ email }` );
 
   // SummationPLTable( hodlingBody );
   // SummationPLTable( plBody );

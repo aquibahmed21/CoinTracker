@@ -244,6 +244,7 @@ div#IndexContainer.RootContainer {
   padding: 8px;
   max-height: calc(50% - 10px);
   overflow: hidden;
+  overflow-y: auto;
 }
 
 .divFundsContainer h2 {
@@ -263,7 +264,6 @@ div#IndexContainer.RootContainer {
   flex-flow: row wrap;
   max-height: calc(100% - 40px);
   overflow: hidden;
-  overflow-y: scroll;
 }
 
 .flex-item {
