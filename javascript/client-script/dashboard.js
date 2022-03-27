@@ -1,16 +1,5 @@
 "use strict";
 
-// ! Make sure sw are supported
-// if ( "serviceWorker" in navigator ) {
-//   window.addEventListener( "load", () =>
-//   {
-//     navigator.serviceWorker.register( "../../serviceWorker.js" ).then( ( registration ) =>
-//     {
-//       console.log( "ServiceWorker registration successful with scope: ", registration.scope );
-//     }).catch( ( err ) => console.log( "ServiceWorker registration failed: ", err ) );
-//   });
-// }
-
 import * as Const from "./constants.js";
 import * as webSocket from "./websocket.js";
 
