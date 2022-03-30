@@ -181,7 +181,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
         sideNav.classList.toggle( "active" );
         break;
       case "spanCharts":
-        return ShowNotification( "Implementation Disabled" );
+        // return ShowNotification( "Implementation Disabled" );
         allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
         document.getElementById( "TradingView" ).classList.remove( "Util_hide" );
         sideNav.classList.toggle( "active" );
