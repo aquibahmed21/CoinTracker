@@ -306,8 +306,6 @@ window.addEventListener( "DOMContentLoaded", async () =>
           //! remove row from hodling table
           table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
 
-          //! add row to pllist table
-          await AddPLRows_FromJSON( [ { coin, pair, qty, buyPrice, soldPrice, term: comment } ] );
 
           //! close popup
           Close_LongPressPopup();
@@ -347,17 +345,20 @@ window.addEventListener( "DOMContentLoaded", async () =>
               "Content-Type": "application/json",
               "uid": uid
             }, body: JSON.stringify( { id } )
-          } ) ).json().catch( err => console.log( err ) ); +
+          } ) ).json().catch( err => console.log( err ) );
 
 
             //! add coin to pl db
-            await ( await fetch( Routes.PL_LIST_POST, {
-              method: Method.POST,
-              headers: {
-                "Content-Type": "application/json",
-                "uid": uid
-              }, body: JSON.stringify( { coin, pair, qty, buyPrice, soldPrice, term: comment, uid } )
-            } ) ).json().catch( err => console.log( err ) );
+          const res = await ( await fetch( Routes.PL_LIST_POST, {
+            method: Method.POST,
+            headers: {
+              "Content-Type": "application/json",
+              "uid": uid
+            }, body: JSON.stringify( { coin, pair, qty, buyPrice, soldPrice, term: comment, uid } )
+          } ) ).json().catch( err => console.log( err ) );
+
+            //! add row to pllist table
+          await AddPLRows_FromJSON( [ { coin, pair, qty, buyPrice, soldPrice, term: comment, id: res.id } ] );
 
           return; // !return to avoid the below code
           // if pair usdt
@@ -446,14 +447,16 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
             const body = { coin, pair, qty, buyPrice, soldPrice: sellValue, term: comment, uid };
             await Const.fetchUtils( Routes.DELETE_HODL_COIN_POST, Method.POST, { id: targetID } );
-            await Const.fetchUtils( Routes.PL_LIST_POST, Method.POST, body );
+            const res = await Const.fetchUtils( Routes.PL_LIST_POST, Method.POST, body );
+            body.id = res.id;
             hodlingBody[ 0 ].children[ targetID ].remove();
             await AddPLRows_FromJSON( [ body ] );
           }
           else {
             const body = { coin, pair, qty, "price": buyPrice, term: comment, uid };
             await Const.fetchUtils( Routes.DELETE_PL_COIN_POST, Method.POST, { id: targetID } );
-            await Const.fetchUtils( Routes.HODLING_POST, Method.POST, body );
+            const response = await Const.fetchUtils( Routes.HODLING_POST, Method.POST, body );
+            body.id = response.id;
             plBody[ 0 ].children[ targetID ].remove();
             await AddHodlingRows_FromJSON( [ body ] );
           }
@@ -643,6 +646,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
           } else {
             const response = await Const.fetchUtils( ( isPLList ? Routes.PL_LIST_POST : Routes.HODLING_POST ), Method.POST, body );
             // console.log( response.msg );
+            body.id = response.id;
             isPLList ?
               await AddPLRows_FromJSON( [ body ] ) :
               await AddHodlingRows_FromJSON( [ body ] );
@@ -1013,15 +1017,15 @@ window.addEventListener( "DOMContentLoaded", async () =>
     for ( const key in obj ) {
 
       if ( obj.hasOwnProperty( key ) ) {
-        const { coin, pair, qty, buyPrice, soldPrice, term, _id } = obj[ key ];
-        const row = isUpdate ? document.querySelector( "#" + ( _id || key ) ) :
+        const { coin, pair, qty, buyPrice, soldPrice, term, _id, id } = obj[ key ];
+        const row = isUpdate ? document.querySelector( "#" + ( _id || id || key ) ) :
           document.getElementById( "templatePL1Row" ).content.cloneNode( true );
 
         const lastPairPrice = ( ( pair == "usdt" ) || ( pair == "inr" ) ) ? usdtinr : ( pair == "wrx" ) ? wrxinr : btcinr;
 
         const isINR = pair == "inr";
         if ( !isUpdate )
-          row.getElementById( "tdPairName" ).parentElement.id = ( _id || key );
+          row.getElementById( "tdPairName" ).parentElement.id = ( _id || id ||key );
 
         if ( !coinPairArr.includes( coin + pair ) )
           coinPairArr.push( coin + pair );

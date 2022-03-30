@@ -56,7 +56,7 @@ router.post(
         uid
       } );
       await coinPair.save();
-      return res.status( 200 ).json( { status: "success", msg: "Hodling row inserted" } );
+      return res.status( 200 ).json( { status: "success", msg: "Hodling row inserted", id: coinPair.id } );
 
       // return jsonwebtoken
     } catch ( error ) {

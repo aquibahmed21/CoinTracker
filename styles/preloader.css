@@ -7,7 +7,7 @@
   position: fixed;
   background: linear-gradient(to right, #25c481, #25b7c4);
   background: -webkit-gradient(linear, left top, left bottom, from(#25c481), to(#25b7c4)) fixed;
-  z-index: 1;
+  z-index: 2;
 }
 
 .loading.loader-circle-24 {

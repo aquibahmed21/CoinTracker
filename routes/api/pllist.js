@@ -50,7 +50,7 @@ router.post(
       } );
 
       await coinPair.save();
-      return res.status( 200 ).json( { status: "success", msg: "Profit/Loss row inserted" } );
+      return res.status( 200 ).json( { status: "success", msg: "Profit/Loss row inserted", id: coinPair.id } );
 
       // return jsonwebtoken
     } catch ( error ) {
