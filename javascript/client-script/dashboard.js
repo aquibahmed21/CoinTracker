@@ -568,17 +568,17 @@ window.addEventListener( "DOMContentLoaded", async () =>
     const targetRow = e.target.tagName == "TD" ? e.target.parentElement : e.target;
 
     // getting trading view of specific coin
-    if ( e.target.id == "tdPairName" )
-    {
-      const allContainers = document.querySelectorAll( ".RootContainer" );
-      const pairName = e.target.textContent;
-      const url = `https://cryptowatch.net/?chart=BINANCE:${ pairName }&`;
-      iframe.src = url;
-      allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
-      document.getElementById( "TradingView" ).classList.remove( "Util_hide" );
-      sideNav.classList.toggle( "active" );
-      return;
-    }
+    // if ( e.target.id == "tdPairName" )
+    // {
+    //   const allContainers = document.querySelectorAll( ".RootContainer" );
+    //   const pairName = e.target.textContent;
+    //   const url = `https://cryptowatch.net/?chart=BINANCE:${ pairName }&`;
+    //   iframe.src = url;
+    //   allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
+    //   document.getElementById( "TradingView" ).classList.remove( "Util_hide" );
+    //   sideNav.classList.toggle( "active" );
+    //   return;
+    // }
 
     if ( targetRow.tagName !== "TR" )
       return;

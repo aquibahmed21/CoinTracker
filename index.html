@@ -239,7 +239,46 @@
 
 		<!-- start of tv page -->
 		<div id="TradingView" class="RootContainer Util_hide">
-			<iframe src="https://cryptowatch.net/?chart=BITSTAMP:BTCUSD&chart=BITSTAMP:ETHUSD&chart=BTC.D&chart=BITFINEX:LINKUSD&chart=BITFINEX:LTCUSD&chart=BITFINEX:XRPUSD&chart=FTX:UNIUSD&chart=FTX:DEFIPERP&chart=FTX:ALTPERP&" frameborder="0" height="100%" width="100%"></iframe>
+
+			<!-- TradingView Widget BEGIN -->
+			<div class="tradingview-widget-container" style="height: 100%;width: 100%">
+				<div id="tradingview_f888d" style="height: 100%;width: 100%"></div>
+				<div class="tradingview-widget-copyright"><a href="https://in.tradingview.com/symbols/BTCUSDT/?exchange=BINANCE"
+						rel="noopener" target="_blank"><span class="blue-text">BTCUSDT Chart</span></a> by TradingView</div>
+				<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+				<script type="text/javascript">
+					new TradingView.widget(
+						{
+							"autosize": true,
+							"symbol": "BINANCE:BTCUSDT",
+							"interval": "240",
+							"timezone": "Etc/UTC",
+							"theme": "light",
+							"style": "1",
+							"locale": "in",
+							"toolbar_bg": "#f1f3f6",
+							"enable_publishing": false,
+							"hide_side_toolbar": false,
+							"allow_symbol_change": true,
+							"save_image": false,
+							"watchlist": [
+								"BINANCE:LUNAUSDT"
+							],
+							"details": true,
+							"studies": [
+								"MACD@tv-basicstudies",
+								"RSI@tv-basicstudies",
+								"StochasticRSI@tv-basicstudies"
+							],
+							"container_id": "tradingview_f888d"
+						}
+					);
+				</script>
+			</div>
+			<!-- TradingView Widget END -->
+
+
+			<!-- <iframe src="https://cryptowatch.net/?chart=BITSTAMP:BTCUSD&chart=BITSTAMP:ETHUSD&chart=BTC.D&chart=BITFINEX:LINKUSD&chart=BITFINEX:LTCUSD&chart=BITFINEX:XRPUSD&chart=FTX:UNIUSD&chart=FTX:DEFIPERP&chart=FTX:ALTPERP&" frameborder="0" height="100%" width="100%"></iframe> -->
 			<!-- <iframe src="https://wazirx.com/exchange/" frameborder="0"></iframe> -->
 			<!-- <embed src="http://stackoverflow.com" width=200 height=200 />
 			<object data="http://stackoverflow.com" width="400" height="300" type="text/html">
@@ -276,7 +315,8 @@
 				</div>
 			</div> -->
 			<!-- side navigation Menu -->
-			<span id="spanDashboard" class="spanMenuBtn"><img id="spanDashboard" src="/res/images/dashboard.png">Dashboard</span>
+			<span id="spanDashboard" class="spanMenuBtn"><img id="spanDashboard"
+					src="/res/images/dashboard.png">Dashboard</span>
 			<span id="spanCharts" class="spanMenuBtn"><img id="spanCharts" src="/res/images/chart.png">Charts</span>
 			<span id="spanOrders" class="spanMenuBtn"><img id="spanOrders" src="/res/images/store.png">Orders</span>
 			<span id="spanProfile" class="spanMenuBtn"><img id="spanProfile" src="/res/images/profile.png">Profile</span>
