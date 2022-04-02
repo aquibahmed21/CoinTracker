@@ -240,6 +240,10 @@ window.addEventListener( "DOMContentLoaded", async () =>
         {
           const div = document.createElement( "div" );
           div.classList.add( "flex-item1" );
+
+          if ( e.side == "buy" )
+            div.style.background = "#679f67";
+
           let span = document.createElement( "span" );
           span.innerHTML = "coin: " + e.symbol;
           div.append( span );
