@@ -59,23 +59,9 @@ const plCaption = plTable.getElementsByTagName( "caption" )[ 0 ];
 const coinDetailsPopup = document.getElementsByClassName( "signup-container" )[ 0 ];
 const LongPressPopup = document.getElementsByClassName( "divLongPressPopUp" )[ 0 ];
 const sideNav = document.getElementsByClassName( "divSideNav" )[ 0 ];
+const iframe = document.getElementsByTagName( "iframe" )[ 0 ];
 
 const getStopLossValue = ( price, percentage, decimal = 1 ) => ( price - ( ( price * percentage ) / 100 ) ).toFixed( decimal );
-
-document.getElementById( "imgeditprofile" ).addEventListener( "click", () =>
-{
-  document.getElementById( "ProfileContainer" ).children[ 0 ].classList.add( "Util_hide" );
-  document.getElementById( "ProfileContainer" ).children[ 1 ].classList.remove( "Util_hide" );
-} );
-
-document.getElementById( "spanSignOut" ).addEventListener( "click", () =>
-{
-  localStorage.removeItem( "token" );
-  localStorage.removeItem( "uid" );
-  window.location.href = "/";
-} );
-
-
 
 window.addEventListener( "DOMContentLoaded", async () =>
 {
@@ -138,6 +124,23 @@ window.addEventListener( "DOMContentLoaded", async () =>
   }
   else
     return window.location.href = "/";
+
+  // ! Edit profile
+  document.getElementById( "imgeditprofile" ).addEventListener( "click", () =>
+  {
+    ShowNotification( " Edit profile not implemented yet" );
+    return;
+    document.getElementById( "ProfileContainer" ).children[ 0 ].classList.add( "Util_hide" );
+    document.getElementById( "ProfileContainer" ).children[ 1 ].classList.remove( "Util_hide" );
+  } );
+
+  // ! Sign-out
+  document.getElementById( "spanSignOut" ).addEventListener( "click", () =>
+  {
+    localStorage.removeItem( "token" );
+    localStorage.removeItem( "uid" );
+    window.location.href = "/";
+  } );
 
   document.getElementById( "cancelOpenOrders" ).addEventListener( "click", async ( event ) =>
   {
@@ -348,7 +351,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
           } ) ).json().catch( err => console.log( err ) );
 
 
-            //! add coin to pl db
+          //! add coin to pl db
           const res = await ( await fetch( Routes.PL_LIST_POST, {
             method: Method.POST,
             headers: {
@@ -357,7 +360,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
             }, body: JSON.stringify( { coin, pair, qty, buyPrice, soldPrice, term: comment, uid } )
           } ) ).json().catch( err => console.log( err ) );
 
-            //! add row to pllist table
+          //! add row to pllist table
           await AddPLRows_FromJSON( [ { coin, pair, qty, buyPrice, soldPrice, term: comment, id: res.id } ] );
 
           return; // !return to avoid the below code
@@ -559,6 +562,19 @@ window.addEventListener( "DOMContentLoaded", async () =>
     e.preventDefault();
 
     const targetRow = e.target.tagName == "TD" ? e.target.parentElement : e.target;
+
+    // getting trading view of specific coin
+    if ( e.target.id == "tdPairName" )
+    {
+      const allContainers = document.querySelectorAll( ".RootContainer" );
+      const pairName = e.target.textContent;
+      const url = `https://cryptowatch.net/?chart=BINANCE:${ pairName }&`;
+      iframe.src = url;
+      allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
+      document.getElementById( "TradingView" ).classList.remove( "Util_hide" );
+      sideNav.classList.toggle( "active" );
+      return;
+    }
 
     if ( targetRow.tagName !== "TR" )
       return;
@@ -1025,7 +1041,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
         const isINR = pair == "inr";
         if ( !isUpdate )
-          row.getElementById( "tdPairName" ).parentElement.id = ( _id || id ||key );
+          row.getElementById( "tdPairName" ).parentElement.id = ( _id || id || key );
 
         if ( !coinPairArr.includes( coin + pair ) )
           coinPairArr.push( coin + pair );
