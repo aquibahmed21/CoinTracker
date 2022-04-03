@@ -59,7 +59,7 @@ const plCaption = plTable.getElementsByTagName( "caption" )[ 0 ];
 const coinDetailsPopup = document.getElementsByClassName( "signup-container" )[ 0 ];
 const LongPressPopup = document.getElementsByClassName( "divLongPressPopUp" )[ 0 ];
 const sideNav = document.getElementsByClassName( "divSideNav" )[ 0 ];
-const iframe = document.getElementsByTagName( "iframe" )[ 0 ];
+let iframe = document.getElementsByTagName( "iframe" )[ 0 ];
 
 const getStopLossValue = ( price, percentage, decimal = 1 ) => ( price - ( ( price * percentage ) / 100 ) ).toFixed( decimal );
 
@@ -185,9 +185,14 @@ window.addEventListener( "DOMContentLoaded", async () =>
         break;
       case "spanCharts":
         // return ShowNotification( "Implementation Disabled" );
-        allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
-        document.getElementById( "TradingView" ).classList.remove( "Util_hide" );
-        sideNav.classList.toggle( "active" );
+        if ( !document.getElementsByTagName( "iframe" )[ 0 ] )
+          TradingViewPreview();
+        else
+        {
+          allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
+          document.getElementById( "TradingView" ).classList.remove( "Util_hide" );
+          sideNav.classList.toggle( "active" );
+        }
         break;
       case "spanOrders":
         let orderContainer = document.getElementById( "OrdersContainer" );
@@ -568,17 +573,12 @@ window.addEventListener( "DOMContentLoaded", async () =>
     const targetRow = e.target.tagName == "TD" ? e.target.parentElement : e.target;
 
     // getting trading view of specific coin
-    // if ( e.target.id == "tdPairName" )
-    // {
-    //   const allContainers = document.querySelectorAll( ".RootContainer" );
-    //   const pairName = e.target.textContent;
-    //   const url = `https://cryptowatch.net/?chart=BINANCE:${ pairName }&`;
-    //   iframe.src = url;
-    //   allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
-    //   document.getElementById( "TradingView" ).classList.remove( "Util_hide" );
-    //   sideNav.classList.toggle( "active" );
-    //   return;
-    // }
+    if ( e.target.id == "tdPairName" )
+    {
+      const pairName = `BINANCE:${ e.target.textContent.toLocaleUpperCase() }`;
+      TradingViewPreview( pairName );
+      return;
+    }
 
     if ( targetRow.tagName !== "TR" )
       return;
@@ -1198,6 +1198,41 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
 
 }, false );
+
+function TradingViewPreview ( pairName = `BINANCE:BTCUSDT` )
+{
+  const allContainers = document.querySelectorAll( ".RootContainer" );
+  new TradingView.widget(
+    {
+      "autosize": true,
+      "symbol": pairName,
+      "interval": "240",
+      "timezone": "UTC+05:30",
+      "theme": "dark",
+      "style": "1",
+      "locale": "in",
+      "toolbar_bg": "#f1f3f6",
+      "enable_publishing": false,
+      "hide_side_toolbar": false,
+      "allow_symbol_change": true,
+      "save_image": false,
+      "watchlist": [
+        "BINANCE:LUNAUSDT",
+      ],
+      "details": true,
+      "studies": [
+        "MACD@tv-basicstudies",
+        "RSI@tv-basicstudies",
+        "StochasticRSI@tv-basicstudies"
+      ],
+      "container_id": "tradingview_f888d"
+    }
+  );
+
+  allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
+  document.getElementById( "TradingView" ).classList.remove( "Util_hide" );
+  sideNav.classList.toggle( "active" );
+}
 
 function Close_LongPressPopup ()
 {
