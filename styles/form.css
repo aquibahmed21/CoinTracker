@@ -321,6 +321,11 @@ div#IndexContainer.RootContainer {
 /* add media query */
 @media screen and (max-width: 480px)
 {
+
+  .RootContainer {
+    height: calc(100vh - 136px);
+  }
+
   #divOpenOrdersHolder {
     max-height: calc(100% - 40px);
     overflow: hidden;
