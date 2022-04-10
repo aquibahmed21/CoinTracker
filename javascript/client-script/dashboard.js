@@ -42,7 +42,7 @@ let HODLING = Const.JSONDATA;
 let email = "";
 
 const coinPairArr = [];
-const missMatchAssets = [];
+let missMatchAssets = [];
 
 const hodlingTable = document.getElementById( "table" );
 for ( let item of hodlingTable.getElementsByTagName( "thead" )[ 0 ].children[ 0 ].children )
@@ -542,26 +542,13 @@ window.addEventListener( "DOMContentLoaded", async () =>
   // } ) ).json();
 
   await AddHodlingRows_FromJSON( HODLING );
-  await AddPLRows_FromJSON( PL_LIST );
-
-  // for ( let fund of funds )
-  // {
-  //   let details = HODLING.filter( p => p.coin == fund.asset );
-  //   if ( details.length )
-  //   {
-  //     const sum = details.map( item => item.qty ).reduce( ( a, b ) => a + b, 0 ).toString();
-  //     const asset = fund.free;
-  //     if ( sum !== asset )
-  //       missMatchAssets.push( { coin: fund.asset, sum } );
-  //   }
-  // }
-  // debugger;
-
-  await TestFunction( hodlingBody[ 0 ] );
   document.getElementById( "loader" ).classList.add( "Util_hide" );
+  await AddPLRows_FromJSON( PL_LIST );
 
   if ( email )
     ShowNotification( `Welcome ${ email }` );
+
+  await TestFunction( hodlingBody[ 0 ] );
 
   // SummationPLTable( hodlingBody );
   // SummationPLTable( plBody );
@@ -821,6 +808,8 @@ window.addEventListener( "DOMContentLoaded", async () =>
     } ) ).json();
     const coins = funds.filter( e => ( pairs.includes( e.asset ) ) );
 
+
+
     const childrens = body.children;
     let wrx = [];
     let usdt = [];
@@ -863,6 +852,9 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
     SummationPLTable( hodlingBody );
     SummationPLTable( plBody );
+
+    MissMatchAssets( funds, childrens, ShowNotification );
+
   }
 
   async function Daka ( coin, arr, coins )
@@ -1228,6 +1220,48 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
 
 }, false );
+
+function MissMatchAssets ( funds, childrens, ShowNotification )
+{
+  for ( let fund of funds ) {
+    const shariat = [];
+    for ( let child of childrens ) {
+      const coin = child.getAttribute( "coin" );
+      const pair = child.getAttribute( "pair" );
+      const qty = +child.querySelector( "#tdQty" ).textContent;
+      const abc = shariat.filter( e => e.coin === coin );
+      if ( abc.length )
+        abc[ 0 ].qty += +qty;
+
+      else
+        shariat.push( { coin, qty: +qty, pair } );
+    }
+    let details = shariat.filter( p => p.coin == fund.asset );
+    if ( details.length ) {
+      const sum = details.map( item => item.qty )
+        .reduce( ( a, b ) => a + b, 0 );
+      const asset = parseFloat( fund.free ).toString();
+      if ( parseFloat( sum ).toString() !== asset )
+        missMatchAssets.push( { coin: fund.asset, sum: +sum, asset: fund.free } );
+    }
+  }
+
+  if ( missMatchAssets.length ) {
+    const splice = [];
+    for ( let key in missMatchAssets ) {
+
+      if ( parseFloat( missMatchAssets[ key ].asset ).toFixed( 4 ).toString() ==
+        parseFloat( missMatchAssets[ key ].sum ).toFixed( 4 ).toString() )
+        splice.push( missMatchAssets[ key ].coin );
+    }
+
+    missMatchAssets = missMatchAssets.filter( e => !splice.includes( e.coin ) );
+    if ( missMatchAssets.length ) {
+      const msg = "Miss match assets: " + missMatchAssets.map( e => e.coin + ": " + e.sum + " vs " + e.asset ).join( ", " );
+      ShowNotification( msg );
+    }
+  }
+}
 
 function TradingViewPreview ( pairName = `BINANCE:BTCUSDT` )
 {
