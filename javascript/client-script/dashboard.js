@@ -42,6 +42,7 @@ let HODLING = Const.JSONDATA;
 let email = "";
 
 const coinPairArr = [];
+const missMatchAssets = [];
 
 const hodlingTable = document.getElementById( "table" );
 for ( let item of hodlingTable.getElementsByTagName( "thead" )[ 0 ].children[ 0 ].children )
@@ -532,11 +533,31 @@ window.addEventListener( "DOMContentLoaded", async () =>
   let btcinr = arrTicker.filter( e => e.symbol == ( PAIR.BTC ) )[ 0 ]?.lastPrice || 0;
   let wrxinr = arrTicker.filter( e => e.symbol == ( PAIR.WRX ) )[ 0 ]?.lastPrice || 0;
 
+  // const funds = await ( await fetch( Routes.FUNDS_GET, {
+  //   method: Method.GET,
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     "uid": userID
+  //   }
+  // } ) ).json();
+
   await AddHodlingRows_FromJSON( HODLING );
   await AddPLRows_FromJSON( PL_LIST );
 
-  await TestFunction( hodlingBody[ 0 ] );
+  // for ( let fund of funds )
+  // {
+  //   let details = HODLING.filter( p => p.coin == fund.asset );
+  //   if ( details.length )
+  //   {
+  //     const sum = details.map( item => item.qty ).reduce( ( a, b ) => a + b, 0 ).toString();
+  //     const asset = fund.free;
+  //     if ( sum !== asset )
+  //       missMatchAssets.push( { coin: fund.asset, sum } );
+  //   }
+  // }
+  // debugger;
 
+  await TestFunction( hodlingBody[ 0 ] );
   document.getElementById( "loader" ).classList.add( "Util_hide" );
 
   if ( email )
@@ -978,10 +999,19 @@ window.addEventListener( "DOMContentLoaded", async () =>
         const row = isUpdate ? document.getElementById( _id || id ) :
           document.getElementById( "templatePLRow" ).content.cloneNode( true );
 
+        // add multiple attributes to the row
+
+        const rowParent = row.getElementById( "tdPairName" ).parentElement;
+        rowParent.setAttribute( "coin", coin )
+        rowParent.setAttribute( "pair", pair )
+        rowParent.setAttribute( "qty", qty )
+        rowParent.setAttribute( "price", price )
+        rowParent.setAttribute( "term", term )
+
         const isINR = pair == "inr";
         if ( !isUpdate ) {
           const ID = ( _id || id || key );
-          const rowParent = row.getElementById( "tdPairName" ).parentElement;
+
           rowParent.id = ID;
           if ( ID.split( "_" )[ 1 ] )
             rowParent.classList.add( "extra" );
