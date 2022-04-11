@@ -542,13 +542,14 @@ window.addEventListener( "DOMContentLoaded", async () =>
   // } ) ).json();
 
   await AddHodlingRows_FromJSON( HODLING );
-  document.getElementById( "loader" ).classList.add( "Util_hide" );
   await AddPLRows_FromJSON( PL_LIST );
 
   if ( email )
     ShowNotification( `Welcome ${ email }` );
 
   await TestFunction( hodlingBody[ 0 ] );
+
+  document.getElementById( "loader" ).classList.add( "Util_hide" );
 
   // SummationPLTable( hodlingBody );
   // SummationPLTable( plBody );
@@ -807,8 +808,6 @@ window.addEventListener( "DOMContentLoaded", async () =>
       }
     } ) ).json();
     const coins = funds.filter( e => ( pairs.includes( e.asset ) ) );
-
-
 
     const childrens = body.children;
     let wrx = [];
@@ -1221,8 +1220,9 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
 }, false );
 
-function MissMatchAssets ( funds, childrens, ShowNotification )
+async function MissMatchAssets ( funds, childrens, ShowNotification )
 {
+  await Const.delay(1000)
   for ( let fund of funds ) {
     const shariat = [];
     for ( let child of childrens ) {
