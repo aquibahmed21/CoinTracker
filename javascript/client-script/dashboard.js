@@ -512,8 +512,9 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
   const arrTicker = await Const.getTicker() || await Const.getTicker();
 
-  function ShowNotification ( content )
+  function ShowNotification ( content, isError = false )
   {
+    notificationBTN.style.backgroundColor = isError ? "#ff1515c7" : "";
     notificationBTN.innerHTML = content;
     notificationBTN.classList.add( "visible" );
   }
@@ -1258,7 +1259,7 @@ async function MissMatchAssets ( funds, childrens, ShowNotification )
     missMatchAssets = missMatchAssets.filter( e => !splice.includes( e.coin ) );
     if ( missMatchAssets.length ) {
       const msg = "Miss match assets: " + missMatchAssets.map( e => e.coin + ": " + e.sum + " vs " + e.asset ).join( ", " );
-      ShowNotification( msg );
+      ShowNotification( msg, true );
     }
   }
 }
