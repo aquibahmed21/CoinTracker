@@ -515,6 +515,9 @@ window.addEventListener( "DOMContentLoaded", async () =>
   function ShowNotification ( content, isError = false )
   {
     notificationBTN.style.backgroundColor = isError ? "#ff1515c7" : "";
+    notificationBTN.style.animation = isError ? "movein .5s ease forwards, moveout .5s 30s ease forwards" : "";
+    notificationBTN.style.fontWeight = isError ? "600" : "";
+    notificationBTN.style.height = isError ? "auto" : "";
     notificationBTN.innerHTML = content;
     notificationBTN.classList.add( "visible" );
   }
@@ -1223,28 +1226,31 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
 async function MissMatchAssets ( funds, childrens, ShowNotification )
 {
-  await Const.delay(1000)
-  for ( let fund of funds ) {
-    const shariat = [];
-    for ( let child of childrens ) {
-      const coin = child.getAttribute( "coin" );
-      const pair = child.getAttribute( "pair" );
-      const qty = +child.querySelector( "#tdQty" ).textContent;
-      const abc = shariat.filter( e => e.coin === coin );
-      if ( abc.length )
-        abc[ 0 ].qty += +qty;
+  await Const.delay( 1000 )
+  const shariat = [];
+  for ( let child of childrens ) {
+    const coin = child.getAttribute( "coin" );
+    const pair = child.getAttribute( "pair" );
+    const qty = +child.querySelector( "#tdQty" ).textContent;
+    const abc = shariat.filter( e => e.coin === coin );
+    if ( abc.length )
+      abc[ 0 ].qty += +qty;
 
-      else
-        shariat.push( { coin, qty: +qty, pair } );
-    }
+    else
+      shariat.push( { coin, qty: +qty, pair } );
+  }
+
+  for ( let fund of funds ) {
     let details = shariat.filter( p => p.coin == fund.asset );
     if ( details.length ) {
       const sum = details.map( item => item.qty )
-        .reduce( ( a, b ) => a + b, 0 );
-      const asset = parseFloat( fund.free ).toString();
-      if ( parseFloat( sum ).toString() !== asset )
-        missMatchAssets.push( { coin: fund.asset, sum: +sum, asset: fund.free } );
+        .reduce( ( a, b ) => a + b, 0 ).toString();
+      const asset = ( fund.free ).toString();
+      if ( sum  !== asset )
+        missMatchAssets.push( { coin: fund.asset, sum: sum, asset: fund.free } );
     }
+    else if (fund.asset !== "inr")
+      missMatchAssets.push( { coin:fund.asset, sum: +fund.free, asset:fund.free })
   }
 
   if ( missMatchAssets.length ) {
@@ -1258,7 +1264,7 @@ async function MissMatchAssets ( funds, childrens, ShowNotification )
 
     missMatchAssets = missMatchAssets.filter( e => !splice.includes( e.coin ) );
     if ( missMatchAssets.length ) {
-      const msg = "Miss match assets: " + missMatchAssets.map( e => e.coin + ": " + e.sum + " vs " + e.asset ).join( ", " );
+      const msg = "Miss match assets:<br><br>" + missMatchAssets.map( e => e.coin + ": " + e.sum + " vs " + e.asset ).join( "<br>" );
       ShowNotification( msg, true );
     }
   }
