@@ -588,9 +588,22 @@ window.addEventListener( "DOMContentLoaded", async () =>
     // getting trading view of specific coin
     if ( e.target.id == "tdPairName" )
     {
-      const pairName = `BINANCE:${ e.target.textContent.toLocaleUpperCase() }`;
-      TradingViewPreview( pairName );
-      return;
+      const pairName = e.target.textContent;
+      if ( pairName.endsWith( "usdt" ) )
+      {
+        const pairName = `BINANCE:${ pairName.toLocaleUpperCase() }`;
+        TradingViewPreview( pairName );
+        return;
+      }
+      else
+      {
+        const parent = e.target.parentElement;
+        const coin = parent.getAttribute( "coin" );
+        const pair = parent.getAttribute( "pair" );
+        const url = `https://wazirx.com/exchange/${ coin }-${ pair }`;
+        window.open( url, '_blank' ).focus();
+        return;
+      }
     }
 
     if ( targetRow.tagName !== "TR" )
@@ -1177,7 +1190,11 @@ window.addEventListener( "DOMContentLoaded", async () =>
           }
           else if ( prevPercentage >= 0 && percentage.toFixed( 2 ) <= 0 ) {
             const parent = child.parentNode;
-            parent.insertBefore( child, [ ...child.parentNode.querySelectorAll( ".Profit" ) ].pop().nextElementSibling );
+            // insert before the first row
+
+            [ ...child.parentNode.querySelectorAll( ".Profit" ) ].length ?
+              parent.insertBefore( child, [ ...child.parentNode.querySelectorAll( ".Profit" ) ].pop().nextElementSibling ) :
+              parent.insertBefore( child, parent.querySelector( "tr" ) );
             child.classList.remove( "Profit" );
             // move row to below top rows
           }
@@ -1257,8 +1274,8 @@ async function MissMatchAssets ( funds, childrens, ShowNotification )
     const splice = [];
     for ( let key in missMatchAssets ) {
 
-      if ( parseFloat( missMatchAssets[ key ].asset ).toFixed( 4 ).toString() ==
-        parseFloat( missMatchAssets[ key ].sum ).toFixed( 4 ).toString() )
+      if ( parseFloat( missMatchAssets[ key ].asset ).toFixed( 8 ).toString() ==
+           parseFloat( missMatchAssets[ key ].sum ).toFixed( 8 ).toString() )
         splice.push( missMatchAssets[ key ].coin );
     }
 
