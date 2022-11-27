@@ -122,7 +122,6 @@ app.get( "/openOrder", async ( req, res ) =>
 			{
 				method: "GET",
 				headers: {
-					"Content-Type": "application/json",
 					"Content-Type": "application/x-www-form-urlencoded",
 					"X-Api-Key": API_KEY,
 				},

@@ -515,7 +515,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
   function ShowNotification ( content, isError = false )
   {
     notificationBTN.style.backgroundColor = isError ? "#ff1515c7" : "";
-    notificationBTN.style.animation = isError ? "movein .5s ease forwards, moveout .5s 30s ease forwards" : "";
+    notificationBTN.style.animation = isError ? "movein .5s ease forwards, moveout .5s 3s ease forwards" : "";
     notificationBTN.style.fontWeight = isError ? "600" : "";
     notificationBTN.style.height = isError ? "auto" : "";
     notificationBTN.innerHTML = content;
@@ -572,7 +572,6 @@ window.addEventListener( "DOMContentLoaded", async () =>
   {
     // stacksnippet"s console also has CSS animations...
     if ( e.type === "animationend" && e.target.id == notificationBTN.id ) {
-      await Const.delay( 11000 );
       notificationBTN.classList.remove( "visible" );
     }
   };
@@ -845,7 +844,6 @@ window.addEventListener( "DOMContentLoaded", async () =>
     usdt = sort( usdt );
     wrx = sort( wrx );
     btc = sort( btc );
-
 
     for ( let child of wrx ) {
       const qty = +child.querySelector( "#tdQty" ).textContent;
@@ -1263,7 +1261,11 @@ async function MissMatchAssets ( funds, childrens, ShowNotification )
       const sum = details.map( item => item.qty )
         .reduce( ( a, b ) => a + b, 0 ).toString();
       const asset = ( fund.free ).toString();
-      if ( sum  !== asset )
+
+      const isSumWithPrecision = sum.indexOf(".")  > -1;
+      const precisionValue = isSumWithPrecision ? ( sum.length - sum.indexOf( "." ) - 1 ) : sum.length;
+      const whatToDo = isSumWithPrecision ? ( sum !== Number( asset ).toFixed( precisionValue ) ) : ( sum !== asset );
+      if ( whatToDo )
         missMatchAssets.push( { coin: fund.asset, sum: sum, asset: fund.free } );
     }
     else if (fund.asset !== "inr")
