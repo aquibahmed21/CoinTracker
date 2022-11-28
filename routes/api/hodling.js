@@ -12,9 +12,8 @@ const Hodling = require( "../../models/Hodling" );
 // @route 		GET api/hodling
 // @desc 			Get Hodling amout details
 // @access 		Public
-router.get( "/", async ( req, res ) =>
-{
-  const uid = process.env.UID || req.headers[ "uid" ];
+router.get( "/", async ( req, res ) => {
+  const uid = process.env.UID || req.headers.uid;
   let record = null;
   if ( uid )
     record = await Hodling.find( { uid } );
@@ -36,17 +35,14 @@ router.post(
     check( "term", "Add Term/Comment" ).not().isEmpty(),
     check( "uid", "User ID required" ).not().isEmpty()
   ],
-  async ( req, res ) =>
-  {
+  async ( req, res ) => {
     const errors = validationResult( req );
     const { coin, pair, qty, price, term, uid } = req.body;
-
 
     if ( !errors.isEmpty() )
       return res.status( 200 ).json( { status: "invalid", msg: errors.array() } );
     // const { coin, pair, qty, price, term } = req.body;
     try {
-
       const coinPair = new Hodling( {
         coin,
         pair,
@@ -74,33 +70,32 @@ router.post( "/update", [
   check( "pair", "Pair name required" ).not().isEmpty(),
   check( "qty", "Coin quantity required" ).not().isEmpty(),
   check( "price", "Price required" ).not().isEmpty(),
-  check( "term", "Add Term/Comment" ).not().isEmpty(),
+  check( "term", "Add Term/Comment" ).not().isEmpty()
 ],
-  async ( req, res ) =>
-  {
-    const errors = validationResult( req );
+async ( req, res ) => {
+  const errors = validationResult( req );
 
-    const { id, coin, pair, qty, price, term } = req.body;
+  const { id, coin, pair, qty, price, term } = req.body;
 
-    if ( !errors.isEmpty() )
-      return res.status( 200 ).json( { status: "invalid", msg: errors.array() } );
+  if ( !errors.isEmpty() )
+    return res.status( 200 ).json( { status: "invalid", msg: errors.array() } );
 
-    await Hodling.updateOne(
-      {
-        "_id": id,
-      },
-      {
-        $set: {
-          "coin": coin,
-          "pair": pair,
-          "qty": +qty,
-          "price": +price,
-          "term": term,
-        }
+  await Hodling.updateOne(
+    {
+      _id: id
+    },
+    {
+      $set: {
+        coin,
+        pair,
+        qty: +qty,
+        price: +price,
+        term
       }
-    );
-    return res.status( 200 ).json( { status: "success", message: "Coin updated" } );
-  } );
+    }
+  );
+  return res.status( 200 ).json( { status: "success", message: "Coin updated" } );
+} );
 
 // @route 		POST api/hodling/delete
 // @desc 			Delete Hodling amout details
@@ -113,8 +108,7 @@ router.post( "/delete",
     // check( "uid", "User ID required" ).not().isEmpty(),
     check( "id", "ID required" ).not().isEmpty()
   ],
-  async ( req, res ) =>
-  {
+  async ( req, res ) => {
     const errors = validationResult( req );
     if ( !errors.isEmpty() )
       return res.status( 400 ).json( { errors: errors.array() } );

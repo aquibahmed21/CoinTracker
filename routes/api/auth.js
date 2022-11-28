@@ -1,6 +1,5 @@
-if ( process.env.NODE_ENV !== "production" ) {
-	require( "dotenv" ).config();
-}
+if ( process.env.NODE_ENV !== "production" )
+  require( "dotenv" ).config();
 
 const express = require( "express" );
 const router = express.Router();
@@ -11,11 +10,10 @@ const jwt = require( "jsonwebtoken" );
 
 const User = require( "../../models/Users" );
 
-// @route 		GET api/auth
-// @desc 			Test router
-// @access 		Public
-router.get( "/", auth, async ( req, res ) =>
-{
+// @route GET api/auth
+// @desc Test router
+// @access Public
+router.get( "/", auth, async ( req, res ) => {
   try {
     const user = await User.findById( req.user.id ).select( "-password" );
     res.status( 200 ).json( { status: "success", user } );
@@ -24,9 +22,9 @@ router.get( "/", auth, async ( req, res ) =>
   }
 } );
 
-// @route 		POST api/auth
-// @desc 			Validate User
-// @access 		Public
+// @route POST api/auth
+// @desc Validate User
+// @access Public
 router.post(
   "/",
   [
@@ -36,8 +34,7 @@ router.post(
       "Password is required"
     ).exists()
   ],
-  async ( req, res ) =>
-  {
+  async ( req, res ) => {
     const { email, password } = req.body;
     const errors = validationResult( req );
     if ( !errors.isEmpty() )
@@ -47,7 +44,7 @@ router.post(
 
     try {
       // See if user exists
-      let user = await User.findOne( { email } );
+      const user = await User.findOne( { email } );
 
       if ( !user )
         return res
@@ -70,15 +67,13 @@ router.post(
       jwt.sign( payload,
         process.env.JWT_SECRET,
         { expiresIn: 360000 },
-        ( err, token ) =>
-        {
+        ( err, token ) => {
           if ( err )
             console.log( err );
           else
             res.status( 200 ).json( { status: "success", token } );
-          ``;
+          "";
         } );
-
     } catch ( error ) {
       return res.status( 500 ).send( error );
     }

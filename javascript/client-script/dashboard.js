@@ -33,7 +33,7 @@ const Routes = {
   DELETE_PL_COIN_POST: "/api/pllist/delete",
   HODLING_UPDATE_POST: "/api/hodling/update",
   PL_UPDATE_POST: "/api/pllist/update",
-  OPEN_ORDERS_GET: "openOrder",
+  OPEN_ORDERS_GET: "openOrder"
 };
 
 let PL_LIST = Const.SoldJSon;
@@ -45,12 +45,12 @@ const coinPairArr = [];
 let missMatchAssets = [];
 
 const hodlingTable = document.getElementById( "table" );
-for ( let item of hodlingTable.getElementsByTagName( "thead" )[ 0 ].children[ 0 ].children )
+for ( const item of hodlingTable.getElementsByTagName( "thead" )[ 0 ].children[ 0 ].children )
   item.addEventListener( "click", () => sortTable( item.cellIndex, hodlingTable ) );
 const hodlingBody = hodlingTable.getElementsByTagName( "tbody" );
 
 const plTable = hodlingTable.parentElement.nextElementSibling;
-for ( let item of plTable.getElementsByTagName( "thead" )[ 0 ].children[ 0 ].children )
+for ( const item of plTable.getElementsByTagName( "thead" )[ 0 ].children[ 0 ].children )
   item.addEventListener( "click", () => sortTable( item.cellIndex, plTable.children[ 0 ] ) );
 const plBody = plTable.getElementsByTagName( "tbody" );
 
@@ -60,29 +60,29 @@ const plCaption = plTable.getElementsByTagName( "caption" )[ 0 ];
 const coinDetailsPopup = document.getElementsByClassName( "signup-container" )[ 0 ];
 const LongPressPopup = document.getElementsByClassName( "divLongPressPopUp" )[ 0 ];
 const sideNav = document.getElementsByClassName( "divSideNav" )[ 0 ];
-let iframe = document.getElementsByTagName( "iframe" )[ 0 ];
 
 const getStopLossValue = ( price, percentage, decimal = 1 ) => ( price - ( ( price * percentage ) / 100 ) ).toFixed( decimal );
 
-window.addEventListener( "DOMContentLoaded", async () =>
-{
+window.addEventListener( "DOMContentLoaded", async () => {
   const token = localStorage.getItem( "token" );
   let userID = "";
   if ( token ) {
-    const res_data = await Const.fetchUtils( Routes.AUTH_GET, Method.GET );
-    if ( res_data && res_data.status === "success" && res_data.user ) {
-      userID = res_data.user._id;
-      email = res_data.user.email;
+    const resData = await Const.fetchUtils( Routes.AUTH_GET, Method.GET );
+    if ( resData && resData.status === "success" && resData.user ) {
+      userID = resData.user._id;
+      email = resData.user.email;
       localStorage.setItem( "uid", userID );
+    } else
+    {
+      window.location.href = "/";
+      return;
     }
-    else
-      return window.location.href = "/";
 
     const credentials = await ( await fetch( Routes.KEYS_GET, {
       method: Method.GET,
       headers: {
         "Content-Type": "application/json",
-        "uid": userID
+        uid: userID
       }
     } ) ).json();
 
@@ -98,8 +98,9 @@ window.addEventListener( "DOMContentLoaded", async () =>
         method: Method.POST,
         headers: {
           "Content-Type": "application/json",
-          "uid": userID
-        }, body: JSON.stringify( { api, sec, uid } )
+          uid: userID
+        },
+        body: JSON.stringify( { api, sec, uid } )
       } ) ).json();
       ShowNotification( message );
     }
@@ -109,7 +110,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
         method: Method.GET,
         headers: {
           "Content-Type": "application/json",
-          "uid": userID
+          uid: userID
         }
       } ).then( res => res.json() );
     PL_LIST = PL_LIST.message;
@@ -118,35 +119,33 @@ window.addEventListener( "DOMContentLoaded", async () =>
         method: Method.GET,
         headers: {
           "Content-Type": "application/json",
-          "uid": userID
+          uid: userID
         }
       } ).then( res => res.json() );
     HODLING = HODLING.message;
+  } else {
+    window.location.href = "/";
+    return;
   }
-  else
-    return window.location.href = "/";
 
   // ! Edit profile
-  document.getElementById( "imgeditprofile" ).addEventListener( "click", () =>
-  {
+  document.getElementById( "imgeditprofile" ).addEventListener( "click", () => {
     ShowNotification( " Edit profile not implemented yet" );
-    return;
-    document.getElementById( "ProfileContainer" ).children[ 0 ].classList.add( "Util_hide" );
-    document.getElementById( "ProfileContainer" ).children[ 1 ].classList.remove( "Util_hide" );
+    // return;
+    // document.getElementById( "ProfileContainer" ).children[ 0 ].classList.add( "Util_hide" );
+    // document.getElementById( "ProfileContainer" ).children[ 1 ].classList.remove( "Util_hide" );
   } );
 
   // ! Sign-out
-  document.getElementById( "spanSignOut" ).addEventListener( "click", () =>
-  {
+  document.getElementById( "spanSignOut" ).addEventListener( "click", () => {
     localStorage.removeItem( "token" );
     localStorage.removeItem( "uid" );
     window.location.href = "/";
   } );
 
-  document.getElementById( "cancelOpenOrders" ).addEventListener( "click", async ( event ) =>
-  {
+  document.getElementById( "cancelOpenOrders" ).addEventListener( "click", async ( event ) => {
     ShowNotification( "Cancel orders not happening yet..." );
-    return;
+
     // !
     // if ( confirm( "Are you sure you want to cancel all open orders?" ) ) {
 
@@ -166,8 +165,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
     // }
   } );
 
-  sideNav.addEventListener( "click", async ( event ) =>
-  {
+  sideNav.addEventListener( "click", async ( event ) => {
     const targetID = event.target.id;
     const allContainers = document.querySelectorAll( ".RootContainer" );
     switch ( targetID ) {
@@ -188,108 +186,103 @@ window.addEventListener( "DOMContentLoaded", async () =>
         // return ShowNotification( "Implementation Disabled" );
         if ( !document.getElementsByTagName( "iframe" )[ 0 ] )
           TradingViewPreview();
-        else
-        {
+        else {
           allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
           document.getElementById( "TradingView" ).classList.remove( "Util_hide" );
           sideNav.classList.toggle( "active" );
         }
         break;
       case "spanOrders":
-        let orderContainer = document.getElementById( "OrdersContainer" );
-        allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
-        orderContainer.classList.remove( "Util_hide" );
-
-        const funds = await ( await fetch( Routes.FUNDS_GET, {
-          method: Method.GET,
-          headers: {
-            "Content-Type": "application/json",
-            "uid": userID
-          }
-        } ) ).json();
-
-        let divFundsHolder = orderContainer.querySelector( "#divFundsHolder" );
-        divFundsHolder.innerHTML = "";
-
-        funds.forEach( e =>
         {
-          const div = document.createElement( "div" );
-          div.classList.add( "flex-item" );
-          let span = document.createElement( "span" );
-          span.innerHTML = e.asset;
-          div.append( span );
-          span = document.createElement( "span" );
-          span.innerHTML = e.free;
-          div.append( span );
-          if ( +e.locked !== 0 ) {
-            span = document.createElement( "span" );
-            span.innerHTML = e.locked;
+          const orderContainer = document.getElementById( "OrdersContainer" );
+          allContainers.forEach( ( container ) => container.classList.add( "Util_hide" ) );
+          orderContainer.classList.remove( "Util_hide" );
+
+          const funds = await ( await fetch( Routes.FUNDS_GET, {
+            method: Method.GET,
+            headers: {
+              "Content-Type": "application/json",
+              uid: userID
+            }
+          } ) ).json();
+
+          const divFundsHolder = orderContainer.querySelector( "#divFundsHolder" );
+          divFundsHolder.innerHTML = "";
+
+          funds.forEach( e => {
+            const div = document.createElement( "div" );
+            div.classList.add( "flex-item" );
+            let span = document.createElement( "span" );
+            span.innerHTML = e.asset;
             div.append( span );
-          }
-          divFundsHolder.append( div );
-        } );
+            span = document.createElement( "span" );
+            span.innerHTML = e.free;
+            div.append( span );
+            if ( +e.locked !== 0 ) {
+              span = document.createElement( "span" );
+              span.innerHTML = e.locked;
+              div.append( span );
+            }
+            divFundsHolder.append( div );
+          } );
 
-        // --- Get open orders --- //
+          // --- Get open orders --- //
 
-        const openOrders = await ( await fetch( Routes.OPEN_ORDERS_GET, {
-          method: Method.GET,
-          headers: {
-            "Content-Type": "application/json",
-            "uid": userID
-          }
-        } ) ).json();
+          const openOrders = await ( await fetch( Routes.OPEN_ORDERS_GET, {
+            method: Method.GET,
+            headers: {
+              "Content-Type": "application/json",
+              uid: userID
+            }
+          } ) ).json();
 
-        let divOpenOrdersHolder = orderContainer.querySelector( "#divOpenOrdersHolder" );
-        divOpenOrdersHolder.innerHTML = "";
+          const divOpenOrdersHolder = orderContainer.querySelector( "#divOpenOrdersHolder" );
+          divOpenOrdersHolder.innerHTML = "";
 
-        openOrders.forEach( e =>
-        {
-          const div = document.createElement( "div" );
-          div.classList.add( "flex-item1" );
+          openOrders.forEach( e => {
+            const div = document.createElement( "div" );
+            div.classList.add( "flex-item1" );
 
-          if ( e.side == "buy" )
-            div.style.background = "#679f67";
+            if ( e.side === "buy" )
+              div.style.background = "#679f67";
 
-          let span = document.createElement( "span" );
-          span.innerHTML = "coin: " + e.symbol;
-          div.append( span );
-          span = document.createElement( "span" );
-          span.innerHTML = "qty: " + e.origQty;
-          div.append( span );
-          span = document.createElement( "span" );
-          span.innerHTML = "price: " + e.price;
-          div.append( span );
-          span = document.createElement( "span" );
-          span.innerHTML = "exec qty: " + e.executedQty;
-          div.append( span );
-          span = document.createElement( "span" );
-          span.innerHTML = "time: " + Const.GetDisplayTime( e.createdTime );
-          div.append( span );
-          span = document.createElement( "span" );
-          span.innerHTML = "side: " + e.side;
-          div.append( span );
-          divOpenOrdersHolder.append( div );
-        } );
-
+            let span = document.createElement( "span" );
+            span.innerHTML = "coin: " + e.symbol;
+            div.append( span );
+            span = document.createElement( "span" );
+            span.innerHTML = "qty: " + e.origQty;
+            div.append( span );
+            span = document.createElement( "span" );
+            span.innerHTML = "price: " + e.price;
+            div.append( span );
+            span = document.createElement( "span" );
+            span.innerHTML = "exec qty: " + e.executedQty;
+            div.append( span );
+            span = document.createElement( "span" );
+            span.innerHTML = "time: " + Const.GetDisplayTime( e.createdTime );
+            div.append( span );
+            span = document.createElement( "span" );
+            span.innerHTML = "side: " + e.side;
+            div.append( span );
+            divOpenOrdersHolder.append( div );
+          } );
+        }
         break;
       default:
-        {
-          if ( event.target.tagName == "SPAN" )
-            return sideNav.classList.toggle( "active" );
-        }
+        if ( event.target.tagName === "SPAN" )
+          return sideNav.classList.toggle( "active" );
         break;
     }
   } );
 
-  LongPressPopup.addEventListener( "click", async ( event ) =>
-  {
+  LongPressPopup.addEventListener( "click", async ( event ) => {
     const { coin, pair, qty, buyPrice, soldPrice, targetID, comment } = JSON.parse( LongPressPopup.getAttribute( "data" ) );
     const uid = localStorage.getItem( "uid" );
     const target = event.target.id;
-    const isHOLDLingTable = document.getElementById( targetID ).parentElement.parentElement.id == "table";
+    const isHOLDLingTable = document.getElementById( targetID ).parentElement.parentElement.id === "table";
     switch ( target ) {
-
       case "btnEdit":
+        // eslint-disable-next-line no-lone-blocks
         {
           coinDetailsPopup.classList.remove( "Util_hide" );
           coinDetailsPopup.querySelector( "#pets-name" ).focus();
@@ -297,7 +290,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
           coinDetailsPopup.setAttribute( "isEdit", "true" );
           coinDetailsPopup.setAttribute( "targetID", targetID );
 
-          Close_LongPressPopup();
+          CloseLongPressPopup();
 
           coinDetailsPopup.querySelector( "#pets-name" ).value = coin;
           coinDetailsPopup.querySelector( "input[value=" + pair + "]" ).checked = true;
@@ -307,151 +300,149 @@ window.addEventListener( "DOMContentLoaded", async () =>
           if ( !isHOLDLingTable ) {
             coinDetailsPopup.querySelector( "#pets-birthday2" ).value = soldPrice;
             coinDetailsPopup.querySelector( "#pets-birthday2" ).parentElement.classList.remove( "Util_hide" );
-          }
-          else {
+          } else {
             coinDetailsPopup.querySelector( "#pets-birthday2" ).value = 0;
             coinDetailsPopup.querySelector( "#pets-birthday2" ).parentElement.classList.add( "Util_hide" );
           }
         }
         break;
       case "btnSell":
-        {
-          //! remove row from hodling table
-          table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
+      {
+        //! remove row from hodling table
+        table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
 
+        //! close popup
+        CloseLongPressPopup();
 
-          //! close popup
-          Close_LongPressPopup();
+        // TODO: Update USDT/INR balance
+        // get usdt/inr current balance
+        // update usdt/inr balance
 
-          // TODO: Update USDT/INR balance
-          // get usdt/inr current balance
-          // update usdt/inr balance
+        // TODO: Calculate 0.4% commission
+        // check if user eligible for commission
+        // if yes, and opted for reduction of commission
+        // if yes, has wrxusdt coin
+        // if yes, calculate commission
+        // get current balance
+        // update balance
 
+        //! put sell order
+        const side = Side.SELL; // Enum
+        const type = Type.LIMIT; // Enum
+        const coinpair = coin + pair;
+        // // const body = { coinpair, qty, currentPrice: soldPrice, type, side };
+        // // const response = await Const.fetchUtils( Routes.ORDER_POST, Method.POST, body );
+        await ( await fetch( Routes.ORDER_POST, {
+          method: Method.POST,
+          headers: {
+            "Content-Type": "application/json",
+            uid
+          },
+          body: JSON.stringify( { coinpair, qty, currentPrice: soldPrice, type, side, uid } )
+        } ) ).json().catch( err => console.log( err ) );
 
-          // TODO: Calculate 0.4% commission
-          // check if user eligible for commission
-          // if yes, and opted for reduction of commission
-          // if yes, has wrxusdt coin
-          // if yes, calculate commission
-          // get current balance
-          // update balance
+        //! remove coin from hodling db
+        const id = targetID;
+        await ( await fetch( Routes.DELETE_HODL_COIN_POST, {
+          method: Method.POST,
+          headers: {
+            "Content-Type": "application/json",
+            uid
+          },
+          body: JSON.stringify( { id } )
+        } ) ).json().catch( err => console.log( err ) );
 
-          //! put sell order
-          const side = Side.SELL; //Enum
-          const type = Type.LIMIT; //Enum
-          const coinpair = coin + pair;
-          // // const body = { coinpair, qty, currentPrice: soldPrice, type, side };
-          // // const response = await Const.fetchUtils( Routes.ORDER_POST, Method.POST, body );
-          await ( await fetch( Routes.ORDER_POST, {
-            method: Method.POST,
-            headers: {
-              "Content-Type": "application/json",
-              "uid": uid
-            }, body: JSON.stringify( { coinpair, qty, currentPrice: soldPrice, type, side, uid } )
-          } ) ).json().catch( err => console.log( err ) );
+        //! add coin to pl db
+        const res = await ( await fetch( Routes.PL_LIST_POST, {
+          method: Method.POST,
+          headers: {
+            "Content-Type": "application/json",
+            uid
+          },
+          body: JSON.stringify( { coin, pair, qty, buyPrice, soldPrice, term: comment, uid } )
+        } ) ).json().catch( err => console.log( err ) );
 
-          //! remove coin from hodling db
-          const id = targetID;
-          await ( await fetch( Routes.DELETE_HODL_COIN_POST, {
-            method: Method.POST,
-            headers: {
-              "Content-Type": "application/json",
-              "uid": uid
-            }, body: JSON.stringify( { id } )
-          } ) ).json().catch( err => console.log( err ) );
+        //! add row to pllist table
+        await AddPLRowsFromJSON( [ { coin, pair, qty, buyPrice, soldPrice, term: comment, id: res.id } ] );
 
+        return; // !return to avoid the below code
+        // if pair usdt
+        // calculate usdt/inr add or subtract from purchased coin (qty * coinPrice)
+        // get usdt/inr current balance from db
+        // get filtered usdt/inr from db
+        // get { coin, pair, qty, price, term, uid, _id } from from filtered usdt/inr
+        // add/sub usdt
+        // prepare body { coin, pair:Pair, qty: totalusdthodling, price: usdtPrice, term, id: _id };
+        // update usdt/inr balance db
+        // update usdt/inr balance hodling table
 
-          //! add coin to pl db
-          const res = await ( await fetch( Routes.PL_LIST_POST, {
-            method: Method.POST,
-            headers: {
-              "Content-Type": "application/json",
-              "uid": uid
-            }, body: JSON.stringify( { coin, pair, qty, buyPrice, soldPrice, term: comment, uid } )
-          } ) ).json().catch( err => console.log( err ) );
-
-          //! add row to pllist table
-          await AddPLRows_FromJSON( [ { coin, pair, qty, buyPrice, soldPrice, term: comment, id: res.id } ] );
-
-          return; // !return to avoid the below code
-          // if pair usdt
-          // calculate usdt/inr add or subtract from purchased coin (qty * coinPrice)
-          // get usdt/inr current balance from db
-          // get filtered usdt/inr from db
-          // get { coin, pair, qty, price, term, uid, _id } from from filtered usdt/inr
-          // add/sub usdt
-          // prepare body { coin, pair:Pair, qty: totalusdthodling, price: usdtPrice, term, id: _id };
-          // update usdt/inr balance db
-          // update usdt/inr balance hodling table
-
-
-
-          if ( pair == "usdt" ) {
-            const deductUSDT = +qty * +price;
-            let HODLING = await fetch( Routes.HODLING_POST,
-              {
-                method: Method.GET,
-                headers: {
-                  "Content-Type": "application/json",
-                  "uid": userID
-                }
-              } ).then( res => res.json() );
-            HODLING = HODLING.message;
-            const usdtobj = HODLING.filter( e => ( e.coin + e.pair ) == PAIR.USDT )[ 0 ];
-            const { coin, pair: Pair, qty: usdtqty, price: usdtPrice, term, uid, soldPrice, buyPrice, _id } = usdtobj;
-            const totalusdthodling = isPLList ? usdtqty + deductUSDT : usdtqty - deductUSDT;
-            const body = { coin, pair: Pair, qty: totalusdthodling, price: usdtPrice, term, id: _id };
-            const response = await Const.fetchUtils( Routes.HODLING_UPDATE_POST, Method.POST, body );
-            await AddHodlingRows_FromJSON( [ body ], true );
-          }
-        }
-        break;
+        // if ( pair === "usdt" ) {
+        //   const deductUSDT = +qty * +price;
+        //   let HODLING = await fetch( Routes.HODLING_POST,
+        //     {
+        //       method: Method.GET,
+        //       headers: {
+        //         "Content-Type": "application/json",
+        //         uid: userID
+        //       }
+        //     } ).then( res => res.json() );
+        //   HODLING = HODLING.message;
+        //   const usdtobj = HODLING.filter( e => ( e.coin + e.pair ) === PAIR.USDT )[ 0 ];
+        //   const { coin, pair: Pair, qty: usdtqty, price: usdtPrice, term, uid, soldPrice, buyPrice, _id } = usdtobj;
+        //   const totalusdthodling = isPLList ? usdtqty + deductUSDT : usdtqty - deductUSDT;
+        //   const body = { coin, pair: Pair, qty: totalusdthodling, price: usdtPrice, term, id: _id };
+        //   const response = await Const.fetchUtils( Routes.HODLING_UPDATE_POST, Method.POST, body );
+        //   await AddHodlingRowsFromJSON( [ body ], true );
+        // }
+      }
+      // break;
       case "btnSL":
-        {
-          //! remove row from hodling table
-          // table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
+      {
+        //! remove row from hodling table
+        // table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
 
-          //! add row to pllist table
-          // await AddPLRows_FromJSON( [ { coin, pair, qty, buyPrice, soldPrice, term: comment } ] );
+        //! add row to pllist table
+        // await AddPLRows_FromJSON( [ { coin, pair, qty, buyPrice, soldPrice, term: comment } ] );
 
-          //! close popup
-          Close_LongPressPopup();
+        //! close popup
+        CloseLongPressPopup();
 
-          // TODO: Update USDT/INR balance
-          // get usdt/inr current balance
-          // update usdt/inr balance
+        // TODO: Update USDT/INR balance
+        // get usdt/inr current balance
+        // update usdt/inr balance
 
+        // TODO: Calculate 0.4% commission
+        // check if user eligible for commission
+        // if yes, and opted for reduction of commission
+        // if yes, has wrxusdt coin
+        // if yes, calculate commission
+        // get current balance
+        // update balance
 
-          // TODO: Calculate 0.4% commission
-          // check if user eligible for commission
-          // if yes, and opted for reduction of commission
-          // if yes, has wrxusdt coin
-          // if yes, calculate commission
-          // get current balance
-          // update balance
+        //! put sell order
+        const side = Side.SELL; // Enum
+        const type = Type.STOP_LIMIT; // Enum
+        const coinpair = coin + pair;
+        const price = getStopLossValue( soldPrice, 2, 4 );
+        const stopPrice = getStopLossValue( soldPrice, 4, 4 );
+        const body = { coinpair, qty, currentPrice: price, type, side, stopPrice, uid };
 
-          //! put sell order
-          const side = Side.SELL; //Enum
-          const type = Type.STOP_LIMIT; //Enum
-          const coinpair = coin + pair;
-          const price = getStopLossValue( soldPrice, 2, 4 );
-          const stopPrice = getStopLossValue( soldPrice, 4, 4 );
-          const body = { coinpair, qty, currentPrice: price, type, side, stopPrice, uid };
-
-          await ( await fetch( Routes.ORDER_POST, {
-            method: Method.POST,
-            headers: {
-              "Content-Type": "application/json",
-              "uid": uid
-            }, body: JSON.stringify( body )
-          } ) ).json().catch( err => console.log( err ) );
-          return;
-        }
+        await ( await fetch( Routes.ORDER_POST, {
+          method: Method.POST,
+          headers: {
+            "Content-Type": "application/json",
+            uid
+          },
+          body: JSON.stringify( body )
+        } ) ).json().catch( err => console.log( err ) );
+        return;
+      }
       case "btnSLValue":
-        Close_LongPressPopup();
+        CloseLongPressPopup();
         ShowSLFunction( document.getElementById( targetID ), ShowNotification );
         break;
       case "btnBaseCoin":
+        // eslint-disable-next-line no-lone-blocks
         {
           if ( isHOLDLingTable ) {
             let sellValue = soldPrice;
@@ -463,18 +454,17 @@ window.addEventListener( "DOMContentLoaded", async () =>
             const res = await Const.fetchUtils( Routes.PL_LIST_POST, Method.POST, body );
             body.id = res.id;
             hodlingBody[ 0 ].children[ targetID ].remove();
-            await AddPLRows_FromJSON( [ body ] );
-          }
-          else {
-            const body = { coin, pair, qty, "price": buyPrice, term: comment, uid };
+            await AddPLRowsFromJSON( [ body ] );
+          } else {
+            const body = { coin, pair, qty, price: buyPrice, term: comment, uid };
             await Const.fetchUtils( Routes.DELETE_PL_COIN_POST, Method.POST, { id: targetID } );
             const response = await Const.fetchUtils( Routes.HODLING_POST, Method.POST, body );
             body.id = response.id;
             plBody[ 0 ].children[ targetID ].remove();
-            await AddHodlingRows_FromJSON( [ body ] );
+            await AddHodlingRowsFromJSON( [ body ] );
           }
 
-          Close_LongPressPopup();
+          CloseLongPressPopup();
         }
         break;
       case "btnDelete":
@@ -483,8 +473,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
           if ( isHOLDLingTable ) {
             table.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
             fetchRoute = Routes.DELETE_HODL_COIN_POST;
-          }
-          else {
+          } else {
             plTable.querySelectorAll( "tbody" )[ 0 ].children[ targetID ].remove();
             fetchRoute = Routes.DELETE_PL_COIN_POST;
           }
@@ -495,15 +484,16 @@ window.addEventListener( "DOMContentLoaded", async () =>
             method: Method.POST,
             headers: {
               "Content-Type": "application/json",
-              "uid": uid
-            }, body: JSON.stringify( { id } )
+              uid
+            },
+            body: JSON.stringify( { id } )
           } ) ).json().catch( err => console.log( err ) );
 
-          Close_LongPressPopup();
+          CloseLongPressPopup();
         }
         break;
       case "btnCls":
-        Close_LongPressPopup();
+        CloseLongPressPopup();
         break;
 
       default: break;
@@ -512,8 +502,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
   const arrTicker = await Const.getTicker() || await Const.getTicker();
 
-  function ShowNotification ( content, isError = false )
-  {
+  function ShowNotification ( content, isError = false ) {
     notificationBTN.style.backgroundColor = isError ? "#ff1515c7" : "";
     notificationBTN.style.animation = isError ? "movein .5s ease forwards, moveout .5s 3s ease forwards" : "";
     notificationBTN.style.fontWeight = isError ? "600" : "";
@@ -530,12 +519,12 @@ window.addEventListener( "DOMContentLoaded", async () =>
   const PAIR = {
     BTC: "btcinr",
     WRX: "wrxinr",
-    USDT: "usdtinr",
+    USDT: "usdtinr"
   };
 
-  let usdtinr = arrTicker.filter( e => e.symbol == ( PAIR.USDT ) )[ 0 ].lastPrice;
-  let btcinr = arrTicker.filter( e => e.symbol == ( PAIR.BTC ) )[ 0 ]?.lastPrice || 0;
-  let wrxinr = arrTicker.filter( e => e.symbol == ( PAIR.WRX ) )[ 0 ]?.lastPrice || 0;
+  let usdtinr = arrTicker.filter( e => e.symbol === ( PAIR.USDT ) )[ 0 ].lastPrice;
+  let btcinr = arrTicker.filter( e => e.symbol === ( PAIR.BTC ) )[ 0 ]?.lastPrice || 0;
+  let wrxinr = arrTicker.filter( e => e.symbol === ( PAIR.WRX ) )[ 0 ]?.lastPrice || 0;
 
   // const funds = await ( await fetch( Routes.FUNDS_GET, {
   //   method: Method.GET,
@@ -545,8 +534,8 @@ window.addEventListener( "DOMContentLoaded", async () =>
   //   }
   // } ) ).json();
 
-  await AddHodlingRows_FromJSON( HODLING );
-  await AddPLRows_FromJSON( PL_LIST );
+  await AddHodlingRowsFromJSON( HODLING );
+  await AddPLRowsFromJSON( PL_LIST );
 
   if ( email )
     ShowNotification( `Welcome ${ email }` );
@@ -560,47 +549,37 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
   webSocket.wsSubscribe( LiveUpdateHodlingTable );
 
-
-
-
   // AddAllHistory_FromDB( history.aquibHistory );
 
-  hodlingBody[ 0 ].addEventListener( "click", OnClick_HodlingRows() );
+  hodlingBody[ 0 ].addEventListener( "click", OnClickHodlingRows() );
   // hodlingBody[ 0 ].addEventListener( "dblclick", OnDBClick_HodlingRows() );
 
-  window.onanimationend = async ( e ) =>
-  {
+  window.onanimationend = async ( e ) => {
     // stacksnippet"s console also has CSS animations...
-    if ( e.type === "animationend" && e.target.id == notificationBTN.id ) {
+    if ( e.type === "animationend" && e.target.id === notificationBTN.id )
       notificationBTN.classList.remove( "visible" );
-    }
   };
 
-  document.addEventListener( "dblclick", async function ( e )
-  {
+  document.addEventListener( "dblclick", async function ( e ) {
     // https://github.com/john-doherty/long-press-event
     // stop the event from bubbling up
     e.preventDefault();
 
-    const targetRow = e.target.tagName == "TD" ? e.target.parentElement : e.target;
+    const targetRow = e.target.tagName === "TD" ? e.target.parentElement : e.target;
 
     // getting trading view of specific coin
-    if ( e.target.id == "tdPairName" )
-    {
+    if ( e.target.id === "tdPairName" ) {
       const pairName = e.target.textContent;
-      if ( pairName.endsWith( "usdt" ) )
-      {
-        const pairName = `BINANCE:${ pairName.toLocaleUpperCase() }`;
-        TradingViewPreview( pairName );
+      if ( pairName.endsWith( "usdt" ) ) {
+        const pName = `BINANCE:${ pairName.toLocaleUpperCase() }`;
+        TradingViewPreview( pName );
         return;
-      }
-      else
-      {
+      } else {
         const parent = e.target.parentElement;
         const coin = parent.getAttribute( "coin" );
         const pair = parent.getAttribute( "pair" );
         const url = `https://wazirx.com/exchange/${ coin }-${ pair }`;
-        window.open( url, '_blank' ).focus();
+        window.open( url, "_blank" ).focus();
         return;
       }
     }
@@ -611,13 +590,12 @@ window.addEventListener( "DOMContentLoaded", async () =>
     if ( targetRow.classList.contains( "extra" ) )
       return ShowNotification( "Not implemented yet" );
 
-    const isHOLDLingTable = targetRow.parentElement.parentElement.id == "table";
+    const isHOLDLingTable = targetRow.parentElement.parentElement.id === "table";
     if ( isHOLDLingTable ) {
       LongPressPopup.querySelector( "#btnSell" ).classList.remove( "Util_disable" );
       LongPressPopup.querySelector( "#btnSL" ).classList.remove( "Util_disable" );
       LongPressPopup.querySelector( "#btnSLValue" ).classList.remove( "Util_disable" );
-    }
-    else {
+    } else {
       LongPressPopup.querySelector( "#btnSell" ).classList.add( "Util_disable" );
       LongPressPopup.querySelector( "#btnSL" ).classList.add( "Util_disable" );
       LongPressPopup.querySelector( "#btnSLValue" ).classList.add( "Util_disable" );
@@ -646,81 +624,79 @@ window.addEventListener( "DOMContentLoaded", async () =>
     // console.log( response.msg );
   } );
 
-  coinDetailsPopup.addEventListener( "click", async ( event ) =>
-  {
+  coinDetailsPopup.addEventListener( "click", async ( event ) => {
     const target = event.target;
     switch ( target.id ) {
-      case "back":
-        {
-          ResetForm();
-          coinDetailsPopup.classList.add( "Util_hide" );
-        }
+      case "back": {
+        ResetForm();
+        coinDetailsPopup.classList.add( "Util_hide" );
+      }
         break;
       case "next":
-        {
-          const isEdit = coinDetailsPopup.hasAttribute( "isEdit" );
-          const targetID = coinDetailsPopup.getAttribute( "targetID" );
-          const uid = localStorage.getItem( "uid" );
-          const coin = coinDetailsPopup.querySelector( "#pets-name" ).value.trim().split( " " )[ 0 ].toLowerCase();
-          const pair = coinDetailsPopup.querySelector( ".radio-container input[type=radio]:checked + label" ).textContent.toLowerCase();
-          const qty = +coinDetailsPopup.querySelector( "#pets-breed" ).value;
-          const price = +coinDetailsPopup.querySelector( "#pets-birthday" ).value;
-          const buyPrice = +coinDetailsPopup.querySelector( "#pets-birthday" ).value;
-          const term = coinDetailsPopup.querySelector( "#divCommentTerm" ).textContent;
-          const soldPrice = +coinDetailsPopup.querySelector( "#pets-birthday2" ).value;
+      {
+        const isEdit = coinDetailsPopup.hasAttribute( "isEdit" );
+        const targetID = coinDetailsPopup.getAttribute( "targetID" );
+        const uid = localStorage.getItem( "uid" );
+        const coin = coinDetailsPopup.querySelector( "#pets-name" ).value.trim().split( " " )[ 0 ].toLowerCase();
+        const pair = coinDetailsPopup.querySelector( ".radio-container input[type=radio]:checked + label" ).textContent.toLowerCase();
+        const qty = +coinDetailsPopup.querySelector( "#pets-breed" ).value;
+        const price = +coinDetailsPopup.querySelector( "#pets-birthday" ).value;
+        const buyPrice = +coinDetailsPopup.querySelector( "#pets-birthday" ).value;
+        const term = coinDetailsPopup.querySelector( "#divCommentTerm" ).textContent;
+        const soldPrice = +coinDetailsPopup.querySelector( "#pets-birthday2" ).value;
 
-          const isPLList = !coinDetailsPopup.querySelector( "#divSoldPrice" ).classList.contains( "Util_hide" );
+        const isPLList = !coinDetailsPopup.querySelector( "#divSoldPrice" ).classList.contains( "Util_hide" );
 
-          if ( !uid || !coin || !pair || !qty || !price ) {
-            const content = `<p>Please fill all the fields</p>`;
-            return ShowNotification( content );
-          }
-          else {
-            coinDetailsPopup.classList.add( "Util_hide" );
-            ResetForm();
-          }
-          const body = { coin, pair, qty, price, term, uid, soldPrice, buyPrice, id: targetID };
-
-          if ( isEdit ) {
-            const response = await Const.fetchUtils( ( isPLList ? Routes.PL_UPDATE_POST : Routes.HODLING_UPDATE_POST ), Method.POST, body );
-            // console.log( response.message );
-            isPLList ? plBody[ 0 ].children[ targetID ].remove() :
-              hodlingBody[ 0 ].children[ targetID ].remove();
-            isPLList ? await AddPLRows_FromJSON( [ body ] ) :
-              await AddHodlingRows_FromJSON( [ body ] );
-          } else {
-            const response = await Const.fetchUtils( ( isPLList ? Routes.PL_LIST_POST : Routes.HODLING_POST ), Method.POST, body );
-            // console.log( response.msg );
-            body.id = response.id;
-            isPLList ?
-              await AddPLRows_FromJSON( [ body ] ) :
-              await AddHodlingRows_FromJSON( [ body ] );
-
-            return; // !return to avoid the below code
-            if ( pair == "usdt" ) {
-              const deductUSDT = +qty * +price;
-              let HODLING = await fetch( Routes.HODLING_POST,
-                {
-                  method: Method.GET,
-                  headers: {
-                    "Content-Type": "application/json",
-                    "uid": userID
-                  }
-                } ).then( res => res.json() );
-              HODLING = HODLING.message;
-              const usdtobj = HODLING.filter( e => ( e.coin + e.pair ) == PAIR.USDT )[ 0 ];
-              const { coin, pair: Pair, qty: usdtqty, price: usdtPrice, term, uid, soldPrice, buyPrice, _id } = usdtobj;
-              const totalusdthodling = isPLList ? usdtqty + deductUSDT : usdtqty - deductUSDT;
-              const body = { coin, pair: Pair, qty: totalusdthodling, price: usdtPrice, term, id: _id };
-              const response = await Const.fetchUtils( Routes.HODLING_UPDATE_POST, Method.POST, body );
-              await AddHodlingRows_FromJSON( [ body ], true );
-            }
-          }
+        if ( !uid || !coin || !pair || !qty || !price ) {
+          const content = "<p>Please fill all the fields</p>";
+          return ShowNotification( content );
+        } else {
+          coinDetailsPopup.classList.add( "Util_hide" );
+          ResetForm();
         }
+        const body = { coin, pair, qty, price, term, uid, soldPrice, buyPrice, id: targetID };
+
+        if ( isEdit ) {
+          // const response = await Const.fetchUtils((isPLList ? Routes.PL_UPDATE_POST : Routes.HODLING_UPDATE_POST), Method.POST, body)
+          // console.log( response.message );
+          isPLList
+            ? plBody[ 0 ].children[ targetID ].remove()
+            : hodlingBody[ 0 ].children[ targetID ].remove();
+          isPLList
+            ? await AddPLRowsFromJSON( [ body ] )
+            : await AddHodlingRowsFromJSON( [ body ] );
+        } else {
+          const response = await Const.fetchUtils( ( isPLList ? Routes.PL_LIST_POST : Routes.HODLING_POST ), Method.POST, body );
+          // console.log( response.msg );
+          body.id = response.id;
+          isPLList
+            ? await AddPLRowsFromJSON( [ body ] )
+            : await AddHodlingRowsFromJSON( [ body ] );
+
+          return; // !return to avoid the below code
+          // if ( pair === "usdt" ) {
+          //   const deductUSDT = +qty * +price;
+          //   let HODLING = await fetch( Routes.HODLING_POST,
+          //     {
+          //       method: Method.GET,
+          //       headers: {
+          //         "Content-Type": "application/json",
+          //         uid: userID
+          //       }
+          //     } ).then( res => res.json() );
+          //   HODLING = HODLING.message;
+          //   const usdtobj = HODLING.filter( e => ( e.coin + e.pair ) === PAIR.USDT )[ 0 ];
+          //   const { coin, pair: Pair, qty: usdtqty, price: usdtPrice, term, uid, soldPrice, buyPrice, _id } = usdtobj;
+          //   const totalusdthodling = isPLList ? usdtqty + deductUSDT : usdtqty - deductUSDT;
+          //   const body = { coin, pair: Pair, qty: totalusdthodling, price: usdtPrice, term, id: _id };
+          //   const response = await Const.fetchUtils( Routes.HODLING_UPDATE_POST, Method.POST, body );
+          //   await AddHodlingRowsFromJSON( [ body ], true );
+          // }
+        }
+      }
     }
 
-    function ResetForm ()
-    {
+    function ResetForm () {
       coinDetailsPopup.querySelector( "#pets-name" ).value = "";
       coinDetailsPopup.querySelector( "#pets-breed" ).value = "";
       coinDetailsPopup.querySelector( "#pets-birthday" ).value = "";
@@ -736,27 +712,24 @@ window.addEventListener( "DOMContentLoaded", async () =>
     }
   },
 
-    hodlingCaption.addEventListener( "click", async () =>
-    {
-      coinDetailsPopup.classList.remove( "Util_hide" );
-      coinDetailsPopup.querySelector( "#pets-name" ).focus();
-      coinDetailsPopup.querySelector( "#divSoldPrice" ).classList.add( "Util_hide" );
-    } ) );
+  hodlingCaption.addEventListener( "click", async () => {
+    coinDetailsPopup.classList.remove( "Util_hide" );
+    coinDetailsPopup.querySelector( "#pets-name" ).focus();
+    coinDetailsPopup.querySelector( "#divSoldPrice" ).classList.add( "Util_hide" );
+  } ) );
 
-  plCaption.addEventListener( "click", () =>
-  {
+  plCaption.addEventListener( "click", () => {
     coinDetailsPopup.classList.remove( "Util_hide" );
     coinDetailsPopup.querySelector( "#pets-name" ).focus();
     coinDetailsPopup.querySelector( "#divSoldPrice" ).classList.remove( "Util_hide" );
   } );
 
-  function AddAllHistory_FromDB ( history )
-  {
+  function AddAllHistory_FromDB ( history ) {
     const hodlingTable = document.getElementById( "tableHistory" );
     const hodlingBody = hodlingTable.getElementsByTagName( "tbody" );
-    for ( let loop of history )
-      for ( let coin of loop ) {
-        const { id, symbol, type, side, status, price, origQty, createdTime } = coin;
+    for ( const loop of history )
+      for ( const coin of loop ) {
+        const { symbol, type, side, status, price, origQty, createdTime } = coin;
         const row = document.getElementById( "historyRow" ).content.cloneNode( true );
         const isINR = symbol.endsWith( "inr" );
         row.querySelector( "#symbol" ).textContent = symbol;
@@ -768,16 +741,12 @@ window.addEventListener( "DOMContentLoaded", async () =>
         row.querySelector( "#createdTime" ).textContent = Const.GetDisplayTime( createdTime );
         row.querySelector( "#totalPrice" ).textContent = ( price * origQty ).toFixed( 2 ) + ( isINR ? " ₹" : " ₿" );
         hodlingBody[ 0 ].appendChild( row );
-
       }
-
   }
 
-  function OnDBClick_HodlingRows ()
-  {
-    return ( event ) =>
-    {
-      const targetRow = event.target.tagName == "TD" ? event.target.parentElement : event.target;
+  function OnDBClick_HodlingRows () {
+    return ( event ) => {
+      const targetRow = event.target.tagName === "TD" ? event.target.parentElement : event.target;
 
       if ( targetRow.tagName !== "TR" )
         return;
@@ -786,32 +755,28 @@ window.addEventListener( "DOMContentLoaded", async () =>
     };
   }
 
-  function OnClick_HodlingRows ()
-  {
-    return ( event ) =>
-    {
-      const targetRow = event.target.tagName == "TD" ? event.target.parentElement : event.target;
+  function OnClickHodlingRows () {
+    return ( event ) => {
+      const targetRow = event.target.tagName === "TD" ? event.target.parentElement : event.target;
       const targetID = targetRow.id;
 
       if ( targetRow.tagName !== "TR" )
         return;
 
       const existingRow = hodlingBody[ 0 ].querySelector( ".rowSelect" );
-      if ( existingRow ) {
-        if ( existingRow.id == targetID )
+      if ( existingRow )
+        if ( existingRow.id === targetID )
           existingRow.classList.remove( "rowSelect" );
         else {
           existingRow.classList.remove( "rowSelect" );
           targetRow.classList.add( "rowSelect" );
         }
-      }
       else
         targetRow.classList.add( "rowSelect" );
     };
   }
 
-  async function TestFunction ( body = hodlingBody[ 0 ] )
-  {
+  async function TestFunction ( body = hodlingBody[ 0 ] ) {
     const sort = ( arr ) => arr.sort( ( a, b ) =>
       +a.querySelector( "#tdBuyPrice" ).textContent - +b.querySelector( "#tdBuyPrice" ).textContent
     );
@@ -820,7 +785,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
       method: Method.GET,
       headers: {
         "Content-Type": "application/json",
-        "uid": userID
+        uid: userID
       }
     } ) ).json();
     const coins = funds.filter( e => ( pairs.includes( e.asset ) ) );
@@ -830,7 +795,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
     let usdt = [];
     let btc = [];
 
-    for ( let child of childrens ) {
+    for ( const child of childrens ) {
       const pairName = child.getAttribute( "pairName" );
 
       if ( pairName.startsWith( "wrx" ) )
@@ -845,17 +810,17 @@ window.addEventListener( "DOMContentLoaded", async () =>
     wrx = sort( wrx );
     btc = sort( btc );
 
-    for ( let child of wrx ) {
+    for ( const child of wrx ) {
       const qty = +child.querySelector( "#tdQty" ).textContent;
       child.querySelector( "#tdQty" ).setAttribute( "qty", qty );
     }
 
-    for ( let child of usdt ) {
+    for ( const child of usdt ) {
       const qty = +child.querySelector( "#tdQty" ).textContent;
       child.querySelector( "#tdQty" ).setAttribute( "qty", qty );
     }
 
-    for ( let child of btc ) {
+    for ( const child of btc ) {
       const qty = +child.querySelector( "#tdQty" ).textContent;
       child.querySelector( "#tdQty" ).setAttribute( "qty", qty );
     }
@@ -869,32 +834,33 @@ window.addEventListener( "DOMContentLoaded", async () =>
 
     MissMatchAssets( funds, childrens, ShowNotification );
 
+    // default tradingview btn of
+
+    // btc, btc.d, dyxy
+    // loop through pairname
   }
 
-  async function Daka ( coin, arr, coins )
-  {
+  async function Daka ( coin, arr, coins ) {
     // ! Optimize if condition
-    if ( !coins.filter( e => e.asset == coin ).length )
+    if ( !coins.filter( e => e.asset === coin ).length )
       return;
-    let { free } = coins.filter( e => e.asset == coin )[ 0 ];
-    for ( let child of arr ) {
+    let { free } = coins.filter( e => e.asset === coin )[ 0 ];
+    for ( const child of arr ) {
       // child.scrollIntoView();
       // child.style.backgroundColor = "#9b6a6a";
       const tdQty = child.querySelector( "#tdQty" );
       const tdBuyPrice = child.querySelector( "#tdBuyPrice" );
       const pairName = child.querySelector( "#tdPairName" );
-      const pair = pairName.textContent.split( coin )[ 1 ];;
-      const isINR = pair == "inr";
-      const lastPairPrice = ( ( pair == "usdt" ) || ( pair == "inr" ) ) ? usdtinr : ( pair == "wrx" ) ? wrxinr : btcinr;
+      const pair = pairName.textContent.split( coin )[ 1 ];
+      const isINR = pair === "inr";
+      const lastPairPrice = ( ( pair === "usdt" ) || ( pair === "inr" ) ) ? usdtinr : ( pair === "wrx" ) ? wrxinr : btcinr;
       const lastPrice = +child.querySelector( "#tdCurrentPrice" ).textContent.split( " " )[ 0 ];
 
       const attrQty = +tdQty.getAttribute( "qty" );
       if ( +free >= attrQty ) {
         free -= attrQty;
         continue;
-      }
-
-      else if ( +free <= attrQty ) {
+      } else if ( +free <= attrQty ) {
         const qty = +free;
 
         if ( +attrQty !== qty )
@@ -928,42 +894,40 @@ window.addEventListener( "DOMContentLoaded", async () =>
         child.querySelector( "#tdMarginDol" ).textContent = marginDollar.toFixed( 2 ) + " ₿";
         child.querySelector( "#tdMarginINR" ).textContent = marginINR.toFixed( 2 ) + " ₹";
 
-        if ( percentage > 0 ) {
+        if ( percentage > 0 )
           child.querySelector( "#tdMarginINR" ).parentNode.classList.add( "Profit" );
-        }
 
         // insert row in dscending order of the table body
         const body = hodlingBody[ 0 ];
         const rows = body.children;
         let i = 0;
-        for ( ; i < rows.length; i++ ) {
+        for ( ; i < rows.length; i++ )
           if ( rows[ i ].querySelector( "#tdPLPercentage" ).textContent.split( " " )[ 0 ] <= percentage )
             break;
-        }
+
         body.insertBefore( child, rows[ i ] );
         // child.style.backgroundColor = "";
         free = 0;
       }
     }
     if ( free > 0 ) {
-      const pair = coin == "usdt" ? "inr" : "usdt";
+      const pair = coin === "usdt" ? "inr" : "usdt";
       let qty = +free;
       qty = qty.toFixed( 8 );
-      const price = +( arr[ 0 ]?.querySelector( "#tdBuyPrice" ).textContent.split( " " )[ 0 ] || ( ( coin == "usdt" ) ? usdtinr : ( coin == "btc" ? btcinr : wrxinr ) ) );
+      const price = +( arr[ 0 ]?.querySelector( "#tdBuyPrice" ).textContent.split( " " )[ 0 ] || ( ( coin === "usdt" ) ? usdtinr : ( coin === "btc" ? btcinr : wrxinr ) ) );
       const term = "Take Profit";
       const _id = coin + pair + "_" + new Date().getTime();
-      await AddHodlingRows_FromJSON( [ { coin, pair, qty, price, term, _id } ] );
+      await AddHodlingRowsFromJSON( [ { coin, pair, qty, price, term, _id } ] );
     }
   }
 
-  function SummationPLTable ( body )
-  {
+  function SummationPLTable ( body ) {
     const children = body[ 0 ].children;
     const footChild = body[ 0 ].nextElementSibling.children[ 0 ].children;
 
-    let beforeDollar = 0, beforeInr = 0, percentage = 0, afterDollar = 0, afterInr = 0, portFolio = 0;
+    let beforeDollar = 0; let beforeInr = 0; let percentage = 0; let afterDollar = 0; let afterInr = 0; let portFolio = 0;
 
-    for ( let child of children ) {
+    for ( const child of children ) {
       beforeDollar += +child.querySelector( "#tdTotalDollar" ).textContent.split( " " )[ 0 ];
       beforeInr += +child.querySelector( "#tdTotalinr" ).textContent.split( " " )[ 0 ];
       percentage += +child.querySelector( "#tdPLPercentage" ).textContent.split( " " )[ 0 ];
@@ -983,45 +947,46 @@ window.addEventListener( "DOMContentLoaded", async () =>
     if ( portFolio ) {
       const lastPrice = +footChild[ 5 ].getAttribute( "lastPrice" ) || 0;
       const currentPrice = portFolio.toFixed( 2 );
-      const color = lastPrice.toFixed( 2 ) == currentPrice ? "" : ( lastPrice < currentPrice ? "green" : "red" );
+      const color = lastPrice.toFixed( 2 ) === currentPrice ? "" : ( lastPrice < currentPrice ? "green" : "red" );
       footChild[ 5 ].setAttribute( "lastPrice", currentPrice );
       footChild[ 5 ].textContent = "Portfolio: " + currentPrice;
       footChild[ 5 ].style.color = color;
     }
   }
 
-  async function AddHodlingRows_FromJSON ( obj,
-    isUpdate = false )
-  {
+  async function AddHodlingRowsFromJSON ( obj,
+    isUpdate = false ) {
     await UpdateFearGreedIndex( usdtinr );
-    for ( const key in obj ) {
+    const childrens = [];
+    for ( const key in obj )
 
       if ( obj.hasOwnProperty( key ) ) {
         const { coin, pair, qty, price, term, _id, id } = obj[ key ];
-        const lastPrice = arrTicker.filter( e => e.symbol == ( coin + pair ) )[ 0 ].lastPrice;
+        const lastPrice = arrTicker.filter( e => e.symbol === ( coin + pair ) )[ 0 ].lastPrice;
 
-        const lastPairPrice = ( ( pair == "usdt" ) || ( pair == "inr" ) ) ? usdtinr : ( pair == "wrx" ) ? wrxinr : btcinr;
+        const lastPairPrice = ( ( pair === "usdt" ) || ( pair === "inr" ) ) ? usdtinr : ( pair === "wrx" ) ? wrxinr : btcinr;
 
-        const row = isUpdate ? document.getElementById( _id || id ) :
-          document.getElementById( "templatePLRow" ).content.cloneNode( true );
+        const row = isUpdate
+          ? document.getElementById( _id || id )
+          : document.getElementById( "templatePLRow" ).content.cloneNode( true );
 
         // add multiple attributes to the row
 
         const rowParent = row.getElementById( "tdPairName" ).parentElement;
-        rowParent.setAttribute( "coin", coin )
-        rowParent.setAttribute( "pair", pair )
-        rowParent.setAttribute( "qty", qty )
-        rowParent.setAttribute( "price", price )
-        rowParent.setAttribute( "term", term )
+        rowParent.setAttribute( "coin", coin );
+        rowParent.setAttribute( "pair", pair );
+        rowParent.setAttribute( "qty", qty );
+        rowParent.setAttribute( "price", price );
+        rowParent.setAttribute( "term", term );
 
-        const isINR = pair == "inr";
+        const isINR = pair === "inr";
         if ( !isUpdate ) {
           const ID = ( _id || id || key );
 
           rowParent.id = ID;
           if ( ID.split( "_" )[ 1 ] )
             rowParent.classList.add( "extra" );
-          rowParent.setAttribute( "pairName", coin.replace( /[0-9]/g, '' ) + pair ); // regex to remove numbers to handle execptions
+          rowParent.setAttribute( "pairName", coin.replace( /[0-9]/g, "" ) + pair ); // regex to remove numbers to handle execptions
           if ( !coinPairArr.includes( coin + pair ) )
             coinPairArr.push( coin + pair );
         }
@@ -1050,36 +1015,38 @@ window.addEventListener( "DOMContentLoaded", async () =>
         row.querySelector( "#tdMarginDol" ).textContent = marginDollar.toFixed( 2 ) + " ₿";
         row.querySelector( "#tdMarginINR" ).textContent = marginINR.toFixed( 2 ) + " ₹";
 
-        if ( percentage > 0 ) {
+        if ( percentage > 0 )
           row.querySelector( "#tdMarginINR" ).parentNode.classList.add( "Profit" );
-        }
 
         // insert row in dscending order of the table body
-        const body = hodlingBody[ 0 ];
-        const rows = body.children;
+        // const body = hodlingBody[0]
+        const rows = childrens;
         let i = 0;
-        for ( ; i < rows.length; i++ ) {
+        for ( ; i < rows.length; i++ )
           if ( rows[ i ].querySelector( "#tdPLPercentage" ).textContent.split( " " )[ 0 ] <= percentage )
             break;
-        }
-        body.insertBefore( row.children[ 0 ], rows[ i ] );
+
+        // body.insertBefore(row.children[0], rows[i])
+        childrens.splice( i, 0, row.children[ 0 ] );
       }
-    }
+    hodlingBody[ 0 ].append( ...childrens );
   }
 
-  async function AddPLRows_FromJSON ( obj,
-    isUpdate = false )
-  {
-    for ( const key in obj ) {
+  async function AddPLRowsFromJSON ( obj,
+    isUpdate = false ) {
+    const childrens = [];
+    for ( const key in obj )
 
+      // eslint-disable-next-line no-prototype-builtins
       if ( obj.hasOwnProperty( key ) ) {
         const { coin, pair, qty, buyPrice, soldPrice, term, _id, id } = obj[ key ];
-        const row = isUpdate ? document.querySelector( "#" + ( _id || id || key ) ) :
-          document.getElementById( "templatePL1Row" ).content.cloneNode( true );
+        const row = isUpdate
+          ? document.querySelector( "#" + ( _id || id || key ) )
+          : document.getElementById( "templatePL1Row" ).content.cloneNode( true );
 
-        const lastPairPrice = ( ( pair == "usdt" ) || ( pair == "inr" ) ) ? usdtinr : ( pair == "wrx" ) ? wrxinr : btcinr;
+        const lastPairPrice = ( ( pair === "usdt" ) || ( pair === "inr" ) ) ? usdtinr : ( pair === "wrx" ) ? wrxinr : btcinr;
 
-        const isINR = pair == "inr";
+        const isINR = pair === "inr";
         if ( !isUpdate )
           row.getElementById( "tdPairName" ).parentElement.id = ( _id || id || key );
 
@@ -1087,7 +1054,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
           coinPairArr.push( coin + pair );
 
         const rowParent = row.getElementById( "tdPairName" ).parentElement;
-        rowParent.setAttribute( "pairName", coin.replace( /[0-9]/g, '' ) + pair ); // regex to remove numbers to handle execptions
+        rowParent.setAttribute( "pairName", coin.replace( /[0-9]/g, "" ) + pair ); // regex to remove numbers to handle execptions
 
         const totalToDollar = isINR ? ( ( buyPrice / lastPairPrice ) * qty ) : ( buyPrice * qty );
         const totalToInr = totalToDollar * lastPairPrice;
@@ -1118,18 +1085,18 @@ window.addEventListener( "DOMContentLoaded", async () =>
         }
 
         if ( !isUpdate )
-          plBody[ 0 ].prepend( row );
+          childrens.splice( 0, 0, row );
       }
-    }
+    if ( !isUpdate )
+      plBody[ 0 ].append( ...childrens );
   }
 
-  async function LiveUpdateHodlingTable ( event )
-  {
+  async function LiveUpdateHodlingTable ( event ) {
     try {
       const array = event.data.filter( e => coinPairArr.includes( e.s ) );
-      const usdtINRArray = array.filter( e => e.s == PAIR.USDT );
-      const wrxINRArray = array.filter( e => e.s == PAIR.WRX );
-      const btcINRArray = array.filter( e => e.s == PAIR.BTC );
+      const usdtINRArray = array.filter( e => e.s === PAIR.USDT );
+      const wrxINRArray = array.filter( e => e.s === PAIR.WRX );
+      const btcINRArray = array.filter( e => e.s === PAIR.BTC );
 
       if ( usdtINRArray.length ) {
         usdtinr = usdtINRArray[ 0 ].c;
@@ -1142,19 +1109,19 @@ window.addEventListener( "DOMContentLoaded", async () =>
       if ( btcINRArray.length )
         btcinr = btcINRArray[ 0 ].c;
 
-      for ( let arrs of array ) {
+      for ( const arrs of array ) {
         const currentPrice = +arrs.c;
-        for ( let child of hodlingBody[ 0 ].querySelectorAll( "tr[pairName=" + arrs.s.replace( /[0-9]/g, '' ) + "]" ) ) // regex to remove numbers to handle execptions
-        {
+        // regex to remove numbers to handle execptions
+        for ( const child of hodlingBody[ 0 ].querySelectorAll( "tr[pairName=" + arrs.s.replace( /[0-9]/g, "" ) + "]" ) ) {
           const lastPrice = +child.querySelector( "#tdCurrentPrice" ).textContent.split( " " )[ 0 ];
           const qty = +child.querySelector( "#tdQty" ).textContent;
 
-          const color = lastPrice == currentPrice ? "" : lastPrice < currentPrice ? "green" : "red";
+          const color = lastPrice === currentPrice ? "" : lastPrice < currentPrice ? "green" : "red";
           const prevPercentage = +child.querySelector( "#tdPLPercentage" ).textContent.split( " " )[ 0 ];
           const pair = arrs.U;
-          const isINR = arrs.U == "inr";
+          const isINR = arrs.U === "inr";
 
-          const lastPairPrice = ( ( pair == "usdt" ) || ( pair == "inr" ) ) ? usdtinr : ( pair == "wrx" ) ? wrxinr : btcinr;
+          const lastPairPrice = ( ( pair === "usdt" ) || ( pair === "inr" ) ) ? usdtinr : ( pair === "wrx" ) ? wrxinr : btcinr;
 
           const totalToDollar = +child.querySelector( "#tdTotalDollar" ).textContent.split( " " )[ 0 ];
           const totalToInr = +child.querySelector( "#tdTotalinr" ).textContent.split( " " )[ 0 ];
@@ -1185,14 +1152,13 @@ window.addEventListener( "DOMContentLoaded", async () =>
             const parent = child.parentNode;
             parent.insertBefore( child, child.parentNode.querySelector( ".Profit" ) );
             child.classList.add( "Profit" );
-          }
-          else if ( prevPercentage >= 0 && percentage.toFixed( 2 ) <= 0 ) {
+          } else if ( prevPercentage >= 0 && percentage.toFixed( 2 ) <= 0 ) {
             const parent = child.parentNode;
             // insert before the first row
 
-            [ ...child.parentNode.querySelectorAll( ".Profit" ) ].length ?
-              parent.insertBefore( child, [ ...child.parentNode.querySelectorAll( ".Profit" ) ].pop().nextElementSibling ) :
-              parent.insertBefore( child, parent.querySelector( "tr" ) );
+            [ ...child.parentNode.querySelectorAll( ".Profit" ) ].length
+              ? parent.insertBefore( child, [ ...child.parentNode.querySelectorAll( ".Profit" ) ].pop().nextElementSibling )
+              : parent.insertBefore( child, parent.querySelector( "tr" ) );
             child.classList.remove( "Profit" );
             // move row to below top rows
           }
@@ -1208,7 +1174,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
           // body.insertBefore( child, rows[ i ] );
         }
 
-        for ( let child of plBody[ 0 ].querySelectorAll( "tr[pairName=" + arrs.s.replace( /[0-9]/g, '' ) + "]" ) ) {
+        for ( const child of plBody[ 0 ].querySelectorAll( "tr[pairName=" + arrs.s.replace( /[0-9]/g, "" ) + "]" ) ) {
           const soldPrice = +child.querySelector( "#tdSoldPrice" ).textContent.split( " " )[ 0 ];
           const currentPercentage = ( ( currentPrice * 100 ) / soldPrice ) - 100;
           child.querySelector( "#tdCurrentPercentage" ).textContent = currentPercentage.toFixed( 2 ) + " %";
@@ -1224,8 +1190,7 @@ window.addEventListener( "DOMContentLoaded", async () =>
     }
   }
 
-  async function UpdateFearGreedIndex ( usdtinr, isUpdate = false )
-  {
+  async function UpdateFearGreedIndex ( usdtinr, isUpdate = false ) {
     const divFearGreedContainer = document.getElementsByClassName( "divFearGreedIndex" );
     divFearGreedContainer[ 0 ].querySelector( "#spanDollarPrice" ).textContent = usdtinr;
 
@@ -1235,15 +1200,12 @@ window.addEventListener( "DOMContentLoaded", async () =>
       divFearGreedContainer[ 0 ].querySelector( "#spanClassification" ).textContent = fearGreed.data[ 0 ].value_classification;
     }
   }
-
-
 }, false );
 
-async function MissMatchAssets ( funds, childrens, ShowNotification )
-{
-  await Const.delay( 1000 )
+async function MissMatchAssets ( funds, childrens, ShowNotification ) {
+  await Const.delay( 1000 );
   const shariat = [];
-  for ( let child of childrens ) {
+  for ( const child of childrens ) {
     const coin = child.getAttribute( "coin" );
     const pair = child.getAttribute( "pair" );
     const qty = +child.querySelector( "#tdQty" ).textContent;
@@ -1255,31 +1217,29 @@ async function MissMatchAssets ( funds, childrens, ShowNotification )
       shariat.push( { coin, qty: +qty, pair } );
   }
 
-  for ( let fund of funds ) {
-    let details = shariat.filter( p => p.coin == fund.asset );
+  for ( const fund of funds ) {
+    const details = shariat.filter( p => p.coin === fund.asset );
     if ( details.length ) {
       const sum = details.map( item => item.qty )
         .reduce( ( a, b ) => a + b, 0 ).toString();
       const asset = ( fund.free ).toString();
 
-      const isSumWithPrecision = sum.indexOf(".")  > -1;
+      const isSumWithPrecision = sum.indexOf( "." ) > -1;
       const precisionValue = isSumWithPrecision ? ( sum.length - sum.indexOf( "." ) - 1 ) : sum.length;
       const whatToDo = isSumWithPrecision ? ( sum !== Number( asset ).toFixed( precisionValue ) ) : ( sum !== asset );
       if ( whatToDo )
-        missMatchAssets.push( { coin: fund.asset, sum: sum, asset: fund.free } );
-    }
-    else if (fund.asset !== "inr")
-      missMatchAssets.push( { coin:fund.asset, sum: +fund.free, asset:fund.free })
+        missMatchAssets.push( { coin: fund.asset, sum, asset: fund.free } );
+    } else if ( fund.asset !== "inr" )
+      missMatchAssets.push( { coin: fund.asset, sum: +fund.free, asset: fund.free } );
   }
 
   if ( missMatchAssets.length ) {
     const splice = [];
-    for ( let key in missMatchAssets ) {
+    for ( const key in missMatchAssets )
 
-      if ( parseFloat( missMatchAssets[ key ].asset ).toFixed( 8 ).toString() ==
+      if ( parseFloat( missMatchAssets[ key ].asset ).toFixed( 8 ).toString() ===
            parseFloat( missMatchAssets[ key ].sum ).toFixed( 8 ).toString() )
         splice.push( missMatchAssets[ key ].coin );
-    }
 
     missMatchAssets = missMatchAssets.filter( e => !splice.includes( e.coin ) );
     if ( missMatchAssets.length ) {
@@ -1289,33 +1249,33 @@ async function MissMatchAssets ( funds, childrens, ShowNotification )
   }
 }
 
-function TradingViewPreview ( pairName = `BINANCE:BTCUSDT` )
-{
+function TradingViewPreview ( pairName = "BINANCE:BTCUSDT" ) {
   const allContainers = document.querySelectorAll( ".RootContainer" );
+  // eslint-disable-next-line no-new
   new TradingView.widget(
     {
-      "autosize": true,
-      "symbol": pairName,
-      "interval": "240",
-      "timezone": "UTC+05:30",
-      "theme": "dark",
-      "style": "1",
-      "locale": "in",
-      "toolbar_bg": "#f1f3f6",
-      "enable_publishing": false,
-      "hide_side_toolbar": false,
-      "allow_symbol_change": true,
-      "save_image": false,
-      "watchlist": [
-        "BINANCE:LUNAUSDT",
+      autosize: true,
+      symbol: pairName,
+      interval: "240",
+      timezone: "UTC+05:30",
+      theme: "dark",
+      style: "1",
+      locale: "in",
+      toolbar_bg: "#f1f3f6",
+      enable_publishing: false,
+      hide_side_toolbar: false,
+      allow_symbol_change: true,
+      save_image: false,
+      watchlist: [
+        "BINANCE:LUNAUSDT"
       ],
-      "details": true,
-      "studies": [
+      details: true,
+      studies: [
         "MACD@tv-basicstudies",
         "RSI@tv-basicstudies",
         "StochasticRSI@tv-basicstudies"
       ],
-      "container_id": "tradingview_f888d"
+      container_id: "tradingview_f888d"
     }
   );
 
@@ -1324,14 +1284,12 @@ function TradingViewPreview ( pairName = `BINANCE:BTCUSDT` )
   sideNav.classList.toggle( "active" );
 }
 
-function Close_LongPressPopup ()
-{
+function CloseLongPressPopup () {
   LongPressPopup.removeAttribute( "data" );
   LongPressPopup.classList.add( "Util_hide" );
 }
 
-function ShowSLFunction ( targetRow, ShowNotification )
-{
+function ShowSLFunction ( targetRow, ShowNotification ) {
   const { getStopLossValue, currentPrice, countNumber, margin } = CalculateSLValue( targetRow );
   const content = `<p>Trigger Value at ${ getStopLossValue( currentPrice, 2, countNumber ) } <br />
     Sale Value at ${ getStopLossValue( currentPrice, 4, countNumber ) } <br />
@@ -1340,11 +1298,9 @@ function ShowSLFunction ( targetRow, ShowNotification )
   ShowNotification( content );
 }
 
-function CalculateSLValue ( targetRow )
-{
-  const countDecimals = ( value ) =>
-  {
-    if ( ( value % 1 ) != 0 )
+function CalculateSLValue ( targetRow ) {
+  const countDecimals = ( value ) => {
+    if ( ( value % 1 ) !== 0 )
       return value.toString().split( "." )[ 1 ].length;
     return 0;
   };
@@ -1356,62 +1312,59 @@ function CalculateSLValue ( targetRow )
   return { getStopLossValue, currentPrice, countNumber, margin };
 }
 
-function sortTable ( n, table )
-{
-  let rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+function sortTable ( n, table ) {
+  let rows; let switching; let i; let x; let y; let shouldSwitch; let dir; let switchcount = 0;
   // table = document.getElementById("myTable");
   switching = true;
-  //Set the sorting direction to ascending:
+  // Set the sorting direction to ascending:
   dir = "asc";
-  /*Make a loop that will continue until
-  no switching has been done:*/
+  /* Make a loop that will continue until
+  no switching has been done: */
   while ( switching ) {
-    //start by saying: no switching is done:
+    // start by saying: no switching is done:
     switching = false;
     rows = table.querySelector( "tbody" ).children;
-    /*Loop through all table rows (except the
-    first, which contains table headers):*/
+    /* Loop through all table rows (except the
+    first, which contains table headers): */
     for ( i = 0; i < ( rows.length - 1 ); i++ ) {
-      //start by saying there should be no switching:
+      // start by saying there should be no switching:
       shouldSwitch = false;
-      /*Get the two elements you want to compare,
-      one from current row and one from the next:*/
+      /* Get the two elements you want to compare,
+      one from current row and one from the next: */
       x = rows[ i ].getElementsByTagName( "TD" )[ n ];
       y = rows[ i + 1 ].getElementsByTagName( "TD" )[ n ];
-      /*check if the two rows should switch place,
-      based on the direction, asc or desc:*/
+      /* check if the two rows should switch place,
+      based on the direction, asc or desc: */
 
       x = +x.innerHTML.split( " ₿" )[ 0 ].split( " ₹" )[ 0 ] ? +x.innerHTML.split( " ₿" )[ 0 ].split( " ₹" )[ 0 ] : x.innerHTML.split( " ₿" )[ 0 ].split( " ₹" )[ 0 ].toLowerCase();
       y = +y.innerHTML.split( " ₿" )[ 0 ].split( " ₹" )[ 0 ] ? +y.innerHTML.split( " ₿" )[ 0 ].split( " ₹" )[ 0 ] : y.innerHTML.split( " ₿" )[ 0 ].split( " ₹" )[ 0 ].toLowerCase();
 
-      if ( dir == "asc" ) {
+      if ( dir === "asc" ) {
         if ( x > y ) {
-          //if so, mark as a switch and break the loop:
+          // if so, mark as a switch and break the loop:
           shouldSwitch = true;
           break;
         }
-      } else if ( dir == "desc" ) {
+      } else if ( dir === "desc" )
         if ( x < y ) {
-          //if so, mark as a switch and break the loop:
+          // if so, mark as a switch and break the loop:
           shouldSwitch = true;
           break;
         }
-      }
     }
     if ( shouldSwitch ) {
-      /*If a switch has been marked, make the switch
-      and mark that a switch has been done:*/
+      /* If a switch has been marked, make the switch
+      and mark that a switch has been done: */
       rows[ i ].parentNode.insertBefore( rows[ i + 1 ], rows[ i ] );
       switching = true;
-      //Each time a switch is done, increase this count by 1:
+      // Each time a switch is done, increase this count by 1:
       switchcount++;
-    } else {
-      /*If no switching has been done AND the direction is "asc",
-      set the direction to "desc" and run the while loop again.*/
-      if ( switchcount == 0 && dir == "asc" ) {
-        dir = "desc";
-        switching = true;
-      }
+    } else
+    /* If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again. */
+    if ( switchcount === 0 && dir === "asc" ) {
+      dir = "desc";
+      switching = true;
     }
   }
 }
