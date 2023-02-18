@@ -534,6 +534,8 @@ window.addEventListener( "DOMContentLoaded", async () => {
   //   }
   // } ) ).json();
 
+  // document.getElementById( "loader" ).classList.add( "Util_hide" );
+
   await AddHodlingRowsFromJSON( HODLING );
   await AddPLRowsFromJSON( PL_LIST );
 
@@ -557,7 +559,11 @@ window.addEventListener( "DOMContentLoaded", async () => {
   window.onanimationend = async ( e ) => {
     // stacksnippet"s console also has CSS animations...
     if ( e.type === "animationend" && e.target.id === notificationBTN.id )
+    {
+      if ( notificationBTN.textContent.includes( "Trigger Value" ) )
+        await Const.delay( 2000 );
       notificationBTN.classList.remove( "visible" );
+    }
   };
 
   document.addEventListener( "dblclick", async function ( e ) {
@@ -584,6 +590,11 @@ window.addEventListener( "DOMContentLoaded", async () => {
       }
     }
 
+    if ( targetRow.tagName == "DIV" )
+    {
+      document.getElementById( "IndexContainer" ).classList.toggle( "minimized" );
+      return;
+    }
     if ( targetRow.tagName !== "TR" )
       return;
 
@@ -825,9 +836,9 @@ window.addEventListener( "DOMContentLoaded", async () => {
       child.querySelector( "#tdQty" ).setAttribute( "qty", qty );
     }
 
-    await Daka( "usdt", usdt, coins );
-    await Daka( "wrx", wrx, coins );
-    await Daka( "btc", btc, coins );
+    // await Daka( "usdt", usdt, coins );
+    // await Daka( "wrx", wrx, coins );
+    // await Daka( "btc", btc, coins );
 
     SummationPLTable( hodlingBody );
     SummationPLTable( plBody );
@@ -910,7 +921,7 @@ window.addEventListener( "DOMContentLoaded", async () => {
         free = 0;
       }
     }
-    if ( free > 0 ) {
+    if ( +free > 0 ) {
       const pair = coin === "usdt" ? "inr" : "usdt";
       let qty = +free;
       qty = qty.toFixed( 8 );
@@ -955,7 +966,7 @@ window.addEventListener( "DOMContentLoaded", async () => {
   }
 
   async function AddHodlingRowsFromJSON ( obj,
-    isUpdate = false ) {
+                                          isUpdate = false ) {
     await UpdateFearGreedIndex( usdtinr );
     const childrens = [];
     for ( const key in obj )

@@ -24,9 +24,14 @@ table{
 caption {
   color: white;
   margin: 4px 0px;
-  padding: 4px 0px;
   font-size: x-large;
+  background: rgba(0,0,0,0.1);
+  width: max-content;
+  padding: 4px 12px;
+  margin: 0 auto 8px;
+  border-radius: 4px;
 }
+
 thead, tfoot{
   z-index: 1;
   backdrop-filter: blur(16px) saturate(180%);
@@ -158,3 +163,117 @@ table tfoot
 {
   display: none;
 } */
+
+
+.minimized .demo {
+  width: auto;
+}
+
+.minimized #table thead,
+.minimized #table tfoot
+{
+  display: none;
+}
+
+.minimized .demo td
+{
+  border: unset;
+}
+
+.minimized #table tbody tr
+{
+  height: calc(170px + 8px);
+  width: 300px;
+  overflow: auto;
+  padding: 4px 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.minimized #table tbody tr td:first-child
+{
+  text-align: center;
+  text-transform: uppercase;
+  font-size: large;
+  font-weight: 500;
+  background: rgba(0,0,0,0.2);
+  margin-bottom: 8px;
+  width: 70%;
+}
+
+
+.minimized #table tbody tr td:nth-child(4),
+.minimized #table tbody tr td:nth-child(3),
+.minimized #table tbody tr td:nth-child(7),
+.minimized #table tbody tr td:nth-child(10)
+{
+  display: none;
+}
+
+.minimized #table tbody tr td:not(:first-child) {
+  background: rgba(0,0,0,0.1);
+  margin: 2px 4px;
+  border-radius: 4px;
+  order: 2;
+}
+
+.minimized #table tbody tr td:before
+{
+  font-weight: 500;
+}
+
+.minimized #table tbody tr td:nth-child(2):before {
+  content: 'Buy-Price: ';
+}
+
+.minimized #table tbody tr td:nth-child(5):before {
+  content: 'Amt: ';
+}
+
+.minimized #table tbody tr td:nth-child(6):before {
+  content: 'Cur-Price: ';
+}
+
+.minimized #table tbody tr td:nth-child(8):before {
+  content: 'Cur-Amt: ';
+}
+
+.minimized #table tbody tr td:nth-child(9) {
+  order: 0;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: large;
+  font-weight: 500;
+  background: rgba(0,0,0,0.2);
+  margin: unset;
+  margin-bottom: 8px;
+  border-radius: unset;
+}
+
+.minimized #table tbody tr td:nth-child(11) {
+  width: 100%;
+  order: 1;
+}
+
+.minimized #table tbody tr td:nth-child(11)::before {
+  content: 'Margin: ';
+}
+
+.minimized #table tbody tr td:nth-child(12)
+{
+  width: 100%;
+}
+
+.minimized #table tbody tr td:nth-child(12)::before {
+  content: 'Comment: ';
+}
+
+
+/* Temp */
+
+.minimized .table-Container:nth-child(2) {
+  display: none;
+}
