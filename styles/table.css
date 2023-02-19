@@ -164,13 +164,22 @@ table tfoot
   display: none;
 } */
 
+.minimized .table-Container
+{
+  overflow: unset;
+}
 
 .minimized .demo {
   width: auto;
+  margin: 0 auto;
 }
 
-.minimized #table thead,
-.minimized #table tfoot
+.minimized caption {
+  width: auto;
+}
+
+.minimized thead,
+.minimized tfoot
 {
   display: none;
 }
@@ -180,9 +189,9 @@ table tfoot
   border: unset;
 }
 
-.minimized #table tbody tr
+.minimized tbody tr
 {
-  height: calc(170px + 8px);
+  height: auto;
   width: 300px;
   overflow: auto;
   padding: 4px 8px;
@@ -191,9 +200,12 @@ table tfoot
   align-items: center;
   justify-content: space-between;
   align-content: center;
+  background: rgba(0,0,0,0.1);
+  margin: 4px;
+  border-radius: 4px;
 }
 
-.minimized #table tbody tr td:first-child
+.minimized tbody tr td#tdPairName
 {
   text-align: center;
   text-transform: uppercase;
@@ -204,16 +216,26 @@ table tfoot
   width: 70%;
 }
 
+.minimized tbody tr td#tdBuyAgain
+{
+  width: 100%;
+  order: 0;
+}
 
-.minimized #table tbody tr td:nth-child(4),
-.minimized #table tbody tr td:nth-child(3),
-.minimized #table tbody tr td:nth-child(7),
-.minimized #table tbody tr td:nth-child(10)
+.minimized tbody tr td#tdBuyAgain.Util_disable
 {
   display: none;
 }
 
-.minimized #table tbody tr td:not(:first-child) {
+.minimized tbody tr td#tdTotalDollar,
+.minimized tbody tr td#tdQty,
+.minimized tbody tr td#tdCurTotalDollar,
+.minimized tbody tr td#tdMarginDol
+{
+  display: none;
+}
+
+.minimized tbody tr td:not(:first-child) {
   background: rgba(0,0,0,0.1);
   margin: 2px 4px;
   border-radius: 4px;
@@ -225,11 +247,17 @@ table tfoot
   font-weight: 500;
 }
 
-.minimized #table tbody tr td:nth-child(2):before {
+.minimized tbody tr td#tdBuyPrice:before {
   content: 'Buy-Price: ';
 }
 
-.minimized #table tbody tr td:nth-child(5):before {
+.minimized tbody tr td#tdSoldPrice::before
+{
+  content: 'Sold-Price: ';
+}
+
+.minimized tbody tr td#tdTotalinr:before,
+.minimized tbody tr td#tdTotalinr:before{
   content: 'Amt: ';
 }
 
@@ -241,7 +269,8 @@ table tfoot
   content: 'Cur-Amt: ';
 }
 
-.minimized #table tbody tr td:nth-child(9) {
+.minimized #table tbody tr td#tdPLPercentage,
+.minimized #table1 tbody tr #tdPLPercentage {
   order: 0;
   text-align: center;
   text-transform: uppercase;
@@ -253,27 +282,26 @@ table tfoot
   border-radius: unset;
 }
 
-.minimized #table tbody tr td:nth-child(11) {
+.minimized tbody tr td#tdCurrentPercentage,
+.minimized tbody tr td#tdMarginINR {
   width: 100%;
   order: 1;
 }
 
-.minimized #table tbody tr td:nth-child(11)::before {
+.minimized tbody tr td#tdCurrentPercentage::before
+{
+  content: 'Current %: ';
+}
+
+.minimized tbody tr td#tdMarginINR::before {
   content: 'Margin: ';
 }
 
-.minimized #table tbody tr td:nth-child(12)
+.minimized tbody tr td#tdTerm
 {
   width: 100%;
 }
 
-.minimized #table tbody tr td:nth-child(12)::before {
+.minimized tbody tr td#tdTerm::before {
   content: 'Comment: ';
-}
-
-
-/* Temp */
-
-.minimized .table-Container:nth-child(2) {
-  display: none;
 }

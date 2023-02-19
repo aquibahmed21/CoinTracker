@@ -330,7 +330,7 @@ div#IndexContainer.RootContainer {
 {
 
   .RootContainer {
-    height: calc(100vh - 136px);
+    height: calc(100vh - 80px);
   }
 
   #divOpenOrdersHolder {
