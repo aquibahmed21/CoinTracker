@@ -105,7 +105,9 @@ tfoot td {
 {
   .table-Container
   {
-    max-height: 300px;
+        max-height: calc(100vh - 90px);
+    margin: 0;
+    padding: 4px 0;
   }
 
   thead {
@@ -132,7 +134,9 @@ tfoot td {
 {
   .table-Container
   {
-    max-height: 300px;
+    max-height: calc(100vh - 90px);
+    margin: 0;
+    padding: 4px 0;
   }
   thead {
     position: sticky;
@@ -164,13 +168,14 @@ table tfoot
   display: none;
 } */
 
-.minimized .table-Container
-{
-  overflow: unset;
+.minimized tbody {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
 .minimized .demo {
-  width: auto;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -304,4 +309,10 @@ table tfoot
 
 .minimized tbody tr td#tdTerm::before {
   content: 'Comment: ';
+}
+
+@media (min-width:480px) {
+  .minimized .demo {
+    width: auto;
+  }
 }

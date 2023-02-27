@@ -1265,7 +1265,8 @@ async function MissMatchAssets ( funds, childrens, ShowNotification ) {
   }
 }
 
-function TradingViewPreview ( pairName = "BINANCE:BTCUSDT" ) {
+function TradingViewPreview ( pairName = "BINANCE:BTCUSDT" )
+{
   const allContainers = document.querySelectorAll( ".RootContainer" );
   // eslint-disable-next-line no-new
   new TradingView.widget(
@@ -1283,7 +1284,7 @@ function TradingViewPreview ( pairName = "BINANCE:BTCUSDT" ) {
       allow_symbol_change: true,
       save_image: false,
       watchlist: [
-        "BINANCE:LUNAUSDT"
+        "BINANCE:SHIBUSDT", "BINANCE:DOGEUSDT", "BTC.D"
       ],
       details: true,
       studies: [
