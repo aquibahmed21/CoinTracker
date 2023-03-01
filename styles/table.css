@@ -248,6 +248,10 @@ table tfoot
   order: 2;
 }
 
+.minimized tbody tr td:not(:first-child):not(#tdPLPercentage):not(#tdMarginINR):not(#tdTerm) {
+  flex-grow: 1;
+}
+
 .minimized #table tbody tr td:before
 {
   font-weight: 500;
