@@ -208,6 +208,7 @@ table tfoot
   background: rgba(0,0,0,0.1);
   margin: 4px;
   border-radius: 4px;
+  flex: 1 0 300px;
 }
 
 .minimized tbody tr td#tdPairName
