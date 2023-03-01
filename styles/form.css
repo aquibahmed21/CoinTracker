@@ -173,7 +173,7 @@
 }
 
 div#IndexContainer.RootContainer {
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 
 #ProfileContainer {
