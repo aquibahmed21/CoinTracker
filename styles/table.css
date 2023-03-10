@@ -139,7 +139,7 @@ tfoot td {
 
   .minimized tbody
   {
-    max-height: calc(50vh - 65px);
+    max-height: calc(50dvh - 65px);
   }
 
   .table-Container
@@ -183,7 +183,7 @@ table tfoot
   flex-wrap: wrap;
   justify-content: space-evenly;
   overflow: auto;
-  max-height: calc(50vh - 90px);
+  max-height: calc(50dvh - 90px);
 }
 
 .minimized .table-Container
@@ -226,6 +226,10 @@ table tfoot
   margin: 4px;
   border-radius: 4px;
   flex: 1 0 300px;
+}
+
+.minimized tbody tr.Profit {
+  order: -1;
 }
 
 .minimized tbody tr td#tdPairName
