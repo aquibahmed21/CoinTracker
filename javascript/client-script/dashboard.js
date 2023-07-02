@@ -1088,7 +1088,8 @@ window.addEventListener( "DOMContentLoaded", async () => {
         // ! rearrange the code
         const currentPrice = arrTicker.filter( e => e.symbol === ( coin + pair ) )[ 0 ].lastPrice;
         const currentPercentage = ( ( currentPrice * 100 ) / soldPrice ) - 100;
-        row.querySelector( "#tdCurrentPercentage" ).textContent = currentPercentage.toFixed( 2 ) + " %";
+        const currentInrApartFromMargin = totalToInr + ( ( totalToInr * currentPercentage ) / 100 ) - marginINR - totalToInr;
+        row.querySelector( "#tdCurrentPercentage" ).textContent = `${currentInrApartFromMargin.toFixed(2)} ₹ (${currentPercentage.toFixed( 2 )} %)`;
 
         row.querySelector( "#tdPLPercentage" ).textContent = percentage.toFixed( 2 ) + " %";
         row.querySelector( "#tdMarginDol" ).textContent = marginDollar.toFixed( 2 ) + " ₿";
