@@ -31,16 +31,18 @@ ws.onopen = event => {
 ws.onmessage = event => {
   if ( ![ "connected", "subscribed", "unsubscribed", "ping", "pong" ].includes( JSON.parse( event.data ).event ) && subsCallback )
     subsCallback( JSON.parse( event.data ) );
+  else
+    console.warn( { msg: event.data } );
 };
 ws.onclose = event => {
   ws = null;
-  console.log( event );
+  console.error( {close: event} );
 
   if ( ws == null ) {
     clearTimeout( pingTimeout );
     ws = new WebSocket( baseURL );
   }
 };
-ws.onerror = event => console.log( event );
+ws.onerror = event => console.error( {error: event} );
 
 export { wsSubscribe };
